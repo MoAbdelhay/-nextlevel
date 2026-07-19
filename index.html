@@ -1,0 +1,1326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXTLEVEL — Real Estate Marketing Studio</title>
+<meta name="description" content="Full-service real estate marketing: listing launches, media production, brand design and lead generation. The market moves like a tide — we read it to the centimetre.">
+<meta property="og:title" content="NEXTLEVEL — Real Estate Marketing">
+<meta property="og:description" content="Listing launches, media, brand and lead generation. One studio, one rising tide.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23131a18'/%3E%3Cpath d='M8 52V30h8v22zm12 0V18h10v34zm14 0V26h8v26zm12 0V36h8v16z' fill='%234a5c56'/%3E%3Crect x='22' y='22' width='3' height='3' fill='%23d9a44a'/%3E%3Crect x='27' y='30' width='3' height='3' fill='%23d9e0db'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#131a18;
+  --bg2:#161e1c;
+  --panel:#1a2321;
+  --ink:#d9e0db;
+  --dim:#93a09a;
+  --faint:#5f6c66;
+  --line:rgba(217,224,219,.13);
+  --sea:#2e3d39;
+  --accent:#d9a44a;
+  --serif:'Newsreader',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{background:var(--bg)}
+body{
+  font-family:var(--mono);
+  color:var(--ink);
+  font-size:15px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+::selection{background:#4a5c56;color:#f0f4f1}
+a{color:inherit}
+:focus-visible{outline:1.5px solid var(--dim);outline-offset:3px}
+img,video,svg.band{max-width:100%;display:block}
+::-webkit-scrollbar{width:10px;background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#33403b;border:2px solid var(--bg);border-radius:5px}
+html{scrollbar-color:#33403b var(--bg);scrollbar-width:thin}
+
+/* ---------- header ---------- */
+header{
+  position:fixed;inset:0 0 auto 0;z-index:20;
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:1.1rem 1.4rem 2.2rem;
+  background:linear-gradient(rgba(19,26,24,.66),rgba(19,26,24,0));
+  transition:opacity .6s cubic-bezier(.22,.61,.36,1);
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);
+  pointer-events:none;
+}
+header.gone{opacity:0}
+header.gone a{pointer-events:none}
+@media(prefers-reduced-motion:reduce){header{transition:none}}
+header a{pointer-events:auto;text-decoration:none}
+header .wordmark{color:var(--ink);font-weight:600;letter-spacing:.22em}
+header .est{display:none}
+@media(min-width:720px){header .est{display:block}}
+
+/* ---------- hero ---------- */
+#hero{
+  position:relative;height:100vh;height:100svh;min-height:540px;
+  overflow:hidden;
+  background:linear-gradient(#5f6d68 0%,#8d9a94 46%,#33413c 60%,#1c2624 100%);
+}
+#sea{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hero .cloudveil{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(rgba(19,26,24,.55) 0%,rgba(19,26,24,0) 34%,rgba(19,26,24,0) 72%,rgba(19,26,24,.72) 100%);
+}
+#hero .grain{
+  position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+#hero.no-webgl #sea{display:none}
+#hero .fallback{display:none}
+#hero.no-webgl .fallback{
+  display:block;position:absolute;inset:0;
+  background:linear-gradient(#6a776f 0%,#8d9a94 44%,#3a4a44 58%,#1c2624 100%);
+}
+.hero-title{
+  position:absolute;top:18%;left:50%;transform:translateX(-50%);
+  text-align:center;z-index:5;width:min(92vw,60rem);
+}
+.hero-title h1{
+  font-weight:300;letter-spacing:.42em;text-indent:.42em;
+  font-size:clamp(1.7rem,5.6vw,4.1rem);
+  color:#eef2ef;
+  text-shadow:0 1px 24px rgba(19,26,24,.45);
+}
+.hero-title p{
+  margin-top:.9rem;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;
+  color:rgba(238,242,239,.75);
+}
+.hero-cta{
+  display:inline-block;margin-top:2.2rem;
+  font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;text-decoration:none;
+  color:var(--accent);border:1px solid var(--accent);
+  background:rgba(19,26,24,.55);backdrop-filter:blur(4px);
+  padding:.85rem 2.2rem;
+  transition:background .3s,color .3s;
+}
+.hero-cta:hover{background:var(--accent);color:#131a18}
+.gauge-panel{
+  position:absolute;z-index:6;left:1.4rem;bottom:1.4rem;
+  background:rgba(19,26,24,.72);backdrop-filter:blur(6px);
+  border:1px solid var(--line);
+  padding:1rem 1.2rem;min-width:270px;
+  font-size:.8rem;
+}
+.gauge-panel .lbl{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.gauge-panel .height{
+  font-size:2rem;font-weight:500;letter-spacing:.02em;line-height:1.2;
+  font-variant-numeric:tabular-nums;color:#eef2ef;
+}
+.gauge-panel .meta{color:var(--dim);font-variant-numeric:tabular-nums;font-size:.72rem;letter-spacing:.06em}
+.gauge-panel svg{display:block;margin-top:.7rem;width:100%;height:44px}
+.scrub{
+  position:absolute;z-index:6;right:1.4rem;bottom:1.4rem;
+  width:min(320px,60vw);
+  background:rgba(19,26,24,.72);backdrop-filter:blur(6px);
+  border:1px solid var(--line);
+  padding:.9rem 1.2rem 1rem;
+}
+.scrub label{display:flex;justify-content:space-between;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.55rem}
+.scrub output{color:var(--dim);letter-spacing:.06em;font-variant-numeric:tabular-nums;text-transform:none}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;cursor:ew-resize;
+}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--faint)}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  background:var(--accent);margin-top:-6px;border:none;
+  box-shadow:0 0 0 3px rgba(19,26,24,.8);
+}
+input[type=range]::-moz-range-track{height:2px;background:var(--faint)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:none}
+.scrolldown{
+  position:absolute;left:50%;bottom:1.6rem;transform:translateX(-50%);z-index:5;
+  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(238,242,239,.5);
+  text-decoration:none;
+}
+@media(max-width:720px){
+  .hero-title{top:14%}
+  .gauge-panel{left:1rem;right:1rem;bottom:5.4rem;min-width:0}
+  .scrub{left:1rem;right:1rem;bottom:1rem;width:auto}
+  .scrolldown{display:none}
+}
+
+/* ---------- shared section chrome ---------- */
+main{position:relative;z-index:2;background:var(--bg)}
+section{padding:6rem 1.4rem}
+.shell{max-width:72rem;margin:0 auto}
+.kicker{
+  font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);
+  display:flex;align-items:center;gap:1rem;margin-bottom:2.6rem;
+}
+.kicker::after{content:'';flex:1;height:1px;background:var(--line)}
+.kicker .no{color:var(--dim)}
+h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);margin-bottom:1.2rem}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- services ---------- */
+.stations{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.station{background:var(--bg2);padding:1.6rem 1.5rem 1.8rem;transition:background .5s cubic-bezier(.22,.61,.36,1)}
+.station:hover{background:#1e2825}
+.station tr:hover td{color:var(--ink)}
+.station h3{font-size:.95rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.station .coords{font-size:.66rem;color:var(--faint);letter-spacing:.08em;margin:.2rem 0 1.3rem}
+.station table{width:100%;border-collapse:collapse;font-size:.78rem;font-variant-numeric:tabular-nums}
+.station td{padding:.42rem 0;border-top:1px solid var(--line);color:var(--dim)}
+.station td.h{text-align:right;color:var(--ink);white-space:nowrap;padding-left:.8rem}
+.station .z0{margin-top:1.2rem;font-size:.64rem;color:var(--accent);letter-spacing:.06em}
+.tables-note{margin-top:1.4rem;font-size:.7rem;color:var(--faint);letter-spacing:.04em;max-width:52rem}
+
+/* ---------- skyline bands ---------- */
+.bandfig{padding:0;position:relative}
+.bandfig svg.band{width:100%;height:78vh;min-height:420px}
+.bandfig figcaption{
+  position:absolute;left:1.4rem;bottom:1.4rem;
+  background:rgba(19,26,24,.72);border:1px solid var(--line);
+  padding:.8rem 1.1rem;font-size:.68rem;letter-spacing:.1em;color:var(--dim);
+  max-width:26rem;
+}
+.bandfig figcaption b{color:var(--ink);font-weight:500;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:.2rem}
+.bandfig .cap{
+  position:absolute;right:1.4rem;bottom:1.4rem;left:auto;text-align:right;
+  background:none;border:none;padding:0;
+  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,242,239,.65);
+  text-shadow:0 1px 10px rgba(19,26,24,.6);max-width:none;
+}
+#dusk svg.band{height:70vh;min-height:380px}
+.win{animation:winflicker 7s infinite}
+.win.w2{animation-duration:11s;animation-delay:3s}
+.win.w3{animation-duration:9s;animation-delay:5.5s}
+@keyframes winflicker{0%,92%{opacity:1}95%{opacity:.2}98%,100%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.win{animation:none}}
+
+/* ---------- market cycle ---------- */
+#cycle{padding-bottom:4rem}
+#cycle .wrap{display:grid;grid-template-columns:auto 1fr;gap:3.4rem;align-items:center;max-width:52rem;margin:0 auto}
+@media(max-width:720px){#cycle .wrap{grid-template-columns:1fr;justify-items:center;text-align:center}}
+#moonbtn{
+  background:none;border:none;cursor:pointer;padding:1.2rem;border-radius:50%;
+  transition:transform .5s cubic-bezier(.22,.61,.36,1);
+}
+#moonbtn:hover{transform:scale(1.04)}
+#moonbtn svg{display:block}
+#cycle .phase-name{font-size:1.2rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+#cycle .phase-data{margin-top:.8rem;font-size:.76rem;color:var(--dim);line-height:2;font-variant-numeric:tabular-nums;letter-spacing:.05em}
+#cycle .hint{margin-top:1rem;font-size:.64rem;color:var(--faint);letter-spacing:.14em;text-transform:uppercase}
+
+/* ---------- notices ---------- */
+#notices ol{list-style:none;border-top:1px solid var(--line)}
+#notices li{
+  display:grid;grid-template-columns:9.5rem 1fr;gap:1.6rem;
+  padding:1.5rem 0;border-bottom:1px solid var(--line);
+}
+@media(max-width:720px){
+  #notices li{grid-template-columns:1fr;gap:.4rem}
+  #notices .ref .tag{margin-left:.7rem}
+  section{padding:4rem 1.2rem}
+  #cycle{padding-bottom:2.5rem}
+}
+#notices .ref{font-size:.72rem;color:var(--faint);letter-spacing:.08em;font-variant-numeric:tabular-nums}
+#notices .ref .tag{
+  display:inline-block;margin-top:.4rem;padding:.1rem .45rem;
+  font-size:.6rem;letter-spacing:.18em;border:1px solid var(--faint);color:var(--dim);
+}
+#notices .ref .tag.sold{border-color:var(--accent);color:var(--accent)}
+#notices .body{font-size:.86rem;color:var(--dim);max-width:46rem}
+#notices .body b{color:var(--ink);font-weight:500;letter-spacing:.08em;text-transform:uppercase;font-size:.78rem;display:block;margin-bottom:.3rem}
+
+/* ---------- passage ---------- */
+#passage{padding:9rem 1.4rem;background:var(--bg2)}
+#passage .shell{max-width:44rem}
+#passage p{
+  font-family:var(--serif);font-style:italic;font-weight:300;
+  font-size:clamp(1.35rem,2.8vw,1.9rem);line-height:1.75;color:var(--ink);
+  text-wrap:pretty;
+}
+#passage p+p{margin-top:2.2rem}
+#passage .attr{margin-top:3rem;font-family:var(--mono);font-style:normal;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+
+/* ---------- submit a listing ---------- */
+#submit .panelbox{background:var(--bg2);border:1px solid var(--line);padding:2.2rem 2rem 2.4rem}
+.lform{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem 1.6rem;max-width:56rem}
+@media(max-width:720px){.lform{grid-template-columns:1fr}#submit .panelbox{padding:1.5rem 1.1rem 1.7rem}}
+.lform .full{grid-column:1/-1}
+.lform label .flabel{
+  display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:.45rem;
+}
+.lform label .req{color:var(--accent)}
+.lform input,.lform select,.lform textarea{
+  width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);
+  font-family:var(--mono);font-size:.85rem;padding:.65rem .8rem;border-radius:0;
+  transition:border-color .3s;
+}
+.lform input:focus,.lform select:focus,.lform textarea:focus{outline:none;border-color:var(--dim)}
+.lform textarea{resize:vertical;min-height:7.5rem}
+.lform select{appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2393a09a'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .8rem center;
+}
+.dropzone{
+  border:1px dashed var(--faint);background:var(--bg);cursor:pointer;
+  padding:1.6rem 1rem;text-align:center;color:var(--dim);font-size:.72rem;
+  letter-spacing:.12em;text-transform:uppercase;transition:border-color .3s,background .3s;
+}
+.dropzone:hover,.dropzone.drag{border-color:var(--accent);background:#182220}
+.dropzone input{display:none}
+.dropzone .sub{display:block;margin-top:.4rem;font-size:.6rem;color:var(--faint);text-transform:none;letter-spacing:.06em}
+.previews{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.6rem;margin-top:.8rem}
+.previews figure{position:relative;border:1px solid var(--line)}
+.previews img{width:100%;height:74px;object-fit:cover;display:block;filter:saturate(.85)}
+.previews button{
+  position:absolute;top:2px;right:2px;background:rgba(19,26,24,.85);border:1px solid var(--line);
+  color:var(--ink);font-family:var(--mono);font-size:.65rem;line-height:1;
+  width:18px;height:18px;cursor:pointer;
+}
+.previews button:hover{color:var(--accent);border-color:var(--accent)}
+.sendbtn{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;
+  background:none;border:1px solid var(--accent);color:var(--accent);
+  padding:.9rem 2.4rem;cursor:pointer;transition:background .3s,color .3s;
+}
+.sendbtn:hover{background:var(--accent);color:#131a18}
+.sendbtn[disabled]{opacity:.45;cursor:wait}
+.formstatus{margin-top:1.3rem;font-size:.78rem;letter-spacing:.05em;display:none;padding:.9rem 1.1rem;border:1px solid var(--line)}
+.formstatus.ok{display:block;border-color:var(--accent);color:var(--ink)}
+.formstatus.ok b{color:var(--accent);letter-spacing:.14em}
+.formstatus.err{display:block;border-color:#c25c3f;color:#d8a091}
+.recent-h{margin:3.4rem 0 1.4rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);
+  display:flex;align-items:center;gap:1rem}
+.recent-h::after{content:'';flex:1;height:1px;background:var(--line)}
+.recent{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.recent .card{background:var(--bg2);padding:0 0 1.1rem}
+.recent .thumb{height:140px;background:#1e2825;display:flex;align-items:center;justify-content:center;
+  color:var(--faint);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;overflow:hidden}
+.recent .thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
+.recent .card .in{padding:.9rem 1.1rem 0}
+.recent .card .ttl{font-size:.82rem;color:var(--ink);letter-spacing:.04em;font-weight:500}
+.recent .card .loc{font-size:.66rem;color:var(--faint);letter-spacing:.08em;margin-top:.2rem}
+.recent .card .prc{font-size:.78rem;color:var(--accent);margin-top:.45rem;font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.recent-empty{font-size:.72rem;color:var(--faint);letter-spacing:.06em;padding:1.2rem 0}
+
+/* ---------- contact ---------- */
+#contact .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+#contact .cell{background:var(--bg2);padding:1.6rem 1.5rem 1.8rem}
+#contact .cell .lbl{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.6rem}
+#contact .cell .big{font-size:.95rem;color:var(--ink);letter-spacing:.04em}
+#contact .cell a{text-decoration:none;border-bottom:1px solid var(--line)}
+#contact .cell a:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ---------- footer ---------- */
+footer{
+  padding:3.4rem 1.4rem 3rem;border-top:1px solid var(--line);
+  font-size:.68rem;color:var(--faint);letter-spacing:.08em;
+}
+footer .shell{display:flex;flex-wrap:wrap;gap:1.2rem 3rem;justify-content:space-between}
+footer a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
+footer a:hover{color:var(--ink)}
+footer .cols{display:flex;flex-wrap:wrap;gap:1rem 3rem}
+
+/* ---------- language toggle + Arabic (RTL) ---------- */
+.langtoggle{
+  position:fixed;top:1.05rem;right:1.4rem;z-index:30;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(19,26,24,.6);backdrop-filter:blur(4px);
+  border:1px solid var(--line);color:var(--ink);
+  padding:.35rem .85rem;cursor:pointer;
+  transition:border-color .3s,color .3s;
+}
+.langtoggle:hover{border-color:var(--accent);color:var(--accent)}
+html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
+html[lang=ar] *{letter-spacing:0!important}
+html[lang=ar] .hero-title h1{letter-spacing:.42em!important}
+html[lang=ar] header .wordmark{letter-spacing:.22em!important}
+html[lang=ar] button,html[lang=ar] input,html[lang=ar] select,html[lang=ar] textarea{
+  font-family:'IBM Plex Sans Arabic',var(--mono);
+}
+html[lang=ar] #passage p{font-family:'Noto Naskh Arabic',var(--serif);font-style:normal}
+html[lang=ar] .lform select{background-position:left .8rem center;padding-left:2rem}
+html[lang=ar] .station td.h{text-align:left}
+html[lang=ar] input[type=range]{direction:ltr}
+html[lang=ar] .bandfig .cap{text-align:left}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  #moonbtn{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wordmark" href="#hero">NEXTLEVEL</a>
+  <span class="est">Real Estate Marketing Studio · Harborview · Est. 2016</span>
+</header>
+
+<button class="langtoggle" id="langtoggle" type="button" aria-label="Switch language / تغيير اللغة">عربي</button>
+
+<!-- ============ HERO ============ -->
+<div id="hero">
+  <canvas id="sea" aria-label="Animated ocean surface rising and falling with the market tide"></canvas>
+  <div class="fallback" role="img" aria-label="Overcast sea under a grey-green sky"></div>
+  <div class="cloudveil"></div>
+  <div class="grain"></div>
+
+  <div class="hero-title">
+    <h1>NEXTLEVEL</h1>
+    <p>Real estate marketing · listings launched · one rising tide</p>
+    <a class="hero-cta" href="#submit">Submit listing →</a>
+  </div>
+
+  <div class="gauge-panel" aria-live="off">
+    <div class="lbl">Harborview metro · buyer demand</div>
+    <div class="height"><span id="ht">——.—</span> <abbr title="NextLevel demand index" style="text-decoration:none">pts</abbr></div>
+    <div class="meta"><span id="trend">—</span> · <span id="simclock">——:——</span> sim · blended metro index</div>
+    <svg id="curve" viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true">
+      <path id="curvepath" fill="none" stroke="rgba(217,224,219,.35)" stroke-width="1.2" d=""/>
+      <line id="curvenow" x1="0" y1="0" x2="0" y2="44" stroke="rgba(217,224,219,.8)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="scrub">
+    <label for="tidescrub">Scrub the market <output id="scrubout" for="tidescrub">+0.0 mo</output></label>
+    <input type="range" id="tidescrub" min="-12.4" max="12.4" step="0.05" value="0" aria-label="Advance the simulated market, plus or minus twelve months">
+  </div>
+
+  <a class="scrolldown" href="#services">Our services ↓</a>
+</div>
+
+<main>
+
+<!-- ============ SUBMIT A LISTING ============ -->
+<section id="submit">
+  <div class="shell">
+    <div class="kicker reveal"><span class="no">§ 1</span> Submit a listing</div>
+    <div class="panelbox reveal">
+      <form id="listingform" novalidate>
+        <div class="lform">
+          <label class="full">
+            <span class="flabel">Property title <span class="req">*</span></span>
+            <input type="text" name="title" maxlength="140" placeholder="e.g. Waterfront four-bed with private mooring" required>
+          </label>
+          <label>
+            <span class="flabel">Street address <span class="req">*</span></span>
+            <input type="text" name="address" maxlength="200" placeholder="14 Brackworth Row" required>
+          </label>
+          <label>
+            <span class="flabel">City / area <span class="req">*</span></span>
+            <input type="text" name="city" maxlength="120" placeholder="Harborview" required>
+          </label>
+          <label>
+            <span class="flabel">Asking price ($) <span class="req">*</span></span>
+            <input type="number" name="price" min="1" step="1" placeholder="850000" required>
+          </label>
+          <label>
+            <span class="flabel">Property type</span>
+            <select name="type">
+              <option value="house">House</option>
+              <option value="condo">Condo</option>
+              <option value="townhouse">Townhouse</option>
+              <option value="land">Land</option>
+              <option value="multi-family">Multi-family</option>
+              <option value="commercial">Commercial</option>
+            </select>
+          </label>
+          <label>
+            <span class="flabel">Beds</span>
+            <input type="number" name="beds" min="0" step="1" placeholder="4">
+          </label>
+          <label>
+            <span class="flabel">Baths</span>
+            <input type="number" name="baths" min="0" step="0.5" placeholder="2.5">
+          </label>
+          <label>
+            <span class="flabel">Floor area (sq ft)</span>
+            <input type="number" name="sqft" min="0" step="1" placeholder="2200">
+          </label>
+          <label>
+            <span class="flabel">Agent name <span class="req">*</span></span>
+            <input type="text" name="agent_name" maxlength="120" placeholder="Your name" required>
+          </label>
+          <label class="full">
+            <span class="flabel">Agent email <span class="req">*</span></span>
+            <input type="email" name="agent_email" maxlength="200" placeholder="you@brokerage.com" required>
+          </label>
+          <label class="full">
+            <span class="flabel">Description</span>
+            <textarea name="description" maxlength="4000" placeholder="What the tide brought in — light, views, bones, story."></textarea>
+          </label>
+          <div class="full">
+            <span class="flabel" style="display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.45rem">Photos</span>
+            <label class="dropzone" id="dropzone">
+              <span class="dz-main">Drop photos here or click to browse</span>
+              <span class="sub">JPEG · PNG · WebP · up to 12 photos · 8 MB each</span>
+              <input type="file" id="photoinput" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" multiple>
+            </label>
+            <div class="previews" id="previews"></div>
+          </div>
+          <div class="full">
+            <button type="submit" class="sendbtn" id="sendbtn">File the listing →</button>
+            <div class="formstatus" id="formstatus" role="status"></div>
+          </div>
+        </div>
+      </form>
+
+      <div class="recent-h">Latest filings · from the studio database</div>
+      <div class="recent" id="recentgrid" hidden></div>
+      <div class="recent-empty" id="recentempty">The register is empty — yours would be first.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="shell">
+    <div class="kicker reveal"><span class="no">§ 2</span> Services — four disciplines, one studio</div>
+    <div class="stations reveal">
+
+      <div class="station">
+        <h3>Listing Launch</h3>
+        <div class="coords">Every property, treated like a flagship</div>
+        <table><tbody>
+          <tr><td>HDR photography</td><td class="h">40+ frames</td></tr>
+          <tr><td>Cinematic walkthrough</td><td class="h">60–90 s</td></tr>
+          <tr><td>Aerial &amp; drone set</td><td class="h">FAA-licensed</td></tr>
+          <tr><td>3D virtual tour</td><td class="h">full floorplan</td></tr>
+          <tr><td>Portal syndication</td><td class="h">40+ sites</td></tr>
+          <tr><td>Launch-day email blast</td><td class="h">agent network</td></tr>
+        </tbody></table>
+        <div class="z0">From $1,450 per listing · 5-day turnaround</div>
+      </div>
+
+      <div class="station">
+        <h3>Social &amp; Content</h3>
+        <div class="coords">Feeds that sell before the showing</div>
+        <table><tbody>
+          <tr><td>Reels &amp; short-form video</td><td class="h">8 / month</td></tr>
+          <tr><td>Content calendar</td><td class="h">30 days ahead</td></tr>
+          <tr><td>Paid social campaigns</td><td class="h">Meta + Google</td></tr>
+          <tr><td>Neighbourhood spotlights</td><td class="h">monthly</td></tr>
+          <tr><td>Community management</td><td class="h">7 days / wk</td></tr>
+          <tr><td>Performance report</td><td class="h">monthly</td></tr>
+        </tbody></table>
+        <div class="z0">From $950 / month · cancel any tide</div>
+      </div>
+
+      <div class="station">
+        <h3>Brand &amp; Design</h3>
+        <div class="coords">An identity buyers remember</div>
+        <table><tbody>
+          <tr><td>Agent brand identity</td><td class="h">logo + system</td></tr>
+          <tr><td>Listing presentation kit</td><td class="h">print + digital</td></tr>
+          <tr><td>Yard signs &amp; signage</td><td class="h">production-ready</td></tr>
+          <tr><td>Website &amp; IDX build</td><td class="h">custom</td></tr>
+          <tr><td>Template library</td><td class="h">50+ pieces</td></tr>
+          <tr><td>Brand guidelines</td><td class="h">documented</td></tr>
+        </tbody></table>
+        <div class="z0">From $2,800 flat · yours forever</div>
+      </div>
+
+      <div class="station">
+        <h3>Lead Engine</h3>
+        <div class="coords">A pipeline that fills itself</div>
+        <table><tbody>
+          <tr><td>Landing pages</td><td class="h">per campaign</td></tr>
+          <tr><td>Search ads (PPC)</td><td class="h">managed</td></tr>
+          <tr><td>CRM setup &amp; routing</td><td class="h">included</td></tr>
+          <tr><td>Nurture sequences</td><td class="h">automated</td></tr>
+          <tr><td>Open-house capture</td><td class="h">QR + forms</td></tr>
+          <tr><td>Attribution dashboard</td><td class="h">live</td></tr>
+        </tbody></table>
+        <div class="z0">From $1,200 / month + ad spend</div>
+      </div>
+
+    </div>
+    <p class="tables-note reveal">Rates in local currency, before media spend. Campaigns are the sum of many small constituents and take no account of the weather; a steady rate hike can hold a market back by half a season and has, historically, done worse. Timelines are studio standard.</p>
+  </div>
+</section>
+
+<!-- ============ SKYLINE BAND ============ -->
+<figure id="skyline" class="bandfig reveal">
+  <svg class="band" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Twilight city skyline above still harbour water">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#5f6d68"/><stop offset=".55" stop-color="#8d9a94"/><stop offset="1" stop-color="#9aa69f"/>
+      </linearGradient>
+      <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#33413c"/><stop offset="1" stop-color="#1c2624"/>
+      </linearGradient>
+    </defs>
+    <rect width="1600" height="480" fill="url(#sky)"/>
+    <circle cx="1180" cy="120" r="46" fill="#d9e0db" opacity=".85"/>
+    <!-- far skyline -->
+    <path fill="#5c6a64" opacity=".65" d="M0 480V330h60v-40h50v40h70V300h60v180h50V260h40l10-30 10 30h40v220h70V320h60v160h60V280h80v200h60V340h70v-50h50v50h60v140h70V300h60v180h60V350h80v130h50V310h70v170h50V330h60v150h55V300h60v180z"/>
+    <!-- near skyline -->
+    <path fill="#2b3733" d="M0 480V370h90v-60h70v60h60V260h20V230h60v30h20v220h80V330h90v150h70V210h30l8-40 8 40h30v270h90V360h100v120h80V240h100v240h70V310h80v170h90V380h110v100h70V280h90v200h64z"/>
+    <!-- lit windows -->
+    <g fill="#d9a44a">
+      <rect class="win"   x="316" y="278" width="8" height="10"/>
+      <rect class="win w2" x="336" y="308" width="8" height="10"/>
+      <rect x="316" y="338" width="8" height="10" opacity=".7"/>
+      <rect class="win w3" x="586" y="248" width="8" height="10"/>
+      <rect x="602" y="288" width="8" height="10" opacity=".8"/>
+      <rect class="win"   x="586" y="328" width="8" height="10"/>
+      <rect x="900" y="380" width="8" height="10" opacity=".7"/>
+      <rect class="win w2" x="930" y="400" width="8" height="10"/>
+      <rect x="1105" y="330" width="8" height="10" opacity=".8"/>
+      <rect class="win w3" x="1130" y="360" width="8" height="10"/>
+      <rect x="1300" y="400" width="8" height="10" opacity=".7"/>
+      <rect class="win"   x="1440" y="310" width="8" height="10"/>
+    </g>
+    <g fill="#eef2ef" opacity=".55">
+      <rect x="120" y="390" width="7" height="9"/>
+      <rect x="420" y="360" width="7" height="9"/>
+      <rect x="700" y="390" width="7" height="9"/>
+      <rect x="1010" y="270" width="7" height="9"/>
+      <rect x="1210" y="340" width="7" height="9"/>
+      <rect x="1530" y="300" width="7" height="9"/>
+    </g>
+    <!-- water + reflections -->
+    <rect y="480" width="1600" height="220" fill="url(#water)"/>
+    <g stroke="#d9a44a" stroke-width="3" opacity=".28">
+      <path d="M320 492h14M318 504h20M322 518h12"/>
+      <path d="M590 492h14M588 506h20M592 522h12"/>
+      <path d="M1108 490h14M1106 502h20M1110 516h12"/>
+      <path d="M1444 494h14M1442 508h20"/>
+    </g>
+    <g stroke="#aeb8b1" stroke-width="2" opacity=".18">
+      <path d="M60 500h180M420 530h240M760 505h200M1060 540h260M1380 515h160"/>
+      <path d="M180 560h240M620 575h300M1120 585h280"/>
+    </g>
+  </svg>
+  <figcaption><b>Field work · Harborview waterfront</b>Twilight exteriors, shot 22 minutes after sunset — the window where every listing looks like it was always meant to be lived in.</figcaption>
+</figure>
+
+<!-- ============ MARKET CYCLE ============ -->
+<section id="cycle">
+  <div class="shell">
+    <div class="kicker reveal"><span class="no">§ 3</span> The market-raising body</div>
+    <div class="wrap reveal">
+      <button id="moonbtn" type="button" aria-label="Market cycle dial. Activate to advance the cycle.">
+        <svg id="moonsvg" width="150" height="150" viewBox="-75 -75 150 150" role="img" aria-hidden="true">
+          <circle r="56" fill="#232e2b" stroke="rgba(217,224,219,.18)" stroke-width="1"/>
+          <path id="moonlit" fill="#d9e0db" d=""/>
+        </svg>
+      </button>
+      <div>
+        <div class="phase-name" id="phasename">—</div>
+        <div class="phase-data">
+          Buyer confidence <span id="illum">—</span><br>
+          Day <span id="moonage">—</span> of a 29.5-day sales cycle<br>
+          Next peak in <span id="springs">—</span>
+        </div>
+        <div class="hint">Click the dial to hurry it along · the market will not follow</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NOTICES ============ -->
+<section id="notices">
+  <div class="shell">
+    <div class="kicker reveal"><span class="no">§ 4</span> Notices to agents</div>
+    <ol class="reveal">
+      <li>
+        <div class="ref">N.t.A. 2026/131<span class="tag">launch</span></div>
+        <div class="body"><b>Harborview Penthouse — campaign live</b>
+        The full launch package for the Pier 9 penthouse went live Monday: twilight set, aerial reveal, 3D tour and a reel that did its first ten thousand views before the sign hit the lawn. Agents who grew fond of marketing by word of mouth are advised to stop.</div>
+      </li>
+      <li>
+        <div class="ref">N.t.A. 2026/134<span class="tag sold">sold</span></div>
+        <div class="body"><b>Brackworth Row — under contract, 9 days on market</b>
+        The four-bed terrace at Brackworth Row, listed twice before with other studios and withdrawn twice, closed above asking after a single weekend of showings. Give the comparables in that street a wide berth until reappraised.</div>
+      </li>
+      <li>
+        <div class="ref">N.t.A. 2026/137<span class="tag">media</span></div>
+        <div class="body"><b>Twilight slots — booking ahead recommended</b>
+        The golden-hour calendar for August is filling roughly two weeks out. The light does not negotiate and neither does the drone pilot's schedule; mariners of the listing calendar should treat their optimism with the usual caution.</div>
+      </li>
+      <li>
+        <div class="ref">N.t.A. 2026/141<span class="tag">works</span></div>
+        <div class="body"><b>Client portal — replatform in progress</b>
+        Migration of the campaign dashboard continues through August. The new build displays the metrics prescribed and moves for no one. Clients should expect a short window of dual reporting and pass through it at dead slow.</div>
+      </li>
+      <li>
+        <div class="ref">N.t.A. 2026/144<span class="tag">general</span></div>
+        <div class="body"><b>All clients — annual reminder</b>
+        The studio is once again obliged to remind the public that marketing sells the showing and the showing sells the house. It does not authorise the price, hasten the appraisal, nor hold back the neighbours' opinions. Correspondence on this subject will be filed with the others.</div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ DUSK BAND ============ -->
+<figure id="dusk" class="bandfig reveal">
+  <svg class="band" viewBox="0 0 1600 620" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Suburban rooftops at dusk with lit porches">
+    <defs>
+      <linearGradient id="dsky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4c5a54"/><stop offset=".6" stop-color="#7d8b85"/><stop offset="1" stop-color="#93a099"/>
+      </linearGradient>
+    </defs>
+    <rect width="1600" height="430" fill="url(#dsky)"/>
+    <!-- hills -->
+    <path fill="#3c4a44" d="M0 430c140-40 260-70 420-64s300 44 470 40 340-52 470-44 190 36 240 44v70H0z"/>
+    <!-- houses -->
+    <g fill="#212c28">
+      <path d="M120 430v-80l70-46 70 46v80z"/>
+      <path d="M340 430v-64l56-38 56 38v64z"/>
+      <path d="M560 430v-92l80-52 80 52v92z"/>
+      <path d="M840 430v-70l62-42 62 42v70z"/>
+      <path d="M1070 430v-86l74-48 74 48v86z"/>
+      <path d="M1330 430v-62l54-36 54 36v62z"/>
+    </g>
+    <!-- lit windows / porches -->
+    <g fill="#d9a44a">
+      <rect class="win"    x="172" y="376" width="14" height="18"/>
+      <rect x="206" y="376" width="14" height="18" opacity=".75"/>
+      <rect class="win w2" x="382" y="392" width="12" height="16"/>
+      <rect x="614" y="366" width="14" height="20" opacity=".85"/>
+      <rect class="win w3" x="648" y="366" width="14" height="20"/>
+      <rect x="884" y="386" width="12" height="16" opacity=".8"/>
+      <rect class="win"    x="1120" y="372" width="14" height="18"/>
+      <rect x="1154" y="372" width="14" height="18" opacity=".7"/>
+      <rect class="win w2" x="1368" y="394" width="12" height="16"/>
+    </g>
+    <!-- sold sign accents -->
+    <g>
+      <rect x="292" y="398" width="3" height="32" fill="#5f6c66"/>
+      <rect x="278" y="386" width="32" height="16" fill="#d9a44a"/>
+      <rect x="1032" y="396" width="3" height="34" fill="#5f6c66"/>
+      <rect x="1018" y="384" width="32" height="16" fill="#d9e0db"/>
+    </g>
+    <!-- foreground -->
+    <rect y="430" width="1600" height="190" fill="#18211e"/>
+  </svg>
+  <figcaption class="cap">Dusk over the Westgate development · campaign b-roll, NextLevel media unit</figcaption>
+</figure>
+
+<!-- ============ PASSAGE ============ -->
+<section id="passage">
+  <div class="shell reveal">
+    <p>Twice a decade the market files its report and twice a decade it withdraws to reconsider. What it leaves behind is not emptiness but evidence: streets scribbled with sold signs, the comparables combed one way, a bright line of closings where the argument ended.</p>
+    <p>A listing keeps the only honest clock in this business. It does not divide the week into hours anyone chose; it divides it into <em>shown</em> and <em>not</em>, into the open house crowded and the open house gone quiet. You can set your forecast by it only if your forecast is patient.</p>
+    <p>The studio measures all of this to the click, and the measuring changes everything, and that is the point of it.</p>
+    <div class="attr">— From the studio's field notebook, unsigned, as always</div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="shell">
+    <div class="kicker reveal"><span class="no">§ 5</span> Raise your tide</div>
+    <div class="grid reveal">
+      <div class="cell">
+        <div class="lbl">New campaigns</div>
+        <div class="big"><a href="mailto:studio@nextlevel.example">studio@nextlevel.example</a></div>
+      </div>
+      <div class="cell">
+        <div class="lbl">Studio line</div>
+        <div class="big"><a href="tel:+15550194200">+1 (555) 019-4200</a></div>
+      </div>
+      <div class="cell">
+        <div class="lbl">Visit</div>
+        <div class="big">Pier House, 9 Harbour Walk<br>Harborview</div>
+      </div>
+      <div class="cell">
+        <div class="lbl">Hours</div>
+        <div class="big">Mon–Fri 09:00–18:00<br>Twilight shoots by the light</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="cols">
+      <span>NEXTLEVEL · Real Estate Marketing<br>Pier House, 9 Harbour Walk<br>Harborview</span>
+      <span>Disciplines: Launch · Social · Brand · Leads<br>Forecasts are not the market<br>Listings are not the sea</span>
+    </div>
+    <span>
+      Designed &amp; built by <a href="#hero">NextLevel Studio</a><br>
+      Hero sea rendered live in WebGL
+    </span>
+  </div>
+</footer>
+
+<script>
+/* ================= shared market-tide model (no WebGL dependency) ================= */
+const TAU = Math.PI * 2;
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ================= language ================= */
+let LANG = localStorage.getItem('nl-lang') === 'ar' ? 'ar' : 'en';
+const TXT = {
+  en: {
+    rising:'RISING ▲', cooling:'COOLING ▼', holding:'HOLDING —', mo:' mo', d:' d',
+    filing:'Filing…',
+    photoBig: n => n + ' is over 8 MB — left on the quay.',
+    limit:'Twelve photos is the studio limit.',
+    filed:(ref, n) => '<b>' + ref + '</b> — listing filed with ' + n + ' photo' + (n === 1 ? '' : 's') +
+      '. The register has been amended; the market has been notified of nothing.',
+    offline:'The studio server is not answering. Start it with <b>npm start</b> in the nextlevel folder and open http://localhost:3000.',
+    refused:'Submission refused.',
+    empty:'The register is empty — yours would be first.',
+    regOffline:'Register unavailable — the studio server is offline. Run npm start in the nextlevel folder.',
+    noPhoto:'No photo', bd:' bd', ba:' ba',
+    title:'NEXTLEVEL — Real Estate Marketing Studio',
+  },
+  ar: {
+    rising:'صاعد ▲', cooling:'هابط ▼', holding:'ثابت —', mo:' شهر', d:' ي',
+    filing:'جارٍ القيد…',
+    photoBig: n => n + ' تتجاوز 8 ميغابايت — تُركت على الرصيف.',
+    limit:'اثنتا عشرة صورة هي حدّ الاستوديو.',
+    filed:(ref, n) => '<b>' + ref + '</b> — تم قيد العقار مع ' + (n === 1 ? 'صورة واحدة' : n + ' صور') +
+      '. عُدِّل السجل؛ ولم يُخطَر السوق بشيء.',
+    offline:'خادم الاستوديو لا يستجيب. شغّله بالأمر <b>npm start</b> داخل مجلد nextlevel ثم افتح http://localhost:3000.',
+    refused:'رُفض الطلب.',
+    empty:'السجل فارغ — قيدُك سيكون الأول.',
+    regOffline:'السجل غير متاح — خادم الاستوديو متوقف. شغّل npm start داخل مجلد nextlevel.',
+    noPhoto:'بلا صورة', bd:' غرف', ba:' حمّام',
+    title:'نكست ليفل — استوديو التسويق العقاري',
+  },
+};
+
+/* Harmonic constituents: period in hours — the market breathes like a sea */
+const PERIOD = { M2: 12.4206012, S2: 12.0, K1: 23.9344697, O1: 25.8193417 };
+const SPEED = {}; for (const k in PERIOD) SPEED[k] = TAU / PERIOD[k]; /* rad per hour */
+
+/* Harborview metro: mean level + amplitude (m) and phase (rad) per constituent */
+const METRO = { z0:2.10, H:{M2:[1.42,0.6], S2:[0.48,1.1], K1:[0.11,2.9], O1:[0.09,2.1]} };
+
+function tideHeight(st, tHours){
+  let h = st.z0;
+  for (const k in st.H) h += st.H[k][0] * Math.cos(SPEED[k] * tHours - st.H[k][1]);
+  return h;
+}
+
+/* Simulated time: hours since epoch. Starts from real clock, advances 90x, plus scrub offset. */
+const t0real = Date.now();
+const simEpochHours = (t0real / 3600000) % 10000;
+let scrubOffset = 0;      /* hours, from the slider */
+let cycleNudge = 0;       /* days, from clicking the dial */
+const TIMESCALE = REDUCED ? 0 : 90;
+
+function simHours(){
+  return simEpochHours + ((Date.now() - t0real) / 3600000) * TIMESCALE + scrubOffset;
+}
+function simClockString(t){
+  const mins = Math.round((t % 24) * 60);
+  const hh = String(Math.floor(mins / 60) % 24).padStart(2,'0');
+  const mm = String(mins % 60).padStart(2,'0');
+  return hh + ':' + mm;
+}
+
+/* ---------- hero readout ---------- */
+const curvePath = document.getElementById('curvepath');
+const curveNow = document.getElementById('curvenow');
+function updateReadout(){
+  const t = simHours();
+  const h = tideHeight(METRO, t);
+  const dh = tideHeight(METRO, t + 0.05) - h;
+  const T = TXT[LANG];
+  document.getElementById('ht').textContent = (h * 23.6).toFixed(1);   /* metres → index points */
+  document.getElementById('trend').textContent = Math.abs(dh) < 0.002 ? T.holding : (dh > 0 ? T.rising : T.cooling);
+  document.getElementById('simclock').textContent = simClockString(t);
+  /* sparkline: −12.4h .. +12.4h around the unscrubbed now, marker follows scrub */
+  const tc = t - scrubOffset;
+  const min = METRO.z0 - 2.2, max = METRO.z0 + 2.2;
+  let d = '';
+  for (let i = 0; i <= 96; i++){
+    const th = tc - 12.4 + (i / 96) * 24.8;
+    const y = 40 - (tideHeight(METRO, th) - min) / (max - min) * 36;
+    d += (i ? 'L' : 'M') + (i / 96 * 240).toFixed(1) + ',' + y.toFixed(1);
+  }
+  curvePath.setAttribute('d', d);
+  const nx = ((scrubOffset + 12.4) / 24.8 * 240).toFixed(1);
+  curveNow.setAttribute('x1', nx); curveNow.setAttribute('x2', nx);
+}
+updateReadout();
+
+/* ---------- scrub slider ---------- */
+const scrub = document.getElementById('tidescrub');
+scrub.addEventListener('input', () => {
+  scrubOffset = parseFloat(scrub.value);
+  document.getElementById('scrubout').textContent =
+    (scrubOffset >= 0 ? '+' : '−') + Math.abs(scrubOffset).toFixed(1) + TXT[LANG].mo;
+  updateReadout();
+});
+
+/* ---------- market cycle dial ---------- */
+const SYNODIC = 29.530588853;
+const litPath = document.getElementById('moonlit');
+const PHASE_NAMES = {
+  en: ['Market bottom','Early recovery','Warming market','Heating market','Peak market','Cooling market','Correction','Late correction'],
+  ar: ['قاع السوق','تعافٍ مبكر','سوق يتدفأ','سوق يسخن','ذروة السوق','سوق يبرد','تصحيح','أواخر التصحيح'],
+};
+function cycleFrac(){
+  const days = simHours() / 24 + cycleNudge + 21.3; /* offset so the page opens photogenic */
+  return ((days % SYNODIC) + SYNODIC) % SYNODIC / SYNODIC;
+}
+function cyclePathD(p, r){
+  if (p < 0.008 || p > 0.992) return '';                        /* bottom: nothing lit */
+  if (Math.abs(p - 0.5) < 0.008) return `M0,${-r} A${r},${r} 0 1 1 0,${r} A${r},${r} 0 1 1 0,${-r}`; /* peak */
+  const x = Math.cos(TAU * p);
+  const rx = Math.abs(x) * r;
+  const waxing = p < 0.5;
+  const outer = waxing ? 1 : 0;
+  const term = x > 0 ? (waxing ? 0 : 1) : (waxing ? 1 : 0);
+  return `M0,${-r} A${r},${r} 0 0 ${outer} 0,${r} A${rx},${r} 0 0 ${term} 0,${-r}`;
+}
+function drawCycle(){
+  const p = cycleFrac();
+  litPath.setAttribute('d', cyclePathD(p, 56));
+  const conf = (1 - Math.cos(TAU * p)) / 2;
+  document.getElementById('phasename').textContent = PHASE_NAMES[LANG][Math.round(p * 8) % 8];
+  document.getElementById('illum').textContent = Math.round(conf * 100) + ' %';
+  document.getElementById('moonage').textContent = (p * SYNODIC).toFixed(1);
+  const dBottom = (1 - p) * SYNODIC, dPeak = ((0.5 - p + 1) % 1) * SYNODIC;
+  document.getElementById('springs').textContent = Math.min(dBottom, dPeak).toFixed(1) + TXT[LANG].d;
+}
+drawCycle();
+document.getElementById('moonbtn').addEventListener('click', () => {
+  cycleNudge += SYNODIC / 8;
+  drawCycle();
+});
+
+/* ---------- header hides once the hero is gone ---------- */
+const hdr = document.querySelector('header');
+new IntersectionObserver(es => {
+  for (const e of es) hdr.classList.toggle('gone', !e.isIntersecting);
+}, { threshold: 0.04 }).observe(document.getElementById('hero'));
+
+/* ---------- scroll reveals ---------- */
+const io = new IntersectionObserver(es => {
+  for (const e of es) if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* slow ticker for readout + cycle when not scrubbing */
+setInterval(() => { updateReadout(); drawCycle(); }, 1000);
+
+/* ================= listing submission ================= */
+const lform = document.getElementById('listingform');
+const dropzone = document.getElementById('dropzone');
+const photoInput = document.getElementById('photoinput');
+const previews = document.getElementById('previews');
+const sendbtn = document.getElementById('sendbtn');
+const formstatus = document.getElementById('formstatus');
+const recentGrid = document.getElementById('recentgrid');
+const recentEmpty = document.getElementById('recentempty');
+
+const MAX_PHOTOS = 12, MAX_BYTES = 8 * 1024 * 1024;
+let photoFiles = [];
+
+function renderPreviews(){
+  previews.innerHTML = '';
+  photoFiles.forEach((f, i) => {
+    const fig = document.createElement('figure');
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(f);
+    img.alt = f.name;
+    img.onload = () => URL.revokeObjectURL(img.src);
+    const rm = document.createElement('button');
+    rm.type = 'button'; rm.textContent = '×';
+    rm.setAttribute('aria-label', 'Remove ' + f.name);
+    rm.addEventListener('click', () => { photoFiles.splice(i, 1); renderPreviews(); });
+    fig.append(img, rm);
+    previews.append(fig);
+  });
+}
+function addPhotos(list){
+  for (const f of list){
+    if (!/^image\//.test(f.type)) continue;
+    if (f.size > MAX_BYTES){ showStatus('err', TXT[LANG].photoBig(f.name)); continue; }
+    if (photoFiles.length >= MAX_PHOTOS){ showStatus('err', TXT[LANG].limit); break; }
+    photoFiles.push(f);
+  }
+  renderPreviews();
+}
+photoInput.addEventListener('change', () => { addPhotos(photoInput.files); photoInput.value = ''; });
+['dragenter','dragover'].forEach(ev => dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.add('drag'); }));
+['dragleave','drop'].forEach(ev => dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.remove('drag'); }));
+dropzone.addEventListener('drop', e => addPhotos(e.dataTransfer.files));
+
+function showStatus(kind, html){
+  formstatus.className = 'formstatus ' + kind;
+  formstatus.innerHTML = html;
+}
+
+lform.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!lform.reportValidity()) return;
+  const fd = new FormData(lform);
+  photoFiles.forEach(f => fd.append('photos', f, f.name));
+  sendbtn.disabled = true;
+  showStatus('ok', TXT[LANG].filing);
+  try {
+    const res = await fetch('api/listings', { method: 'POST', body: fd });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) throw new Error((data.errors || [TXT[LANG].refused]).join(' '));
+    showStatus('ok', TXT[LANG].filed(data.ref, data.photos));
+    lform.reset();
+    photoFiles = [];
+    renderPreviews();
+    loadRecent();
+  } catch (err) {
+    const offline = err instanceof TypeError;
+    showStatus('err', offline ? TXT[LANG].offline : err.message);
+  } finally {
+    sendbtn.disabled = false;
+  }
+});
+
+/* ---------- latest filings from the database ---------- */
+const money = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:0 });
+async function loadRecent(){
+  try {
+    const res = await fetch('api/listings');
+    if (!res.ok) throw new Error();
+    const { listings } = await res.json();
+    recentGrid.innerHTML = '';
+    const T = TXT[LANG];
+    if (!listings || !listings.length){
+      recentGrid.hidden = true;
+      recentEmpty.hidden = false;
+      recentEmpty.textContent = T.empty;
+      return;
+    }
+    for (const l of listings){
+      const card = document.createElement('div'); card.className = 'card';
+      const thumb = document.createElement('div'); thumb.className = 'thumb';
+      if (l.photos && l.photos.length){
+        const img = document.createElement('img');
+        img.src = l.photos[0].url; img.alt = l.title; img.loading = 'lazy';
+        thumb.append(img);
+      } else thumb.textContent = T.noPhoto;
+      const inner = document.createElement('div'); inner.className = 'in';
+      const ttl = document.createElement('div'); ttl.className = 'ttl'; ttl.textContent = l.title;
+      const loc = document.createElement('div'); loc.className = 'loc';
+      loc.textContent = (l.ref ? l.ref + ' · ' : '') + l.address + ', ' + l.city;
+      const prc = document.createElement('div'); prc.className = 'prc';
+      prc.textContent = money.format(l.price) + (l.beds ? ' · ' + l.beds + T.bd : '') + (l.baths ? ' · ' + l.baths + T.ba : '');
+      inner.append(ttl, loc, prc);
+      card.append(thumb, inner);
+      recentGrid.append(card);
+    }
+    recentGrid.hidden = false;
+    recentEmpty.hidden = true;
+  } catch {
+    recentGrid.hidden = true;
+    recentEmpty.hidden = false;
+    recentEmpty.textContent = TXT[LANG].regOffline;
+  }
+}
+loadRecent();
+
+/* ================= Arabic content + language toggle ================= */
+const AR_HTML = [
+  ['header .est', 'استوديو التسويق العقاري · هاربورفيو · تأسس 2016'],
+  ['.hero-title p', 'تسويق عقاري · قوائم تُطلق · مدٌّ واحد صاعد'],
+  ['.hero-cta', 'قدّم عقارك ←'],
+  ['.gauge-panel .lbl', 'هاربورفيو الكبرى · طلب المشترين'],
+  ['.gauge-panel .height', '<span id="ht">——.—</span> <abbr title="مؤشر الطلب — نكست ليفل" style="text-decoration:none">نقطة</abbr>'],
+  ['.gauge-panel .meta', '<span id="trend">—</span> · <span id="simclock">——:——</span> محاكاة · مؤشر المدينة المدمج'],
+  ['.scrub label', 'حرّك السوق <output id="scrubout" for="tidescrub">+0.0 شهر</output>'],
+  ['.scrolldown', 'خدماتنا ↓'],
+
+  ['#submit .kicker', '<span class="no">§ 1</span> قدّم عقارك'],
+  ['.lform label:nth-of-type(1) .flabel', 'عنوان العقار <span class="req">*</span>'],
+  ['.lform label:nth-of-type(2) .flabel', 'عنوان الشارع <span class="req">*</span>'],
+  ['.lform label:nth-of-type(3) .flabel', 'المدينة / المنطقة <span class="req">*</span>'],
+  ['.lform label:nth-of-type(4) .flabel', 'السعر المطلوب ($) <span class="req">*</span>'],
+  ['.lform label:nth-of-type(5) .flabel', 'نوع العقار'],
+  ['.lform label:nth-of-type(6) .flabel', 'غرف النوم'],
+  ['.lform label:nth-of-type(7) .flabel', 'الحمّامات'],
+  ['.lform label:nth-of-type(8) .flabel', 'المساحة (قدم مربعة)'],
+  ['.lform label:nth-of-type(9) .flabel', 'اسم الوكيل <span class="req">*</span>'],
+  ['.lform label:nth-of-type(10) .flabel', 'البريد الإلكتروني للوكيل <span class="req">*</span>'],
+  ['.lform label:nth-of-type(11) .flabel', 'الوصف'],
+  ['.lform select[name=type] option[value=house]', 'منزل'],
+  ['.lform select[name=type] option[value=condo]', 'شقة (كوندو)'],
+  ['.lform select[name=type] option[value=townhouse]', 'تاون هاوس'],
+  ['.lform select[name=type] option[value=land]', 'أرض'],
+  ['.lform select[name=type] option[value="multi-family"]', 'متعدد الوحدات'],
+  ['.lform select[name=type] option[value=commercial]', 'تجاري'],
+  ['.lform > div:nth-of-type(1) > span:first-child', 'الصور'],
+  ['.dropzone .dz-main', 'أسقط الصور هنا أو انقر للتصفح'],
+  ['.dropzone .sub', 'JPEG · PNG · WebP · حتى 12 صورة · 8 م.ب لكل صورة'],
+  ['#sendbtn', 'قيّد العقار ←'],
+  ['.recent-h', 'أحدث القيود · من قاعدة بيانات الاستوديو'],
+
+  ['#services .kicker', '<span class="no">§ 2</span> الخدمات — أربعة تخصصات، استوديو واحد'],
+  ['#services .station:nth-child(1) h3', 'إطلاق القوائم'],
+  ['#services .station:nth-child(1) .coords', 'كل عقار يُعامَل كسفينة رائدة'],
+  ['#services .station:nth-child(1) tbody', '<tr><td>تصوير HDR</td><td class="h">+40 لقطة</td></tr><tr><td>جولة سينمائية</td><td class="h">60–90 ث</td></tr><tr><td>تصوير جوي بالدرون</td><td class="h">مرخّص</td></tr><tr><td>جولة افتراضية ثلاثية الأبعاد</td><td class="h">مخطط كامل</td></tr><tr><td>النشر على البوابات</td><td class="h">+40 موقعًا</td></tr><tr><td>بريد يوم الإطلاق</td><td class="h">شبكة الوكلاء</td></tr>'],
+  ['#services .station:nth-child(1) .z0', 'ابتداءً من $1,450 لكل قائمة · تسليم خلال 5 أيام'],
+  ['#services .station:nth-child(2) h3', 'التواصل والمحتوى'],
+  ['#services .station:nth-child(2) .coords', 'حسابات تبيع قبل المعاينة'],
+  ['#services .station:nth-child(2) tbody', '<tr><td>ريلز وفيديو قصير</td><td class="h">8 / شهر</td></tr><tr><td>تقويم المحتوى</td><td class="h">30 يومًا مقدمًا</td></tr><tr><td>حملات ممولة</td><td class="h">Meta + Google</td></tr><tr><td>أضواء على الأحياء</td><td class="h">شهريًا</td></tr><tr><td>إدارة المجتمع</td><td class="h">7 أيام / أسبوع</td></tr><tr><td>تقرير الأداء</td><td class="h">شهريًا</td></tr>'],
+  ['#services .station:nth-child(2) .z0', 'ابتداءً من $950 / شهر · ألغِ مع أي مدّ'],
+  ['#services .station:nth-child(3) h3', 'الهوية والتصميم'],
+  ['#services .station:nth-child(3) .coords', 'هوية يتذكرها المشترون'],
+  ['#services .station:nth-child(3) tbody', '<tr><td>هوية الوكيل</td><td class="h">شعار + نظام</td></tr><tr><td>حقيبة عرض القوائم</td><td class="h">مطبوع + رقمي</td></tr><tr><td>لافتات وإعلانات ميدانية</td><td class="h">جاهزة للإنتاج</td></tr><tr><td>موقع إلكتروني مع IDX</td><td class="h">مخصص</td></tr><tr><td>مكتبة قوالب</td><td class="h">+50 قطعة</td></tr><tr><td>دليل الهوية</td><td class="h">موثّق</td></tr>'],
+  ['#services .station:nth-child(3) .z0', 'ابتداءً من $2,800 دفعة واحدة · ملكك للأبد'],
+  ['#services .station:nth-child(4) h3', 'محرك العملاء'],
+  ['#services .station:nth-child(4) .coords', 'خط أنابيب يملأ نفسه'],
+  ['#services .station:nth-child(4) tbody', '<tr><td>صفحات هبوط</td><td class="h">لكل حملة</td></tr><tr><td>إعلانات البحث (PPC)</td><td class="h">مُدارة</td></tr><tr><td>إعداد CRM وتوجيه العملاء</td><td class="h">مشمول</td></tr><tr><td>تسلسلات رعاية</td><td class="h">آلية</td></tr><tr><td>التقاط زوار البيت المفتوح</td><td class="h">QR + نماذج</td></tr><tr><td>لوحة الإحالة</td><td class="h">مباشرة</td></tr>'],
+  ['#services .station:nth-child(4) .z0', 'ابتداءً من $1,200 / شهر + الإنفاق الإعلاني'],
+  ['#services .tables-note', 'الأسعار بالعملة المحلية وقبل الإنفاق الإعلاني. الحملات مجموع مكوّنات صغيرة كثيرة ولا تأخذ الطقس في الحسبان؛ فرفعٌ ثابت للفائدة قد يؤخر السوق نصف موسم، وقد فعل تاريخيًا ما هو أسوأ. المواعيد بتوقيت الاستوديو.'],
+
+  ['#skyline figcaption', '<b>عمل ميداني · واجهة هاربورفيو البحرية</b>تصوير خارجي عند الشفق، بعد 22 دقيقة من الغروب — النافذة التي يبدو فيها كل عقار وكأنه صُمم ليُسكَن منذ الأزل.'],
+
+  ['#cycle .kicker', '<span class="no">§ 3</span> الجسم الرافع للسوق'],
+  ['#cycle .phase-data', 'ثقة المشترين <span id="illum">—</span><br>اليوم <span id="moonage">—</span> من دورة مبيعات مدتها 29.5 يومًا<br>الذروة التالية بعد <span id="springs">—</span>'],
+  ['#cycle .hint', 'انقر القرص لتستعجل الدورة · السوق لن يتبعك'],
+
+  ['#notices .kicker', '<span class="no">§ 4</span> إشعارات للوكلاء'],
+  ['#notices li:nth-child(1) .tag', 'إطلاق'],
+  ['#notices li:nth-child(1) .body', '<b>بنتهاوس هاربورفيو — الحملة مباشرة</b>انطلقت حزمة الإطلاق الكاملة لبنتهاوس رصيف 9 يوم الاثنين: جلسة شفق، وكشف جوي، وجولة ثلاثية الأبعاد، وريل حقق أول عشرة آلاف مشاهدة قبل أن تُغرس اللافتة في الحديقة. ويُنصح الوكلاء الذين ألفوا التسويق بالكلام المتناقل أن يتوقفوا.'],
+  ['#notices li:nth-child(2) .tag', 'بيع'],
+  ['#notices li:nth-child(2) .body', '<b>صف براكوورث — تحت التعاقد، 9 أيام في السوق</b>المنزل ذو الغرف الأربع في صف براكوورث، الذي أُدرج مرتين من قبل مع استوديوهات أخرى وسُحب مرتين، أُغلق فوق السعر المطلوب بعد عطلة أسبوع واحدة من المعاينات. أبقوا مسافة واسعة من مقارنات ذلك الشارع حتى يُعاد التقييم.'],
+  ['#notices li:nth-child(3) .tag', 'ميديا'],
+  ['#notices li:nth-child(3) .body', '<b>مواعيد الشفق — يُستحسن الحجز مبكرًا</b>تقويم الساعة الذهبية لشهر أغسطس يمتلئ قبل أسبوعين تقريبًا. الضوء لا يتفاوض، وكذلك جدول طيّار الدرون؛ فليعامل بحّارةُ تقويمِ القوائم تفاؤلَهم بالحذر المعتاد.'],
+  ['#notices li:nth-child(4) .tag', 'أعمال'],
+  ['#notices li:nth-child(4) .body', '<b>بوابة العملاء — إعادة بناء قيد التنفيذ</b>يستمر ترحيل لوحة الحملات حتى أغسطس. البناء الجديد يعرض المقاييس المقررة ولا يتحرك لأحد. على العملاء توقّع فترة قصيرة من التقارير المزدوجة والمرور بها ببطء شديد.'],
+  ['#notices li:nth-child(5) .tag', 'عام'],
+  ['#notices li:nth-child(5) .body', '<b>إلى جميع العملاء — تذكير سنوي</b>يجد الاستوديو نفسه مضطرًا مرة أخرى لتذكير الجمهور بأن التسويق يبيع المعاينة، والمعاينة تبيع المنزل. وهو لا يجيز السعر، ولا يعجّل التثمين، ولا يكبح آراء الجيران. وستُحفظ المراسلات في هذا الشأن مع سابقاتها.'],
+
+  ['#dusk .cap', 'الغسق فوق مشروع ويستغيت · لقطات الحملة، وحدة الميديا في نكست ليفل'],
+
+  ['#passage p:nth-of-type(1)', 'مرتين في كل عقد يقدّم السوق تقريره، ومرتين ينسحب ليعيد النظر. وما يتركه خلفه ليس فراغًا بل دليلًا: شوارع مخربشة بلافتات البيع، والمقارنات ممشطة في اتجاه واحد، وخط لامع من الصفقات حيث انتهى الجدال.'],
+  ['#passage p:nth-of-type(2)', 'القائمة العقارية هي الساعة الصادقة الوحيدة في هذه المهنة. فهي لا تقسم الأسبوع إلى ساعات اختارها أحد؛ بل تقسمه إلى <em>عُرض</em> و<em>لم يُعرض</em>، إلى بيت مفتوح مزدحم وبيت مفتوح خلا من روّاده. يمكنك ضبط توقعاتك عليها فقط إن كانت توقعاتك صبورة.'],
+  ['#passage p:nth-of-type(3)', 'يقيس الاستوديو كل هذا بالنقرة، والقياس يغيّر كل شيء، وهذا هو المغزى.'],
+  ['#passage .attr', '— من دفتر الاستوديو الميداني، بلا توقيع، كالعادة'],
+
+  ['#contact .kicker', '<span class="no">§ 5</span> ارفع مدّك'],
+  ['#contact .cell:nth-child(1) .lbl', 'حملات جديدة'],
+  ['#contact .cell:nth-child(2) .lbl', 'خط الاستوديو'],
+  ['#contact .cell:nth-child(3) .lbl', 'زورونا'],
+  ['#contact .cell:nth-child(3) .big', 'بيت الرصيف، 9 ممشى المرفأ<br>هاربورفيو'],
+  ['#contact .cell:nth-child(4) .lbl', 'الدوام'],
+  ['#contact .cell:nth-child(4) .big', 'الاثنين–الجمعة 09:00–18:00<br>وجلسات الشفق على مواعيد الضوء'],
+
+  ['footer .cols span:nth-child(1)', 'نكست ليفل · تسويق عقاري<br>بيت الرصيف، 9 ممشى المرفأ<br>هاربورفيو'],
+  ['footer .cols span:nth-child(2)', 'التخصصات: إطلاق · تواصل · هوية · عملاء<br>التوقعات ليست السوق<br>والقوائم ليست البحر'],
+  ['footer > .shell > span', 'صمّمه وبناه <a href="#hero">استوديو نكست ليفل</a><br>بحر الواجهة يُرسم مباشرةً بتقنية WebGL'],
+];
+const AR_PH = [
+  ['.lform input[name=title]', 'مثال: منزل بأربع غرف على الواجهة البحرية مع مرسى خاص'],
+  ['.lform input[name=address]', '14 صف براكوورث'],
+  ['.lform input[name=city]', 'هاربورفيو'],
+  ['.lform input[name=agent_name]', 'اسمك'],
+  ['.lform textarea[name=description]', 'ما جاء به المد — الضوء، الإطلالات، البنية، الحكاية.'],
+];
+
+const I18N_EN = new Map();
+function applyLang(lang){
+  LANG = lang;
+  localStorage.setItem('nl-lang', lang);
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.title = TXT[lang].title;
+  for (const [sel, ar] of AR_HTML){
+    const el = document.querySelector(sel);
+    if (!el) continue;
+    if (!I18N_EN.has(sel)) I18N_EN.set(sel, el.innerHTML);
+    el.innerHTML = lang === 'ar' ? ar : I18N_EN.get(sel);
+  }
+  for (const [sel, ar] of AR_PH){
+    const el = document.querySelector(sel);
+    if (!el) continue;
+    if (!I18N_EN.has('ph:' + sel)) I18N_EN.set('ph:' + sel, el.placeholder);
+    el.placeholder = lang === 'ar' ? ar : I18N_EN.get('ph:' + sel);
+  }
+  document.getElementById('langtoggle').textContent = lang === 'ar' ? 'English' : 'عربي';
+  document.getElementById('scrubout').textContent =
+    (scrubOffset >= 0 ? '+' : '−') + Math.abs(scrubOffset).toFixed(1) + TXT[lang].mo;
+  updateReadout();
+  drawCycle();
+  loadRecent();
+}
+document.getElementById('langtoggle').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
+if (LANG === 'ar') applyLang('ar');
+</script>
+
+<!-- ================= WebGL ocean ================= -->
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+const hero = document.getElementById('hero');
+let THREE;
+try {
+  THREE = await import('three');
+} catch (e) {
+  hero.classList.add('no-webgl');
+}
+
+if (THREE) try {
+  const canvas = document.getElementById('sea');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+  const FOGCOL = new THREE.Color(0x93a099);
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(FOGCOL, 22, 150);
+  renderer.setClearColor(FOGCOL, 1);
+
+  const camera = new THREE.PerspectiveCamera(46, 2, 0.1, 400);
+  camera.position.set(0, 2.6, 10);
+  camera.lookAt(0, 0.2, -60);
+
+  /* ---------- ocean: Gerstner waves in the vertex shader ---------- */
+  const GEO = new THREE.PlaneGeometry(320, 320, 256, 256);
+  GEO.rotateX(-Math.PI / 2);
+
+  const uniforms = {
+    uTime:  { value: 0 },
+    uTide:  { value: 0 },              /* metres relative to mean level */
+    uDeep:  { value: new THREE.Color(0x27362f) },
+    uShal:  { value: new THREE.Color(0x41544b) },
+    uSky:   { value: FOGCOL.clone() },
+    uFogNear: { value: 22 }, uFogFar: { value: 150 },
+  };
+
+  const mat = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: /* glsl */`
+      uniform float uTime, uTide;
+      varying vec3 vPos;
+      varying vec3 vNormal;
+      varying float vCrest;
+
+      /* one Gerstner wave: accumulates displacement + tangent/binormal for smooth normals */
+      void gerstner(vec2 dir, float steep, float len, vec3 p0,
+                    inout vec3 disp, inout vec3 tang, inout vec3 binm, inout float crest){
+        vec2 d = normalize(dir);
+        float k = 6.28318 / len;
+        float c = sqrt(9.8 / k);              /* deep-water celerity */
+        float f = k * (dot(d, p0.xz) - c * uTime);
+        float a = steep / k;
+        float S = sin(f), C = cos(f);
+        disp += vec3(d.x * a * C, a * S, d.y * a * C);
+        tang += vec3(-d.x * d.x * steep * S, d.x * steep * C, -d.x * d.y * steep * S);
+        binm += vec3(-d.x * d.y * steep * S, d.y * steep * C, -d.y * d.y * steep * S);
+        crest += S * steep;
+      }
+
+      void main(){
+        vec3 p = position;
+        vec3 disp = vec3(0.0);
+        vec3 tang = vec3(1.0, 0.0, 0.0);
+        vec3 binm = vec3(0.0, 0.0, 1.0);
+        float crest = 0.0;
+        gerstner(vec2( 1.0, 0.25), 0.14, 30.0, p, disp, tang, binm, crest);
+        gerstner(vec2( 0.8,-0.55), 0.13, 17.0, p, disp, tang, binm, crest);
+        gerstner(vec2(-0.4, 0.9 ), 0.10, 10.0, p, disp, tang, binm, crest);
+        gerstner(vec2( 0.9, 0.7 ), 0.08,  6.2, p, disp, tang, binm, crest);
+        gerstner(vec2(-0.7,-0.3 ), 0.06,  3.8, p, disp, tang, binm, crest);
+        p += disp;
+        p.y += uTide;                          /* the whole sea rises and falls */
+        vNormal = normalize(cross(binm, tang));
+        vCrest = crest;
+        vPos = p;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+      }`,
+    fragmentShader: /* glsl */`
+      uniform float uTime;
+      uniform vec3 uDeep, uShal, uSky;
+      uniform float uFogNear, uFogFar;
+      varying vec3 vPos;
+      varying vec3 vNormal;
+      varying float vCrest;
+
+      void main(){
+        /* fine wind-ripple: cheap procedural normal perturbation */
+        float r1 = sin(vPos.x * 2.1 + vPos.z * 1.3 + uTime * 1.4);
+        float r2 = sin(vPos.x * -1.4 + vPos.z * 2.6 + uTime * 1.1);
+        vec3 n = normalize(vNormal + vec3(r1, 0.0, r2) * 0.045);
+
+        vec3 viewDir = normalize(cameraPosition - vPos);
+        float fres = pow(1.0 - max(dot(n, viewDir), 0.0), 3.2);
+
+        /* large-scale tonal mottling so the near water isn't a void */
+        float mottle = sin(vPos.x * 0.045 + uTime * 0.05) * sin(vPos.z * 0.037 - uTime * 0.04);
+        vec3 col = mix(uDeep, uShal, clamp(vCrest * 0.8 + 0.42 + mottle * 0.16, 0.0, 1.0));
+        col = mix(col, uSky, clamp(fres, 0.0, 0.85));
+
+        /* soft overcast sheen along wave faces */
+        float sheen = pow(max(dot(n, normalize(vec3(0.2, 1.0, 0.35))), 0.0), 30.0);
+        col += vec3(0.05) * sheen;
+
+        /* thin foam threads at the sharpest crests */
+        col = mix(col, vec3(0.80, 0.84, 0.81), smoothstep(0.40, 0.60, vCrest + r1 * 0.03) * 0.22);
+
+        /* distance fog to a milky horizon */
+        float fog = smoothstep(uFogNear, uFogFar, length(cameraPosition - vPos));
+        col = mix(col, uSky, fog);
+        gl_FragColor = vec4(col, 1.0);
+      }`,
+  });
+  const ocean = new THREE.Mesh(GEO, mat);
+  ocean.frustumCulled = false;
+  scene.add(ocean);
+
+  /* ---------- resize ---------- */
+  function resize(){
+    const w = hero.clientWidth, h = hero.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  addEventListener('resize', resize);
+
+  /* ---------- render loop, becalmed ---------- */
+  const t0 = performance.now();
+  const METRO = { z0:2.10, H:{M2:[1.42,0.6], S2:[0.48,1.1], K1:[0.11,2.9], O1:[0.09,2.1]} };
+  const PERIOD = { M2:12.4206012, S2:12.0, K1:23.9344697, O1:25.8193417 };
+  function tideRel(tH){
+    let h = 0;
+    for (const k in METRO.H) h += METRO.H[k][0] * Math.cos((Math.PI*2/PERIOD[k]) * tH - METRO.H[k][1]);
+    return h;
+  }
+  function draw(){
+    const now = performance.now();
+    uniforms.uTime.value = (now - t0) / 1000 * (window.__reducedMotion ? 0 : 0.55);
+    uniforms.uTide.value = tideRel(window.__simHours ? window.__simHours() : 0);
+    renderer.render(scene, camera);
+  }
+  function frame(){
+    if (!document.hidden) draw();
+    requestAnimationFrame(frame);
+  }
+  draw();                                   /* one becalmed frame right away */
+  setTimeout(frame, 1500);                  /* then let the page settle before the loop */
+  document.getElementById('tidescrub').addEventListener('input', draw);
+} catch (e) {
+  hero.classList.add('no-webgl');
+  console.warn('WebGL unavailable, static fallback shown.');
+}
+</script>
+<script>
+/* bridge for the module scope */
+window.__simHours = simHours;
+window.__reducedMotion = REDUCED;
+</script>
+</body>
+</html>
