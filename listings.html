@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listings — NEXTLEVEL</title>
+<meta name="description" content="Browse properties listed with NextLevel.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23131a18'/%3E%3Cpath d='M8 52V30h8v22zm12 0V18h10v34zm14 0V26h8v26zm12 0V36h8v16z' fill='%234a5c56'/%3E%3Crect x='22' y='22' width='3' height='3' fill='%23d9a44a'/%3E%3Crect x='27' y='30' width='3' height='3' fill='%23d9e0db'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#131a18; --bg2:#161e1c; --ink:#d9e0db; --dim:#93a09a; --faint:#5f6c66;
+  --line:rgba(217,224,219,.13); --accent:#d9a44a;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg)}
+body{font-family:var(--mono);color:var(--ink);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:1.5px solid var(--dim);outline-offset:3px}
+.shell{max-width:72rem;margin:0 auto}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.2rem 1.4rem;border-bottom:1px solid var(--line)}
+.wordmark{font-size:.9rem;letter-spacing:.4em;text-decoration:none;font-weight:500}
+.hdr-r{display:flex;align-items:center;gap:1rem}
+.back{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--dim)}
+.back:hover{color:var(--ink)}
+.langtoggle{background:none;border:1px solid var(--line);color:var(--ink);font-family:var(--mono);font-size:.72rem;padding:.35rem .8rem;cursor:pointer}
+.langtoggle:hover{border-color:var(--accent);color:var(--accent)}
+
+main{padding:3.5rem 1.4rem 6rem}
+.kicker{display:flex;align-items:center;gap:1rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);margin-bottom:2rem}
+.kicker::after{content:'';flex:1;height:1px;background:var(--line)}
+h1{font-size:1.5rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.4rem}
+.lead{font-size:.8rem;color:var(--dim);margin-bottom:2rem}
+.lead a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)}
+
+.lbar{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-bottom:1.4rem}
+.lbar input,.lbar select{background:var(--bg);border:1px solid var(--line);color:var(--ink);font-family:var(--mono);font-size:.8rem;padding:.6rem .8rem;border-radius:0}
+.lbar input{flex:1 1 220px;min-width:0}
+.lbar input:focus,.lbar select:focus{outline:none;border-color:var(--dim)}
+.lbar select{cursor:pointer}
+.lcount{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem}
+.card{background:var(--bg2);border:1px solid var(--line);padding:0 0 1.1rem;display:flex;flex-direction:column}
+.thumb{position:relative;height:170px;background:#1e2825;display:flex;align-items:center;justify-content:center;
+  color:var(--faint);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
+.pcount{position:absolute;bottom:.5rem;right:.5rem;background:rgba(19,26,24,.85);color:var(--ink);font-size:.58rem;letter-spacing:.12em;padding:.2rem .45rem}
+.in{padding:.9rem 1.1rem 0}
+.ttl{font-size:.82rem;letter-spacing:.04em;font-weight:500}
+.loc{font-size:.66rem;color:var(--faint);letter-spacing:.08em;margin-top:.2rem}
+.prc{font-size:.78rem;color:var(--accent);margin-top:.45rem;font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.enq{display:inline-block;margin-top:.8rem;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:.1rem}
+.enq:hover{color:var(--accent)}
+.empty{font-size:.76rem;color:var(--faint);letter-spacing:.06em;padding:1.2rem 0}
+
+footer{border-top:1px solid var(--line);padding:2rem 1.4rem;font-size:.66rem;color:var(--faint);letter-spacing:.06em}
+footer a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
+footer a:hover{color:var(--ink)}
+
+html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
+html[lang=ar] .kicker,html[lang=ar] h1,html[lang=ar] .lcount,html[lang=ar] .back,html[lang=ar] .enq{letter-spacing:0}
+html[lang=ar] .pcount{right:auto;left:.5rem}
+html[lang=ar] .lbar input,html[lang=ar] .lbar select,html[lang=ar] .langtoggle{font-family:'IBM Plex Sans Arabic',var(--mono)}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wordmark" href="./">NEXTLEVEL</a>
+  <div class="hdr-r">
+    <a class="back" href="./" data-t="back">← Home</a>
+    <button class="langtoggle" id="langtoggle" type="button" aria-label="Switch language / تغيير اللغة">عربي</button>
+  </div>
+</header>
+
+<main>
+  <div class="shell">
+    <div class="kicker" data-t="kicker">Listings</div>
+    <h1 data-t="h1">Browse listings</h1>
+    <p class="lead" data-t="lead">Properties submitted to the studio. Have one to add? <a href="./#submit">Submit a listing →</a></p>
+
+    <div class="lbar">
+      <input type="search" id="lsearch" aria-label="Search listings">
+      <select id="lsort" aria-label="Sort listings">
+        <option value="new">Newest first</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+      </select>
+      <span class="lcount" id="lcount"></span>
+    </div>
+    <div class="grid" id="grid" hidden></div>
+    <div class="empty" id="empty">Loading…</div>
+  </div>
+</main>
+
+<footer>
+  <div class="shell">Powered by <a href="https://takween-studio.com" target="_blank" rel="noopener">Takween Studio</a> · <a href="mailto:info@takween-studio.com">info@takween-studio.com</a></div>
+</footer>
+
+<script>
+const TXT = {
+  en: {
+    title:'Listings — NEXTLEVEL', back:'← Home', kicker:'Listings', h1:'Browse listings',
+    lead:'Properties submitted to the studio. Have one to add? <a href="./#submit">Submit a listing →</a>',
+    search:'Search by location or title', sort:['Newest first','Price: low to high','Price: high to low'],
+    count: n => n + (n === 1 ? ' listing' : ' listings'),
+    photos: n => n + ' photos', noPhoto:'No photo', enquire:'Enquire →',
+    empty:'No listings yet — be the first to submit one.', noMatch:'No listings match your search.',
+    offline:'Listings are unavailable right now — the studio server is not answering.',
+    loading:'Loading…',
+  },
+  ar: {
+    title:'العقارات — نكست ليفل', back:'الرئيسية →', kicker:'العقارات', h1:'تصفّح العقارات',
+    lead:'العقارات المقدَّمة إلى الاستوديو. لديك عقار؟ <a href="./#submit">قدّم عقارك ←</a>',
+    search:'ابحث بالموقع أو العنوان', sort:['الأحدث أولًا','السعر: من الأقل','السعر: من الأعلى'],
+    count: n => n + ' عقار',
+    photos: n => n + ' صور', noPhoto:'بلا صورة', enquire:'استفسر ←',
+    empty:'لا توجد عقارات بعد — كن أول من يضيف عقارًا.', noMatch:'لا توجد عقارات مطابقة لبحثك.',
+    offline:'العقارات غير متاحة حاليًا — خادم الاستوديو لا يستجيب.',
+    loading:'جارٍ التحميل…',
+  },
+};
+let LANG = 'en';
+try { if (localStorage.getItem('nl-lang') === 'ar') LANG = 'ar'; } catch {}
+
+const grid = document.getElementById('grid');
+const empty = document.getElementById('empty');
+const lsearch = document.getElementById('lsearch');
+const lsort = document.getElementById('lsort');
+const lcount = document.getElementById('lcount');
+const money = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:0 });
+let ALL = null, FAILED = false;
+
+function showEmpty(msg){ grid.hidden = true; empty.hidden = false; empty.textContent = msg; }
+
+function render(){
+  const T = TXT[LANG];
+  grid.innerHTML = '';
+  if (FAILED) { lcount.textContent = ''; return showEmpty(T.offline); }
+  if (!ALL) return showEmpty(T.loading);
+  if (!ALL.length) { lcount.textContent = ''; return showEmpty(T.empty); }
+  const q = lsearch.value.trim().toLowerCase();
+  let list = ALL.filter(l => !q || [l.title, l.city, l.address].join(' ').toLowerCase().includes(q));
+  if (lsort.value === 'low') list = [...list].sort((a, b) => a.price - b.price);
+  else if (lsort.value === 'high') list = [...list].sort((a, b) => b.price - a.price);
+  lcount.textContent = T.count(list.length);
+  if (!list.length) return showEmpty(T.noMatch);
+  for (const l of list){
+    const card = document.createElement('article'); card.className = 'card';
+    const thumb = document.createElement('div'); thumb.className = 'thumb';
+    if (l.photos && l.photos.length){
+      const img = document.createElement('img');
+      img.src = l.photos[0].url; img.alt = l.title; img.loading = 'lazy';
+      thumb.append(img);
+      if (l.photos.length > 1){
+        const n = document.createElement('span'); n.className = 'pcount'; n.textContent = T.photos(l.photos.length);
+        thumb.append(n);
+      }
+    } else thumb.textContent = T.noPhoto;
+    const inner = document.createElement('div'); inner.className = 'in';
+    const ttl = document.createElement('div'); ttl.className = 'ttl'; ttl.textContent = l.title;
+    const loc = document.createElement('div'); loc.className = 'loc';
+    loc.textContent = [l.address, l.city].filter(Boolean).join(', ');
+    const prc = document.createElement('div'); prc.className = 'prc'; prc.textContent = money.format(l.price);
+    inner.append(ttl, loc, prc);
+    if (l.agent_email){
+      const a = document.createElement('a'); a.className = 'enq';
+      a.href = 'mailto:' + l.agent_email + '?subject=' + encodeURIComponent('Enquiry: ' + l.title + (l.ref ? ' (' + l.ref + ')' : ''));
+      a.textContent = T.enquire;
+      inner.append(a);
+    }
+    card.append(thumb, inner);
+    grid.append(card);
+  }
+  grid.hidden = false; empty.hidden = true;
+}
+
+function applyLang(lang){
+  LANG = lang;
+  try { localStorage.setItem('nl-lang', lang); } catch {}
+  const T = TXT[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.title = T.title;
+  document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = T[el.dataset.t]; });
+  lsearch.placeholder = T.search;
+  [...lsort.options].forEach((o, i) => { o.textContent = T.sort[i]; });
+  document.getElementById('langtoggle').textContent = lang === 'ar' ? 'English' : 'عربي';
+  render();
+}
+
+lsearch.addEventListener('input', render);
+lsort.addEventListener('change', render);
+document.getElementById('langtoggle').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
+applyLang(LANG);
+
+fetch('api/listings')
+  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+  .then(d => { ALL = d.listings || []; render(); })
+  .catch(() => { FAILED = true; render(); });
+</script>
+</body>
+</html>

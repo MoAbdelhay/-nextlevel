@@ -108,6 +108,10 @@ header .est{display:none}
   transition:background .3s,color .3s;
 }
 .hero-cta:hover{background:var(--accent);color:#131a18}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center;margin-top:2.2rem}
+.hero-ctas .hero-cta{margin-top:0}
+.hero-cta.alt{color:var(--ink);border-color:rgba(217,224,219,.55)}
+.hero-cta.alt:hover{background:var(--ink);color:#131a18}
 .gauge-panel{
   position:absolute;z-index:6;left:1.4rem;bottom:1.4rem;
   background:rgba(19,26,24,.72);backdrop-filter:blur(6px);
@@ -283,7 +287,10 @@ html[lang=ar] input[type=range]{direction:ltr}
   <div class="hero-title">
     <h1>NEXTLEVEL</h1>
     <p>Real estate marketing · listings launched · one rising tide</p>
-    <a class="hero-cta" href="#submit">Submit listing →</a>
+    <div class="hero-ctas">
+      <a class="hero-cta" href="#submit">Submit listing →</a>
+      <a class="hero-cta alt" href="listings">Browse listings →</a>
+    </div>
   </div>
 
   <div class="gauge-panel" aria-live="off">
@@ -573,7 +580,8 @@ lform.addEventListener('submit', async (e) => {
 const AR_HTML = [
   ['header .est', 'استوديو التسويق العقاري · هاربورفيو · تأسس 2016'],
   ['.hero-title p', 'تسويق عقاري · قوائم تُطلق · مدٌّ واحد صاعد'],
-  ['.hero-cta', 'قدّم عقارك ←'],
+  ['.hero-cta:not(.alt)', 'قدّم عقارك ←'],
+  ['.hero-cta.alt', 'تصفّح العقارات ←'],
   ['.gauge-panel .lbl', 'هاربورفيو الكبرى · طلب المشترين'],
   ['.gauge-panel .height', '<span id="ht">——.—</span> <abbr title="مؤشر الطلب — نكست ليفل" style="text-decoration:none">نقطة</abbr>'],
   ['.gauge-panel .meta', '<span id="trend">—</span> · <span id="simclock">——:——</span> محاكاة · مؤشر المدينة المدمج'],
