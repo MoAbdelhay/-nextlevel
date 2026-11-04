@@ -70,7 +70,7 @@ const insListing = db.prepare(`
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
 const setRef = db.prepare('UPDATE listings SET ref = ? WHERE id = ?');
 const insPhoto = db.prepare('INSERT INTO photos (listing_id, filename, original) VALUES (?, ?, ?)');
-const recentListings = db.prepare('SELECT * FROM listings ORDER BY id DESC LIMIT 12');
+const recentListings = db.prepare('SELECT * FROM listings ORDER BY id DESC LIMIT 60');
 const photosFor = db.prepare('SELECT filename, original FROM photos WHERE listing_id = ? ORDER BY id');
 
 app.post('/api/listings', upload.array('photos', 12), (req, res) => {

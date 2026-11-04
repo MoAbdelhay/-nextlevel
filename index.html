@@ -289,12 +289,22 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
 .formstatus.ok{display:block;border-color:var(--accent);color:var(--ink)}
 .formstatus.ok b{color:var(--accent);letter-spacing:.14em}
 .formstatus.err{display:block;border-color:#c25c3f;color:#d8a091}
-.recent-h{margin:3.4rem 0 1.4rem;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);
-  display:flex;align-items:center;gap:1rem}
-.recent-h::after{content:'';flex:1;height:1px;background:var(--line)}
-.recent{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-.recent .card{background:var(--bg2);padding:0 0 1.1rem}
-.recent .thumb{height:140px;background:#1e2825;display:flex;align-items:center;justify-content:center;
+.recent{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem}
+.lbar{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-bottom:1.4rem}
+.lbar input,.lbar select{background:var(--bg);border:1px solid var(--line);color:var(--ink);font-family:var(--mono);
+  font-size:.8rem;padding:.6rem .8rem;border-radius:0}
+.lbar input{flex:1 1 220px;min-width:0}
+.lbar input:focus,.lbar select:focus{outline:none;border-color:var(--dim)}
+.lbar select{cursor:pointer}
+.lcount{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.recent .card{background:var(--bg2);border:1px solid var(--line);padding:0 0 1.1rem;display:flex;flex-direction:column}
+.recent .thumb{position:relative}
+.recent .pcount{position:absolute;bottom:.5rem;right:.5rem;background:rgba(19,26,24,.85);color:var(--ink);
+  font-size:.58rem;letter-spacing:.12em;padding:.2rem .45rem;text-transform:none}
+.recent .card .enq{display:inline-block;margin-top:.8rem;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:.1rem}
+.recent .card .enq:hover{color:var(--accent)}
+.recent .thumb{height:170px;background:#1e2825;display:flex;align-items:center;justify-content:center;
   color:var(--faint);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;overflow:hidden}
 .recent .thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
 .recent .card .in{padding:.9rem 1.1rem 0}
@@ -431,74 +441,33 @@ html[lang=ar] .bandfig .cap{text-align:left}
         </div>
       </form>
 
-      <div class="recent-h">Latest filings · from the studio database</div>
-      <div class="recent" id="recentgrid" hidden></div>
-      <div class="recent-empty" id="recentempty">The register is empty — yours would be first.</div>
     </div>
   </div>
 </section>
 
 
-<!-- ============ SKYLINE BAND ============ -->
-<figure id="skyline" class="bandfig reveal">
-  <svg class="band" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Twilight city skyline above still harbour water">
-    <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#5f6d68"/><stop offset=".55" stop-color="#8d9a94"/><stop offset="1" stop-color="#9aa69f"/>
-      </linearGradient>
-      <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#33413c"/><stop offset="1" stop-color="#1c2624"/>
-      </linearGradient>
-    </defs>
-    <rect width="1600" height="480" fill="url(#sky)"/>
-    <circle cx="1180" cy="120" r="46" fill="#d9e0db" opacity=".85"/>
-    <!-- far skyline -->
-    <path fill="#5c6a64" opacity=".65" d="M0 480V330h60v-40h50v40h70V300h60v180h50V260h40l10-30 10 30h40v220h70V320h60v160h60V280h80v200h60V340h70v-50h50v50h60v140h70V300h60v180h60V350h80v130h50V310h70v170h50V330h60v150h55V300h60v180z"/>
-    <!-- near skyline -->
-    <path fill="#2b3733" d="M0 480V370h90v-60h70v60h60V260h20V230h60v30h20v220h80V330h90v150h70V210h30l8-40 8 40h30v270h90V360h100v120h80V240h100v240h70V310h80v170h90V380h110v100h70V280h90v200h64z"/>
-    <!-- lit windows -->
-    <g fill="#d9a44a">
-      <rect class="win"   x="316" y="278" width="8" height="10"/>
-      <rect class="win w2" x="336" y="308" width="8" height="10"/>
-      <rect x="316" y="338" width="8" height="10" opacity=".7"/>
-      <rect class="win w3" x="586" y="248" width="8" height="10"/>
-      <rect x="602" y="288" width="8" height="10" opacity=".8"/>
-      <rect class="win"   x="586" y="328" width="8" height="10"/>
-      <rect x="900" y="380" width="8" height="10" opacity=".7"/>
-      <rect class="win w2" x="930" y="400" width="8" height="10"/>
-      <rect x="1105" y="330" width="8" height="10" opacity=".8"/>
-      <rect class="win w3" x="1130" y="360" width="8" height="10"/>
-      <rect x="1300" y="400" width="8" height="10" opacity=".7"/>
-      <rect class="win"   x="1440" y="310" width="8" height="10"/>
-    </g>
-    <g fill="#eef2ef" opacity=".55">
-      <rect x="120" y="390" width="7" height="9"/>
-      <rect x="420" y="360" width="7" height="9"/>
-      <rect x="700" y="390" width="7" height="9"/>
-      <rect x="1010" y="270" width="7" height="9"/>
-      <rect x="1210" y="340" width="7" height="9"/>
-      <rect x="1530" y="300" width="7" height="9"/>
-    </g>
-    <!-- water + reflections -->
-    <rect y="480" width="1600" height="220" fill="url(#water)"/>
-    <g stroke="#d9a44a" stroke-width="3" opacity=".28">
-      <path d="M320 492h14M318 504h20M322 518h12"/>
-      <path d="M590 492h14M588 506h20M592 522h12"/>
-      <path d="M1108 490h14M1106 502h20M1110 516h12"/>
-      <path d="M1444 494h14M1442 508h20"/>
-    </g>
-    <g stroke="#aeb8b1" stroke-width="2" opacity=".18">
-      <path d="M60 500h180M420 530h240M760 505h200M1060 540h260M1380 515h160"/>
-      <path d="M180 560h240M620 575h300M1120 585h280"/>
-    </g>
-  </svg>
-  <figcaption><b>Field work · Harborview waterfront</b>Twilight exteriors, shot 22 minutes after sunset — the window where every listing looks like it was always meant to be lived in.</figcaption>
-</figure>
+<!-- ============ LISTINGS ============ -->
+<section id="listings">
+  <div class="shell">
+    <div class="kicker reveal"><span class="no">§ 2</span> Listings</div>
+    <div class="lbar reveal">
+      <input type="search" id="lsearch" placeholder="Search by location or title" aria-label="Search listings">
+      <select id="lsort" aria-label="Sort listings">
+        <option value="new">Newest first</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+      </select>
+      <span class="lcount" id="lcount"></span>
+    </div>
+    <div class="recent" id="recentgrid" hidden></div>
+    <div class="recent-empty" id="recentempty">No listings yet — be the first to submit one.</div>
+  </div>
+</section>
 
 <!-- ============ MARKET CYCLE ============ -->
 <section id="cycle">
   <div class="shell">
-    <div class="kicker reveal"><span class="no">§ 2</span> The market-raising body</div>
+    <div class="kicker reveal"><span class="no">§ 3</span> The market-raising body</div>
     <div class="wrap reveal">
       <button id="moonbtn" type="button" aria-label="Market cycle dial. Activate to advance the cycle.">
         <svg id="moonsvg" width="150" height="150" viewBox="-75 -75 150 150" role="img" aria-hidden="true">
@@ -522,7 +491,7 @@ html[lang=ar] .bandfig .cap{text-align:left}
 <!-- ============ NOTICES ============ -->
 <section id="notices">
   <div class="shell">
-    <div class="kicker reveal"><span class="no">§ 3</span> Notices to agents</div>
+    <div class="kicker reveal"><span class="no">§ 4</span> Notices to agents</div>
     <ol class="reveal">
       <li>
         <div class="ref">N.t.A. 2026/131<span class="tag">launch</span></div>
@@ -611,7 +580,7 @@ html[lang=ar] .bandfig .cap{text-align:left}
 <!-- ============ CONTACT ============ -->
 <section id="contact">
   <div class="shell">
-    <div class="kicker reveal"><span class="no">§ 4</span> Raise your tide</div>
+    <div class="kicker reveal"><span class="no">§ 5</span> Raise your tide</div>
     <div class="grid reveal">
       <div class="cell">
         <div class="lbl">New campaigns</div>
@@ -665,7 +634,11 @@ const TXT = {
       '. The register has been amended; the market has been notified of nothing.',
     offline:'The studio server is not answering. Start it with <b>npm start</b> in the nextlevel folder and open http://localhost:3000.',
     refused:'Submission refused.',
-    empty:'The register is empty — yours would be first.',
+    empty:'No listings yet — be the first to submit one.',
+    noMatch:'No listings match your search.',
+    count: n => n + (n === 1 ? ' listing' : ' listings'),
+    photos: n => n + (n === 1 ? ' photo' : ' photos'),
+    enquire:'Enquire →',
     regOffline:'Register unavailable — the studio server is offline. Run npm start in the nextlevel folder.',
     noPhoto:'No photo', bd:' bd', ba:' ba',
     title:'NEXTLEVEL — Real Estate Marketing Studio',
@@ -679,7 +652,11 @@ const TXT = {
       '. عُدِّل السجل؛ ولم يُخطَر السوق بشيء.',
     offline:'خادم الاستوديو لا يستجيب. شغّله بالأمر <b>npm start</b> داخل مجلد nextlevel ثم افتح http://localhost:3000.',
     refused:'رُفض الطلب.',
-    empty:'السجل فارغ — قيدُك سيكون الأول.',
+    empty:'لا توجد عقارات بعد — كن أول من يضيف عقارًا.',
+    noMatch:'لا توجد عقارات مطابقة لبحثك.',
+    count: n => n + ' عقار',
+    photos: n => n + ' صور',
+    enquire:'استفسر ←',
     regOffline:'السجل غير متاح — خادم الاستوديو متوقف. شغّل npm start داخل مجلد nextlevel.',
     noPhoto:'بلا صورة', bd:' غرف', ba:' حمّام',
     title:'نكست ليفل — استوديو التسويق العقاري',
@@ -877,39 +854,68 @@ lform.addEventListener('submit', async (e) => {
 
 /* ---------- latest filings from the database ---------- */
 const money = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:0 });
+let ALL_LISTINGS = null;
+const lsearch = document.getElementById('lsearch');
+const lsort = document.getElementById('lsort');
+const lcount = document.getElementById('lcount');
+
+function renderListings(){
+  const T = TXT[LANG];
+  recentGrid.innerHTML = '';
+  if (!ALL_LISTINGS || !ALL_LISTINGS.length){
+    recentGrid.hidden = true; recentEmpty.hidden = false;
+    recentEmpty.textContent = T.empty; lcount.textContent = '';
+    return;
+  }
+  const q = lsearch.value.trim().toLowerCase();
+  let list = ALL_LISTINGS.filter(l => !q || [l.title, l.city, l.address].join(' ').toLowerCase().includes(q));
+  if (lsort.value === 'low') list = [...list].sort((a, b) => a.price - b.price);
+  else if (lsort.value === 'high') list = [...list].sort((a, b) => b.price - a.price);
+  lcount.textContent = T.count(list.length);
+  if (!list.length){
+    recentGrid.hidden = true; recentEmpty.hidden = false;
+    recentEmpty.textContent = T.noMatch;
+    return;
+  }
+  for (const l of list){
+    const card = document.createElement('article'); card.className = 'card';
+    const thumb = document.createElement('div'); thumb.className = 'thumb';
+    if (l.photos && l.photos.length){
+      const img = document.createElement('img');
+      img.src = l.photos[0].url; img.alt = l.title; img.loading = 'lazy';
+      thumb.append(img);
+      if (l.photos.length > 1){
+        const n = document.createElement('span'); n.className = 'pcount'; n.textContent = T.photos(l.photos.length);
+        thumb.append(n);
+      }
+    } else thumb.textContent = T.noPhoto;
+    const inner = document.createElement('div'); inner.className = 'in';
+    const ttl = document.createElement('div'); ttl.className = 'ttl'; ttl.textContent = l.title;
+    const loc = document.createElement('div'); loc.className = 'loc';
+    loc.textContent = [l.address, l.city].filter(Boolean).join(', ');
+    const prc = document.createElement('div'); prc.className = 'prc';
+    prc.textContent = money.format(l.price);
+    inner.append(ttl, loc, prc);
+    if (l.agent_email){
+      const a = document.createElement('a'); a.className = 'enq';
+      a.href = 'mailto:' + l.agent_email + '?subject=' + encodeURIComponent('Enquiry: ' + l.title + (l.ref ? ' (' + l.ref + ')' : ''));
+      a.textContent = T.enquire;
+      inner.append(a);
+    }
+    card.append(thumb, inner);
+    recentGrid.append(card);
+  }
+  recentGrid.hidden = false; recentEmpty.hidden = true;
+}
+lsearch.addEventListener('input', renderListings);
+lsort.addEventListener('change', renderListings);
+
 async function loadRecent(){
   try {
     const res = await fetch('api/listings');
     if (!res.ok) throw new Error();
-    const { listings } = await res.json();
-    recentGrid.innerHTML = '';
-    const T = TXT[LANG];
-    if (!listings || !listings.length){
-      recentGrid.hidden = true;
-      recentEmpty.hidden = false;
-      recentEmpty.textContent = T.empty;
-      return;
-    }
-    for (const l of listings){
-      const card = document.createElement('div'); card.className = 'card';
-      const thumb = document.createElement('div'); thumb.className = 'thumb';
-      if (l.photos && l.photos.length){
-        const img = document.createElement('img');
-        img.src = l.photos[0].url; img.alt = l.title; img.loading = 'lazy';
-        thumb.append(img);
-      } else thumb.textContent = T.noPhoto;
-      const inner = document.createElement('div'); inner.className = 'in';
-      const ttl = document.createElement('div'); ttl.className = 'ttl'; ttl.textContent = l.title;
-      const loc = document.createElement('div'); loc.className = 'loc';
-      loc.textContent = (l.ref ? l.ref + ' · ' : '') + [l.address, l.city].filter(Boolean).join(', ');
-      const prc = document.createElement('div'); prc.className = 'prc';
-      prc.textContent = money.format(l.price) + (l.beds ? ' · ' + l.beds + T.bd : '') + (l.baths ? ' · ' + l.baths + T.ba : '');
-      inner.append(ttl, loc, prc);
-      card.append(thumb, inner);
-      recentGrid.append(card);
-    }
-    recentGrid.hidden = false;
-    recentEmpty.hidden = true;
+    ALL_LISTINGS = (await res.json()).listings || [];
+    renderListings();
   } catch {
     recentGrid.hidden = true;
     recentEmpty.hidden = false;
@@ -938,16 +944,18 @@ const AR_HTML = [
   ['.dropzone .dz-main', 'أسقط الصور هنا أو انقر للتصفح'],
   ['.dropzone .sub', 'JPEG · PNG · WebP · حتى 12 صورة · 8 م.ب لكل صورة'],
   ['#sendbtn', 'قيّد العقار ←'],
-  ['.recent-h', 'أحدث القيود · من قاعدة بيانات الاستوديو'],
 
 
-  ['#skyline figcaption', '<b>عمل ميداني · واجهة هاربورفيو البحرية</b>تصوير خارجي عند الشفق، بعد 22 دقيقة من الغروب — النافذة التي يبدو فيها كل عقار وكأنه صُمم ليُسكَن منذ الأزل.'],
 
-  ['#cycle .kicker', '<span class="no">§ 2</span> الجسم الرافع للسوق'],
+  ['#listings .kicker', '<span class="no">§ 2</span> العقارات المعروضة'],
+  ['#lsort option[value=new]', 'الأحدث أولًا'],
+  ['#lsort option[value=low]', 'السعر: من الأقل'],
+  ['#lsort option[value=high]', 'السعر: من الأعلى'],
+  ['#cycle .kicker', '<span class="no">§ 3</span> الجسم الرافع للسوق'],
   ['#cycle .phase-data', 'ثقة المشترين <span id="illum">—</span><br>اليوم <span id="moonage">—</span> من دورة مبيعات مدتها 29.5 يومًا<br>الذروة التالية بعد <span id="springs">—</span>'],
   ['#cycle .hint', 'انقر القرص لتستعجل الدورة · السوق لن يتبعك'],
 
-  ['#notices .kicker', '<span class="no">§ 3</span> إشعارات للوكلاء'],
+  ['#notices .kicker', '<span class="no">§ 4</span> إشعارات للوكلاء'],
   ['#notices li:nth-child(1) .tag', 'إطلاق'],
   ['#notices li:nth-child(1) .body', '<b>بنتهاوس هاربورفيو — الحملة مباشرة</b>انطلقت حزمة الإطلاق الكاملة لبنتهاوس رصيف 9 يوم الاثنين: جلسة شفق، وكشف جوي، وجولة ثلاثية الأبعاد، وريل حقق أول عشرة آلاف مشاهدة قبل أن تُغرس اللافتة في الحديقة. ويُنصح الوكلاء الذين ألفوا التسويق بالكلام المتناقل أن يتوقفوا.'],
   ['#notices li:nth-child(2) .tag', 'بيع'],
@@ -966,7 +974,7 @@ const AR_HTML = [
   ['#passage p:nth-of-type(3)', 'يقيس الاستوديو كل هذا بالنقرة، والقياس يغيّر كل شيء، وهذا هو المغزى.'],
   ['#passage .attr', '— من دفتر الاستوديو الميداني، بلا توقيع، كالعادة'],
 
-  ['#contact .kicker', '<span class="no">§ 4</span> ارفع مدّك'],
+  ['#contact .kicker', '<span class="no">§ 5</span> ارفع مدّك'],
   ['#contact .cell:nth-child(1) .lbl', 'حملات جديدة'],
   ['#contact .cell:nth-child(2) .lbl', 'خط الاستوديو'],
   ['#contact .cell:nth-child(3) .lbl', 'زورونا'],
@@ -979,6 +987,7 @@ const AR_HTML = [
   ['footer > .shell > span', 'صمّمه وبناه <a href="#hero">استوديو نكست ليفل</a><br>بحر الواجهة يُرسم مباشرةً بتقنية WebGL'],
 ];
 const AR_PH = [
+  ['#lsearch', 'ابحث بالموقع أو العنوان'],
   ['.lform input[name=title]', 'مثال: منزل بأربع غرف على الواجهة البحرية مع مرسى خاص'],
   ['.lform input[name=city]', 'هاربورفيو'],
 ];
