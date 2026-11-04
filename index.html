@@ -416,51 +416,16 @@ html[lang=ar] .bandfig .cap{text-align:left}
             <input type="text" name="title" maxlength="140" placeholder="e.g. Waterfront four-bed with private mooring" required>
           </label>
           <label>
-            <span class="flabel">Street address <span class="req">*</span></span>
-            <input type="text" name="address" maxlength="200" placeholder="14 Brackworth Row" required>
-          </label>
-          <label>
-            <span class="flabel">City / area <span class="req">*</span></span>
+            <span class="flabel">Location <span class="req">*</span></span>
             <input type="text" name="city" maxlength="120" placeholder="Harborview" required>
           </label>
           <label>
             <span class="flabel">Asking price ($) <span class="req">*</span></span>
             <input type="number" name="price" min="1" step="1" placeholder="850000" required>
           </label>
-          <label>
-            <span class="flabel">Property type</span>
-            <select name="type">
-              <option value="house">House</option>
-              <option value="condo">Condo</option>
-              <option value="townhouse">Townhouse</option>
-              <option value="land">Land</option>
-              <option value="multi-family">Multi-family</option>
-              <option value="commercial">Commercial</option>
-            </select>
-          </label>
-          <label>
-            <span class="flabel">Beds</span>
-            <input type="number" name="beds" min="0" step="1" placeholder="4">
-          </label>
-          <label>
-            <span class="flabel">Baths</span>
-            <input type="number" name="baths" min="0" step="0.5" placeholder="2.5">
-          </label>
-          <label>
-            <span class="flabel">Floor area (sq ft)</span>
-            <input type="number" name="sqft" min="0" step="1" placeholder="2200">
-          </label>
-          <label>
-            <span class="flabel">Agent name <span class="req">*</span></span>
-            <input type="text" name="agent_name" maxlength="120" placeholder="Your name" required>
-          </label>
           <label class="full">
-            <span class="flabel">Agent email <span class="req">*</span></span>
+            <span class="flabel">Contact email <span class="req">*</span></span>
             <input type="email" name="agent_email" maxlength="200" placeholder="you@brokerage.com" required>
-          </label>
-          <label class="full">
-            <span class="flabel">Description</span>
-            <textarea name="description" maxlength="4000" placeholder="What the tide brought in — light, views, bones, story."></textarea>
           </label>
           <div class="full">
             <span class="flabel" style="display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.45rem">Photos</span>
@@ -1014,7 +979,7 @@ async function loadRecent(){
       const inner = document.createElement('div'); inner.className = 'in';
       const ttl = document.createElement('div'); ttl.className = 'ttl'; ttl.textContent = l.title;
       const loc = document.createElement('div'); loc.className = 'loc';
-      loc.textContent = (l.ref ? l.ref + ' · ' : '') + l.address + ', ' + l.city;
+      loc.textContent = (l.ref ? l.ref + ' · ' : '') + [l.address, l.city].filter(Boolean).join(', ');
       const prc = document.createElement('div'); prc.className = 'prc';
       prc.textContent = money.format(l.price) + (l.beds ? ' · ' + l.beds + T.bd : '') + (l.baths ? ' · ' + l.baths + T.ba : '');
       inner.append(ttl, loc, prc);
@@ -1044,22 +1009,9 @@ const AR_HTML = [
 
   ['#submit .kicker', '<span class="no">§ 1</span> قدّم عقارك'],
   ['.lform label:nth-of-type(1) .flabel', 'عنوان العقار <span class="req">*</span>'],
-  ['.lform label:nth-of-type(2) .flabel', 'عنوان الشارع <span class="req">*</span>'],
-  ['.lform label:nth-of-type(3) .flabel', 'المدينة / المنطقة <span class="req">*</span>'],
-  ['.lform label:nth-of-type(4) .flabel', 'السعر المطلوب ($) <span class="req">*</span>'],
-  ['.lform label:nth-of-type(5) .flabel', 'نوع العقار'],
-  ['.lform label:nth-of-type(6) .flabel', 'غرف النوم'],
-  ['.lform label:nth-of-type(7) .flabel', 'الحمّامات'],
-  ['.lform label:nth-of-type(8) .flabel', 'المساحة (قدم مربعة)'],
-  ['.lform label:nth-of-type(9) .flabel', 'اسم الوكيل <span class="req">*</span>'],
-  ['.lform label:nth-of-type(10) .flabel', 'البريد الإلكتروني للوكيل <span class="req">*</span>'],
-  ['.lform label:nth-of-type(11) .flabel', 'الوصف'],
-  ['.lform select[name=type] option[value=house]', 'منزل'],
-  ['.lform select[name=type] option[value=condo]', 'شقة (كوندو)'],
-  ['.lform select[name=type] option[value=townhouse]', 'تاون هاوس'],
-  ['.lform select[name=type] option[value=land]', 'أرض'],
-  ['.lform select[name=type] option[value="multi-family"]', 'متعدد الوحدات'],
-  ['.lform select[name=type] option[value=commercial]', 'تجاري'],
+  ['.lform label:nth-of-type(2) .flabel', 'الموقع <span class="req">*</span>'],
+  ['.lform label:nth-of-type(3) .flabel', 'السعر المطلوب ($) <span class="req">*</span>'],
+  ['.lform label:nth-of-type(4) .flabel', 'البريد الإلكتروني للتواصل <span class="req">*</span>'],
   ['.lform > div:nth-of-type(1) > span:first-child', 'الصور'],
   ['.dropzone .dz-main', 'أسقط الصور هنا أو انقر للتصفح'],
   ['.dropzone .sub', 'JPEG · PNG · WebP · حتى 12 صورة · 8 م.ب لكل صورة'],
@@ -1124,10 +1076,7 @@ const AR_HTML = [
 ];
 const AR_PH = [
   ['.lform input[name=title]', 'مثال: منزل بأربع غرف على الواجهة البحرية مع مرسى خاص'],
-  ['.lform input[name=address]', '14 صف براكوورث'],
   ['.lform input[name=city]', 'هاربورفيو'],
-  ['.lform input[name=agent_name]', 'اسمك'],
-  ['.lform textarea[name=description]', 'ما جاء به المد — الضوء، الإطلالات، البنية، الحكاية.'],
 ];
 
 const I18N_EN = new Map();

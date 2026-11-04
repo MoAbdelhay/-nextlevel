@@ -86,11 +86,9 @@ app.post('/api/listings', upload.array('photos', 12), (req, res) => {
 
   const errors = [];
   if (!title) errors.push('Property title is required.');
-  if (!address) errors.push('Street address is required.');
-  if (!city) errors.push('City / area is required.');
+  if (!city) errors.push('Location is required.');
   if (!Number.isFinite(price) || price <= 0) errors.push('Asking price must be a positive number.');
-  if (!agentName) errors.push('Agent name is required.');
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(agentEmail)) errors.push('A valid agent email is required.');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(agentEmail)) errors.push('A valid contact email is required.');
   if (errors.length) {
     for (const f of req.files || []) fs.unlink(f.path, () => {});
     return res.status(400).json({ ok: false, errors });
