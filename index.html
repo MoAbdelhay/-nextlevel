@@ -8,20 +8,20 @@
 <meta property="og:title" content="NEXTLEVEL — Real Estate Marketing">
 <meta property="og:description" content="Listing launches, media, brand and lead generation. One studio, one rising tide.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23131a18'/%3E%3Cpath d='M8 52V30h8v22zm12 0V18h10v34zm14 0V26h8v26zm12 0V36h8v16z' fill='%234a5c56'/%3E%3Crect x='22' y='22' width='3' height='3' fill='%23d9a44a'/%3E%3Crect x='27' y='30' width='3' height='3' fill='%23d9e0db'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a1628'/%3E%3Cpath d='M8 52V30h8v22zm12 0V18h10v34zm14 0V26h8v26zm12 0V36h8v16z' fill='%233a5578'/%3E%3Crect x='22' y='22' width='3' height='3' fill='%23d9a44a'/%3E%3Crect x='27' y='30' width='3' height='3' fill='%23dce6f2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#131a18;
-  --bg2:#161e1c;
-  --panel:#1a2321;
-  --ink:#d9e0db;
-  --dim:#93a09a;
-  --faint:#5f6c66;
-  --line:rgba(217,224,219,.13);
-  --sea:#2e3d39;
+  --bg:#0a1628;
+  --bg2:#0d1b30;
+  --panel:#10213a;
+  --ink:#dce6f2;
+  --dim:#8fa3bd;
+  --faint:#5b6e88;
+  --line:rgba(220,230,242,.13);
+  --sea:#16325a;
   --accent:#d9a44a;
   --serif:'Newsreader',Georgia,serif;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
@@ -37,20 +37,20 @@ body{
   text-rendering:optimizeLegibility;
   overflow-x:hidden;
 }
-::selection{background:#4a5c56;color:#f0f4f1}
+::selection{background:#3a5578;color:#f0f5fb}
 a{color:inherit}
 :focus-visible{outline:1.5px solid var(--dim);outline-offset:3px}
 img,video,svg.band{max-width:100%;display:block}
 ::-webkit-scrollbar{width:10px;background:var(--bg)}
-::-webkit-scrollbar-thumb{background:#33403b;border:2px solid var(--bg);border-radius:5px}
-html{scrollbar-color:#33403b var(--bg);scrollbar-width:thin}
+::-webkit-scrollbar-thumb{background:#24364f;border:2px solid var(--bg);border-radius:5px}
+html{scrollbar-color:#24364f var(--bg);scrollbar-width:thin}
 
 /* ---------- header ---------- */
 header{
   position:fixed;inset:0 0 auto 0;z-index:20;
   display:flex;justify-content:space-between;align-items:baseline;
   padding:1.1rem 1.4rem 2.2rem;
-  background:linear-gradient(rgba(19,26,24,.66),rgba(19,26,24,0));
+  background:linear-gradient(rgba(10,22,40,.66),rgba(10,22,40,0));
   transition:opacity .6s cubic-bezier(.22,.61,.36,1);
   font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--dim);
@@ -68,12 +68,12 @@ header .est{display:none}
 #hero{
   position:relative;height:100vh;height:100svh;min-height:540px;
   overflow:hidden;
-  background:linear-gradient(#5f6d68 0%,#8d9a94 46%,#33413c 60%,#1c2624 100%);
+  background:linear-gradient(#4a6488 0%,#7d97b8 46%,#1b3a66 60%,#0b1a33 100%);
 }
 #sea{position:absolute;inset:0;width:100%;height:100%;display:block}
 #hero .cloudveil{
   position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(rgba(19,26,24,.55) 0%,rgba(19,26,24,0) 34%,rgba(19,26,24,0) 72%,rgba(19,26,24,.72) 100%);
+  background:linear-gradient(rgba(10,22,40,.55) 0%,rgba(10,22,40,0) 34%,rgba(10,22,40,0) 72%,rgba(10,22,40,.72) 100%);
 }
 #hero .grain{
   position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
@@ -83,7 +83,7 @@ header .est{display:none}
 #hero .fallback{display:none}
 #hero.no-webgl .fallback{
   display:block;position:absolute;inset:0;
-  background:linear-gradient(#6a776f 0%,#8d9a94 44%,#3a4a44 58%,#1c2624 100%);
+  background:linear-gradient(#56709a 0%,#7d97b8 44%,#1f4170 58%,#0b1a33 100%);
 }
 .hero-title{
   position:absolute;top:18%;left:50%;transform:translateX(-50%);
@@ -92,29 +92,29 @@ header .est{display:none}
 .hero-title h1{
   font-weight:300;letter-spacing:.42em;text-indent:.42em;
   font-size:clamp(1.7rem,5.6vw,4.1rem);
-  color:#eef2ef;
-  text-shadow:0 1px 24px rgba(19,26,24,.45);
+  color:#eef3fa;
+  text-shadow:0 1px 24px rgba(10,22,40,.45);
 }
 .hero-title p{
   margin-top:.9rem;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;
-  color:rgba(238,242,239,.75);
+  color:rgba(238,243,250,.75);
 }
 .hero-cta{
   display:inline-block;margin-top:2.2rem;
   font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;text-decoration:none;
   color:var(--accent);border:1px solid var(--accent);
-  background:rgba(19,26,24,.55);backdrop-filter:blur(4px);
+  background:rgba(10,22,40,.55);backdrop-filter:blur(4px);
   padding:.85rem 2.2rem;
   transition:background .3s,color .3s;
 }
-.hero-cta:hover{background:var(--accent);color:#131a18}
+.hero-cta:hover{background:var(--accent);color:#0a1628}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center;margin-top:2.2rem}
 .hero-ctas .hero-cta{margin-top:0}
-.hero-cta.alt{color:var(--ink);border-color:rgba(217,224,219,.55)}
-.hero-cta.alt:hover{background:var(--ink);color:#131a18}
+.hero-cta.alt{color:var(--ink);border-color:rgba(220,230,242,.55)}
+.hero-cta.alt:hover{background:var(--ink);color:#0a1628}
 .gauge-panel{
   position:absolute;z-index:6;left:1.4rem;bottom:1.4rem;
-  background:rgba(19,26,24,.72);backdrop-filter:blur(6px);
+  background:rgba(10,22,40,.72);backdrop-filter:blur(6px);
   border:1px solid var(--line);
   padding:1rem 1.2rem;min-width:270px;
   font-size:.8rem;
@@ -122,14 +122,14 @@ header .est{display:none}
 .gauge-panel .lbl{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
 .gauge-panel .height{
   font-size:2rem;font-weight:500;letter-spacing:.02em;line-height:1.2;
-  font-variant-numeric:tabular-nums;color:#eef2ef;
+  font-variant-numeric:tabular-nums;color:#eef3fa;
 }
 .gauge-panel .meta{color:var(--dim);font-variant-numeric:tabular-nums;font-size:.72rem;letter-spacing:.06em}
 .gauge-panel svg{display:block;margin-top:.7rem;width:100%;height:44px}
 .scrub{
   position:absolute;z-index:6;right:1.4rem;bottom:1.4rem;
   width:min(320px,60vw);
-  background:rgba(19,26,24,.72);backdrop-filter:blur(6px);
+  background:rgba(10,22,40,.72);backdrop-filter:blur(6px);
   border:1px solid var(--line);
   padding:.9rem 1.2rem 1rem;
 }
@@ -142,13 +142,13 @@ input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--fai
 input[type=range]::-webkit-slider-thumb{
   -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
   background:var(--accent);margin-top:-6px;border:none;
-  box-shadow:0 0 0 3px rgba(19,26,24,.8);
+  box-shadow:0 0 0 3px rgba(10,22,40,.8);
 }
 input[type=range]::-moz-range-track{height:2px;background:var(--faint)}
 input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:none}
 .scrolldown{
   position:absolute;left:50%;bottom:1.6rem;transform:translateX(-50%);z-index:5;
-  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(238,242,239,.5);
+  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(238,243,250,.5);
   text-decoration:none;
 }
 @media(max-width:720px){
@@ -190,7 +190,7 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
 .seg span{display:block;padding:.65rem 1.6rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);transition:background .25s,color .25s}
 .seg label + label span{border-inline-start:1px solid var(--line)}
 .seg label:hover span{color:var(--ink)}
-.seg input:checked + span{background:var(--accent);color:#131a18}
+.seg input:checked + span{background:var(--accent);color:#0a1628}
 .seg input:focus-visible + span{outline:1.5px solid var(--dim);outline-offset:-3px}
 .lform input,.lform select,.lform textarea{
   width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);
@@ -200,7 +200,7 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
 .lform input:focus,.lform select:focus,.lform textarea:focus{outline:none;border-color:var(--dim)}
 .lform textarea{resize:vertical;min-height:7.5rem}
 .lform select{appearance:none;-webkit-appearance:none;cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2393a09a'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238fa3bd'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right .8rem center;
 }
 .dropzone{
@@ -209,14 +209,14 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
   padding:1.6rem 1rem;text-align:center;color:var(--dim);font-size:.72rem;
   letter-spacing:.12em;text-transform:uppercase;transition:border-color .3s,background .3s;
 }
-.dropzone:hover,.dropzone.drag{border-color:var(--accent);background:#182220}
+.dropzone:hover,.dropzone.drag{border-color:var(--accent);background:#0f1f36}
 .dropzone input{display:none}
 .dropzone .sub{display:block;margin-top:.4rem;font-size:.6rem;color:var(--faint);text-transform:none;letter-spacing:.06em}
 .previews{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.6rem;margin-top:.8rem}
 .previews figure{position:relative;border:1px solid var(--line)}
 .previews img{width:100%;height:74px;object-fit:cover;display:block;filter:saturate(.85)}
 .previews button{
-  position:absolute;top:2px;right:2px;background:rgba(19,26,24,.85);border:1px solid var(--line);
+  position:absolute;top:2px;right:2px;background:rgba(10,22,40,.85);border:1px solid var(--line);
   color:var(--ink);font-family:var(--mono);font-size:.65rem;line-height:1;
   width:18px;height:18px;cursor:pointer;
 }
@@ -226,7 +226,7 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
   background:none;border:1px solid var(--accent);color:var(--accent);
   padding:.9rem 2.4rem;cursor:pointer;transition:background .3s,color .3s;
 }
-.sendbtn:hover{background:var(--accent);color:#131a18}
+.sendbtn:hover{background:var(--accent);color:#0a1628}
 .sendbtn[disabled]{opacity:.45;cursor:wait}
 .formstatus{margin-top:1.3rem;font-size:.78rem;letter-spacing:.05em;display:none;padding:.9rem 1.1rem;border:1px solid var(--line)}
 .formstatus.ok{display:block;border-color:var(--accent);color:var(--ink)}
@@ -254,7 +254,7 @@ footer .cols{display:flex;flex-wrap:wrap;gap:1rem 3rem}
 .langtoggle{
   position:fixed;top:1.05rem;right:1.4rem;z-index:30;
   font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
-  background:rgba(19,26,24,.6);backdrop-filter:blur(4px);
+  background:rgba(10,22,40,.6);backdrop-filter:blur(4px);
   border:1px solid var(--line);color:var(--ink);
   padding:.35rem .85rem;cursor:pointer;
   transition:border-color .3s,color .3s;
@@ -289,7 +289,7 @@ html[lang=ar] input[type=range]{direction:ltr}
 <!-- ============ HERO ============ -->
 <div id="hero">
   <canvas id="sea" aria-label="Animated ocean surface rising and falling with the market tide"></canvas>
-  <div class="fallback" role="img" aria-label="Overcast sea under a grey-green sky"></div>
+  <div class="fallback" role="img" aria-label="Deep blue sea under an overcast sky"></div>
   <div class="cloudveil"></div>
   <div class="grain"></div>
 
@@ -307,8 +307,8 @@ html[lang=ar] input[type=range]{direction:ltr}
     <div class="height"><span id="ht">——.—</span> <abbr title="NextLevel demand index" style="text-decoration:none">pts</abbr></div>
     <div class="meta"><span id="trend">—</span> · <span id="simclock">——:——</span> sim · blended metro index</div>
     <svg id="curve" viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true">
-      <path id="curvepath" fill="none" stroke="rgba(217,224,219,.35)" stroke-width="1.2" d=""/>
-      <line id="curvenow" x1="0" y1="0" x2="0" y2="44" stroke="rgba(217,224,219,.8)" stroke-width="1"/>
+      <path id="curvepath" fill="none" stroke="rgba(220,230,242,.35)" stroke-width="1.2" d=""/>
+      <line id="curvenow" x1="0" y1="0" x2="0" y2="44" stroke="rgba(220,230,242,.8)" stroke-width="1"/>
     </svg>
   </div>
 
@@ -671,7 +671,7 @@ if (THREE) try {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 
-  const FOGCOL = new THREE.Color(0x93a099);
+  const FOGCOL = new THREE.Color(0x7f99bb);
   const scene = new THREE.Scene();
   scene.fog = new THREE.Fog(FOGCOL, 22, 150);
   renderer.setClearColor(FOGCOL, 1);
@@ -687,8 +687,8 @@ if (THREE) try {
   const uniforms = {
     uTime:  { value: 0 },
     uTide:  { value: 0 },              /* metres relative to mean level */
-    uDeep:  { value: new THREE.Color(0x27362f) },
-    uShal:  { value: new THREE.Color(0x41544b) },
+    uDeep:  { value: new THREE.Color(0x0b2a55) },
+    uShal:  { value: new THREE.Color(0x1d4f86) },
     uSky:   { value: FOGCOL.clone() },
     uFogNear: { value: 22 }, uFogFar: { value: 150 },
   };
@@ -761,7 +761,7 @@ if (THREE) try {
         col += vec3(0.05) * sheen;
 
         /* thin foam threads at the sharpest crests */
-        col = mix(col, vec3(0.80, 0.84, 0.81), smoothstep(0.40, 0.60, vCrest + r1 * 0.03) * 0.22);
+        col = mix(col, vec3(0.82, 0.88, 0.95), smoothstep(0.40, 0.60, vCrest + r1 * 0.03) * 0.22);
 
         /* distance fog to a milky horizon */
         float fog = smoothstep(uFogNear, uFogFar, length(cameraPosition - vPos));

@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Listings — NEXTLEVEL</title>
 <meta name="description" content="Browse properties listed with NextLevel.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23131a18'/%3E%3Cpath d='M8 52V30h8v22zm12 0V18h10v34zm14 0V26h8v26zm12 0V36h8v16z' fill='%234a5c56'/%3E%3Crect x='22' y='22' width='3' height='3' fill='%23d9a44a'/%3E%3Crect x='27' y='30' width='3' height='3' fill='%23d9e0db'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a1628'/%3E%3Cpath d='M8 52V30h8v22zm12 0V18h10v34zm14 0V26h8v26zm12 0V36h8v16z' fill='%233a5578'/%3E%3Crect x='22' y='22' width='3' height='3' fill='%23d9a44a'/%3E%3Crect x='27' y='30' width='3' height='3' fill='%23dce6f2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#131a18; --bg2:#161e1c; --ink:#d9e0db; --dim:#93a09a; --faint:#5f6c66;
-  --line:rgba(217,224,219,.13); --accent:#d9a44a;
+  --bg:#0a1628; --bg2:#0d1b30; --ink:#dce6f2; --dim:#8fa3bd; --faint:#5b6e88;
+  --line:rgba(220,230,242,.13); --accent:#d9a44a;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -46,12 +46,12 @@ h1{font-size:1.5rem;font-weight:500;letter-spacing:.14em;text-transform:uppercas
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem}
 .card{background:var(--bg2);border:1px solid var(--line);padding:0 0 1.1rem;display:flex;flex-direction:column}
-.thumb{position:relative;height:170px;background:#1e2825;display:flex;align-items:center;justify-content:center;
+.thumb{position:relative;height:170px;background:#13243d;display:flex;align-items:center;justify-content:center;
   color:var(--faint);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;overflow:hidden}
 .thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
-.badge{position:absolute;top:.5rem;left:.5rem;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:.22rem .5rem;background:var(--accent);color:#131a18;font-weight:600}
+.badge{position:absolute;top:.5rem;left:.5rem;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:.22rem .5rem;background:var(--accent);color:#0a1628;font-weight:600}
 .badge.rent{background:var(--ink)}
-.pcount{position:absolute;bottom:.5rem;right:.5rem;background:rgba(19,26,24,.85);color:var(--ink);font-size:.58rem;letter-spacing:.12em;padding:.2rem .45rem}
+.pcount{position:absolute;bottom:.5rem;right:.5rem;background:rgba(10,22,40,.85);color:var(--ink);font-size:.58rem;letter-spacing:.12em;padding:.2rem .45rem}
 .in{padding:.9rem 1.1rem 0}
 .ttl{font-size:.82rem;letter-spacing:.04em;font-weight:500}
 .loc{font-size:.66rem;color:var(--faint);letter-spacing:.08em;margin-top:.2rem}
