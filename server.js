@@ -41,6 +41,10 @@ db.exec(`
     original   TEXT
   );
 `);
+/* older databases: add the sale/rent column if it is missing */
+if (!db.prepare('PRAGMA table_info(listings)').all().some((c) => c.name === 'purpose')) {
+  db.exec("ALTER TABLE listings ADD COLUMN purpose TEXT NOT NULL DEFAULT 'sale'");
+}
 
 /* ---------- photo uploads ---------- */
 const EXT_OK = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif']);
@@ -66,8 +70,8 @@ app.use(express.static(ROOT, { extensions: ['html'] }));
 app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '7d', immutable: true }));
 
 const insListing = db.prepare(`
-  INSERT INTO listings (title, address, city, price, type, beds, baths, sqft, description, agent_name, agent_email)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+  INSERT INTO listings (title, address, city, price, type, beds, baths, sqft, description, agent_name, agent_email, purpose)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
 const setRef = db.prepare('UPDATE listings SET ref = ? WHERE id = ?');
 const insPhoto = db.prepare('INSERT INTO photos (listing_id, filename, original) VALUES (?, ?, ?)');
 const recentListings = db.prepare('SELECT * FROM listings ORDER BY id DESC LIMIT 60');
@@ -83,10 +87,12 @@ app.post('/api/listings', upload.array('photos', 12), (req, res) => {
   const agentName = clean(b.agent_name, 120);
   const agentEmail = clean(b.agent_email, 200);
   const price = Math.round(Number(b.price));
+  const purpose = clean(b.purpose, 10);
 
   const errors = [];
   if (!title) errors.push('Property title is required.');
   if (!city) errors.push('Location is required.');
+  if (purpose !== 'sale' && purpose !== 'rent') errors.push('Choose Sale or Rent.');
   if (!Number.isFinite(price) || price <= 0) errors.push('Asking price must be a positive number.');
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(agentEmail)) errors.push('A valid contact email is required.');
   if (errors.length) {
@@ -101,7 +107,7 @@ app.post('/api/listings', upload.array('photos', 12), (req, res) => {
   const info = insListing.run(
     title, address, city, price, type,
     num(b.beds), num(b.baths), num(b.sqft),
-    clean(b.description, 4000), agentName, agentEmail
+    clean(b.description, 4000), agentName, agentEmail, purpose
   );
   const id = Number(info.lastInsertRowid);
   const ref = 'LST 2026/' + String(130 + id).padStart(3, '0');

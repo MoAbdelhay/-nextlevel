@@ -49,6 +49,8 @@ h1{font-size:1.5rem;font-weight:500;letter-spacing:.14em;text-transform:uppercas
 .thumb{position:relative;height:170px;background:#1e2825;display:flex;align-items:center;justify-content:center;
   color:var(--faint);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;overflow:hidden}
 .thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
+.badge{position:absolute;top:.5rem;left:.5rem;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:.22rem .5rem;background:var(--accent);color:#131a18;font-weight:600}
+.badge.rent{background:var(--ink)}
 .pcount{position:absolute;bottom:.5rem;right:.5rem;background:rgba(19,26,24,.85);color:var(--ink);font-size:.58rem;letter-spacing:.12em;padding:.2rem .45rem}
 .in{padding:.9rem 1.1rem 0}
 .ttl{font-size:.82rem;letter-spacing:.04em;font-weight:500}
@@ -65,6 +67,7 @@ footer a:hover{color:var(--ink)}
 html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
 html[lang=ar] .kicker,html[lang=ar] h1,html[lang=ar] .lcount,html[lang=ar] .back,html[lang=ar] .enq{letter-spacing:0}
 html[lang=ar] .pcount{right:auto;left:.5rem}
+html[lang=ar] .badge{left:auto;right:.5rem;letter-spacing:0}
 html[lang=ar] .lbar input,html[lang=ar] .lbar select,html[lang=ar] .langtoggle{font-family:'IBM Plex Sans Arabic',var(--mono)}
 </style>
 </head>
@@ -86,6 +89,11 @@ html[lang=ar] .lbar input,html[lang=ar] .lbar select,html[lang=ar] .langtoggle{f
 
     <div class="lbar">
       <input type="search" id="lsearch" aria-label="Search listings">
+      <select id="lpurpose" aria-label="Sale or rent">
+        <option value="all">Sale &amp; rent</option>
+        <option value="sale">For sale</option>
+        <option value="rent">For rent</option>
+      </select>
       <select id="lsort" aria-label="Sort listings">
         <option value="new">Newest first</option>
         <option value="low">Price: low to high</option>
@@ -107,7 +115,7 @@ const TXT = {
   en: {
     title:'Listings — NEXTLEVEL', back:'← Home', kicker:'Listings', h1:'Browse listings',
     lead:'Properties submitted to the studio. Have one to add? <a href="./#submit">Submit a listing →</a>',
-    search:'Search by location or title', sort:['Newest first','Price: low to high','Price: high to low'],
+    search:'Search by location or title', purposeOpts:['Sale & rent','For sale','For rent'], sale:'For sale', rent:'For rent', perMonth:' / month', sort:['Newest first','Price: low to high','Price: high to low'],
     count: n => n + (n === 1 ? ' listing' : ' listings'),
     photos: n => n + ' photos', noPhoto:'No photo', enquire:'Enquire →',
     empty:'No listings yet — be the first to submit one.', noMatch:'No listings match your search.',
@@ -117,7 +125,7 @@ const TXT = {
   ar: {
     title:'العقارات — نكست ليفل', back:'الرئيسية →', kicker:'العقارات', h1:'تصفّح العقارات',
     lead:'العقارات المقدَّمة إلى الاستوديو. لديك عقار؟ <a href="./#submit">قدّم عقارك ←</a>',
-    search:'ابحث بالموقع أو العنوان', sort:['الأحدث أولًا','السعر: من الأقل','السعر: من الأعلى'],
+    search:'ابحث بالموقع أو العنوان', purposeOpts:['بيع وإيجار','للبيع','للإيجار'], sale:'للبيع', rent:'للإيجار', perMonth:' / شهريًا', sort:['الأحدث أولًا','السعر: من الأقل','السعر: من الأعلى'],
     count: n => n + ' عقار',
     photos: n => n + ' صور', noPhoto:'بلا صورة', enquire:'استفسر ←',
     empty:'لا توجد عقارات بعد — كن أول من يضيف عقارًا.', noMatch:'لا توجد عقارات مطابقة لبحثك.',
@@ -132,6 +140,7 @@ const grid = document.getElementById('grid');
 const empty = document.getElementById('empty');
 const lsearch = document.getElementById('lsearch');
 const lsort = document.getElementById('lsort');
+const lpurpose = document.getElementById('lpurpose');
 const lcount = document.getElementById('lcount');
 const money = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:0 });
 let ALL = null, FAILED = false;
@@ -145,7 +154,9 @@ function render(){
   if (!ALL) return showEmpty(T.loading);
   if (!ALL.length) { lcount.textContent = ''; return showEmpty(T.empty); }
   const q = lsearch.value.trim().toLowerCase();
-  let list = ALL.filter(l => !q || [l.title, l.city, l.address].join(' ').toLowerCase().includes(q));
+  const want = lpurpose.value;
+  let list = ALL.filter(l => (want === 'all' || (l.purpose || 'sale') === want) &&
+    (!q || [l.title, l.city, l.address].join(' ').toLowerCase().includes(q)));
   if (lsort.value === 'low') list = [...list].sort((a, b) => a.price - b.price);
   else if (lsort.value === 'high') list = [...list].sort((a, b) => b.price - a.price);
   lcount.textContent = T.count(list.length);
@@ -162,11 +173,14 @@ function render(){
         thumb.append(n);
       }
     } else thumb.textContent = T.noPhoto;
+    const purpose = l.purpose === 'rent' ? 'rent' : 'sale';
+    const badge = document.createElement('span'); badge.className = 'badge ' + purpose; badge.textContent = T[purpose];
+    thumb.append(badge);
     const inner = document.createElement('div'); inner.className = 'in';
     const ttl = document.createElement('div'); ttl.className = 'ttl'; ttl.textContent = l.title;
     const loc = document.createElement('div'); loc.className = 'loc';
     loc.textContent = [l.address, l.city].filter(Boolean).join(', ');
-    const prc = document.createElement('div'); prc.className = 'prc'; prc.textContent = money.format(l.price);
+    const prc = document.createElement('div'); prc.className = 'prc'; prc.textContent = money.format(l.price) + (purpose === 'rent' ? T.perMonth : '');
     inner.append(ttl, loc, prc);
     if (l.agent_email){
       const a = document.createElement('a'); a.className = 'enq';
@@ -190,14 +204,18 @@ function applyLang(lang){
   document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = T[el.dataset.t]; });
   lsearch.placeholder = T.search;
   [...lsort.options].forEach((o, i) => { o.textContent = T.sort[i]; });
+  [...lpurpose.options].forEach((o, i) => { o.textContent = T.purposeOpts[i]; });
   document.getElementById('langtoggle').textContent = lang === 'ar' ? 'English' : 'عربي';
   render();
 }
 
 lsearch.addEventListener('input', render);
 lsort.addEventListener('change', render);
+lpurpose.addEventListener('change', render);
 document.getElementById('langtoggle').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
 applyLang(LANG);
+const forParam = new URLSearchParams(location.search).get('for');
+if (forParam === 'sale' || forParam === 'rent') { lpurpose.value = forParam; render(); }
 
 fetch('api/listings')
   .then(r => { if (!r.ok) throw new Error(); return r.json(); })

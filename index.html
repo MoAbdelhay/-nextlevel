@@ -182,7 +182,16 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
   display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
   color:var(--faint);margin-bottom:.45rem;
 }
-.lform label .req{color:var(--accent)}
+.lform label .req,.purpose .req{color:var(--accent)}
+.purpose .flabel{display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.45rem}
+.seg{display:inline-flex;border:1px solid var(--line)}
+.seg label{cursor:pointer;position:relative}
+.lform .seg input{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;padding:0;border:0;pointer-events:none}
+.seg span{display:block;padding:.65rem 1.6rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);transition:background .25s,color .25s}
+.seg label + label span{border-inline-start:1px solid var(--line)}
+.seg label:hover span{color:var(--ink)}
+.seg input:checked + span{background:var(--accent);color:#131a18}
+.seg input:focus-visible + span{outline:1.5px solid var(--dim);outline-offset:-3px}
 .lform input,.lform select,.lform textarea{
   width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);
   font-family:var(--mono);font-size:.85rem;padding:.65rem .8rem;border-radius:0;
@@ -320,6 +329,13 @@ html[lang=ar] input[type=range]{direction:ltr}
     <div class="panelbox reveal">
       <form id="listingform" novalidate>
         <div class="lform">
+          <div class="full purpose" role="radiogroup" aria-label="Listing for">
+            <span class="flabel">Listing for <span class="req">*</span></span>
+            <div class="seg">
+              <label><input type="radio" name="purpose" value="sale" checked><span>For sale</span></label>
+              <label><input type="radio" name="purpose" value="rent"><span>For rent</span></label>
+            </div>
+          </div>
           <label class="full">
             <span class="flabel">Property title <span class="req">*</span></span>
             <input type="text" name="title" maxlength="140" placeholder="e.g. Waterfront four-bed with private mooring" required>
@@ -329,7 +345,7 @@ html[lang=ar] input[type=range]{direction:ltr}
             <input type="text" name="city" maxlength="120" placeholder="Harborview" required>
           </label>
           <label>
-            <span class="flabel">Asking price ($) <span class="req">*</span></span>
+            <span class="flabel">Price ($) <span class="req">*</span></span>
             <input type="number" name="price" min="1" step="1" placeholder="850000" required>
           </label>
           <label class="full">
@@ -591,9 +607,12 @@ const AR_HTML = [
   ['#submit .kicker', '<span class="no">§ 1</span> قدّم عقارك'],
   ['.lform label:nth-of-type(1) .flabel', 'عنوان العقار <span class="req">*</span>'],
   ['.lform label:nth-of-type(2) .flabel', 'الموقع <span class="req">*</span>'],
-  ['.lform label:nth-of-type(3) .flabel', 'السعر المطلوب ($) <span class="req">*</span>'],
+  ['.lform label:nth-of-type(3) .flabel', 'السعر ($) <span class="req">*</span>'],
   ['.lform label:nth-of-type(4) .flabel', 'البريد الإلكتروني للتواصل <span class="req">*</span>'],
-  ['.lform > div:nth-of-type(1) > span:first-child', 'الصور'],
+  ['.purpose .flabel', 'نوع العرض <span class="req">*</span>'],
+  ['.seg label:nth-child(1) span', 'للبيع'],
+  ['.seg label:nth-child(2) span', 'للإيجار'],
+  ['.lform > div:nth-of-type(2) > span:first-child', 'الصور'],
   ['.dropzone .dz-main', 'أسقط الصور هنا أو انقر للتصفح'],
   ['.dropzone .sub', 'JPEG · PNG · WebP · حتى 12 صورة · 8 م.ب لكل صورة'],
   ['#sendbtn', 'قيّد العقار ←'],
