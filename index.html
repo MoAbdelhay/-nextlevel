@@ -169,18 +169,6 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
 .reveal{opacity:0;transform:translateY(14px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
 .reveal.in{opacity:1;transform:none}
 
-/* ---------- services ---------- */
-.stations{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-.station{background:var(--bg2);padding:1.6rem 1.5rem 1.8rem;transition:background .5s cubic-bezier(.22,.61,.36,1)}
-.station:hover{background:#1e2825}
-.station tr:hover td{color:var(--ink)}
-.station h3{font-size:.95rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
-.station .coords{font-size:.66rem;color:var(--faint);letter-spacing:.08em;margin:.2rem 0 1.3rem}
-.station table{width:100%;border-collapse:collapse;font-size:.78rem;font-variant-numeric:tabular-nums}
-.station td{padding:.42rem 0;border-top:1px solid var(--line);color:var(--dim)}
-.station td.h{text-align:right;color:var(--ink);white-space:nowrap;padding-left:.8rem}
-.station .z0{margin-top:1.2rem;font-size:.64rem;color:var(--accent);letter-spacing:.06em}
-.tables-note{margin-top:1.4rem;font-size:.7rem;color:var(--faint);letter-spacing:.04em;max-width:52rem}
 
 /* ---------- skyline bands ---------- */
 .bandfig{padding:0;position:relative}
@@ -352,7 +340,6 @@ html[lang=ar] button,html[lang=ar] input,html[lang=ar] select,html[lang=ar] text
 }
 html[lang=ar] #passage p{font-family:'Noto Naskh Arabic',var(--serif);font-style:normal}
 html[lang=ar] .lform select{background-position:left .8rem center;padding-left:2rem}
-html[lang=ar] .station td.h{text-align:left}
 html[lang=ar] input[type=range]{direction:ltr}
 html[lang=ar] .bandfig .cap{text-align:left}
 
@@ -400,7 +387,7 @@ html[lang=ar] .bandfig .cap{text-align:left}
     <input type="range" id="tidescrub" min="-12.4" max="12.4" step="0.05" value="0" aria-label="Advance the simulated market, plus or minus twelve months">
   </div>
 
-  <a class="scrolldown" href="#services">Our services ↓</a>
+  <a class="scrolldown" href="#submit">Submit a listing ↓</a>
 </div>
 
 <main>
@@ -451,72 +438,6 @@ html[lang=ar] .bandfig .cap{text-align:left}
   </div>
 </section>
 
-<!-- ============ SERVICES ============ -->
-<section id="services">
-  <div class="shell">
-    <div class="kicker reveal"><span class="no">§ 2</span> Services — four disciplines, one studio</div>
-    <div class="stations reveal">
-
-      <div class="station">
-        <h3>Listing Launch</h3>
-        <div class="coords">Every property, treated like a flagship</div>
-        <table><tbody>
-          <tr><td>HDR photography</td><td class="h">40+ frames</td></tr>
-          <tr><td>Cinematic walkthrough</td><td class="h">60–90 s</td></tr>
-          <tr><td>Aerial &amp; drone set</td><td class="h">FAA-licensed</td></tr>
-          <tr><td>3D virtual tour</td><td class="h">full floorplan</td></tr>
-          <tr><td>Portal syndication</td><td class="h">40+ sites</td></tr>
-          <tr><td>Launch-day email blast</td><td class="h">agent network</td></tr>
-        </tbody></table>
-        <div class="z0">From $1,450 per listing · 5-day turnaround</div>
-      </div>
-
-      <div class="station">
-        <h3>Social &amp; Content</h3>
-        <div class="coords">Feeds that sell before the showing</div>
-        <table><tbody>
-          <tr><td>Reels &amp; short-form video</td><td class="h">8 / month</td></tr>
-          <tr><td>Content calendar</td><td class="h">30 days ahead</td></tr>
-          <tr><td>Paid social campaigns</td><td class="h">Meta + Google</td></tr>
-          <tr><td>Neighbourhood spotlights</td><td class="h">monthly</td></tr>
-          <tr><td>Community management</td><td class="h">7 days / wk</td></tr>
-          <tr><td>Performance report</td><td class="h">monthly</td></tr>
-        </tbody></table>
-        <div class="z0">From $950 / month · cancel any tide</div>
-      </div>
-
-      <div class="station">
-        <h3>Brand &amp; Design</h3>
-        <div class="coords">An identity buyers remember</div>
-        <table><tbody>
-          <tr><td>Agent brand identity</td><td class="h">logo + system</td></tr>
-          <tr><td>Listing presentation kit</td><td class="h">print + digital</td></tr>
-          <tr><td>Yard signs &amp; signage</td><td class="h">production-ready</td></tr>
-          <tr><td>Website &amp; IDX build</td><td class="h">custom</td></tr>
-          <tr><td>Template library</td><td class="h">50+ pieces</td></tr>
-          <tr><td>Brand guidelines</td><td class="h">documented</td></tr>
-        </tbody></table>
-        <div class="z0">From $2,800 flat · yours forever</div>
-      </div>
-
-      <div class="station">
-        <h3>Lead Engine</h3>
-        <div class="coords">A pipeline that fills itself</div>
-        <table><tbody>
-          <tr><td>Landing pages</td><td class="h">per campaign</td></tr>
-          <tr><td>Search ads (PPC)</td><td class="h">managed</td></tr>
-          <tr><td>CRM setup &amp; routing</td><td class="h">included</td></tr>
-          <tr><td>Nurture sequences</td><td class="h">automated</td></tr>
-          <tr><td>Open-house capture</td><td class="h">QR + forms</td></tr>
-          <tr><td>Attribution dashboard</td><td class="h">live</td></tr>
-        </tbody></table>
-        <div class="z0">From $1,200 / month + ad spend</div>
-      </div>
-
-    </div>
-    <p class="tables-note reveal">Rates in local currency, before media spend. Campaigns are the sum of many small constituents and take no account of the weather; a steady rate hike can hold a market back by half a season and has, historically, done worse. Timelines are studio standard.</p>
-  </div>
-</section>
 
 <!-- ============ SKYLINE BAND ============ -->
 <figure id="skyline" class="bandfig reveal">
@@ -577,7 +498,7 @@ html[lang=ar] .bandfig .cap{text-align:left}
 <!-- ============ MARKET CYCLE ============ -->
 <section id="cycle">
   <div class="shell">
-    <div class="kicker reveal"><span class="no">§ 3</span> The market-raising body</div>
+    <div class="kicker reveal"><span class="no">§ 2</span> The market-raising body</div>
     <div class="wrap reveal">
       <button id="moonbtn" type="button" aria-label="Market cycle dial. Activate to advance the cycle.">
         <svg id="moonsvg" width="150" height="150" viewBox="-75 -75 150 150" role="img" aria-hidden="true">
@@ -601,7 +522,7 @@ html[lang=ar] .bandfig .cap{text-align:left}
 <!-- ============ NOTICES ============ -->
 <section id="notices">
   <div class="shell">
-    <div class="kicker reveal"><span class="no">§ 4</span> Notices to agents</div>
+    <div class="kicker reveal"><span class="no">§ 3</span> Notices to agents</div>
     <ol class="reveal">
       <li>
         <div class="ref">N.t.A. 2026/131<span class="tag">launch</span></div>
@@ -690,7 +611,7 @@ html[lang=ar] .bandfig .cap{text-align:left}
 <!-- ============ CONTACT ============ -->
 <section id="contact">
   <div class="shell">
-    <div class="kicker reveal"><span class="no">§ 5</span> Raise your tide</div>
+    <div class="kicker reveal"><span class="no">§ 4</span> Raise your tide</div>
     <div class="grid reveal">
       <div class="cell">
         <div class="lbl">New campaigns</div>
@@ -1006,7 +927,7 @@ const AR_HTML = [
   ['.gauge-panel .height', '<span id="ht">——.—</span> <abbr title="مؤشر الطلب — نكست ليفل" style="text-decoration:none">نقطة</abbr>'],
   ['.gauge-panel .meta', '<span id="trend">—</span> · <span id="simclock">——:——</span> محاكاة · مؤشر المدينة المدمج'],
   ['.scrub label', 'حرّك السوق <output id="scrubout" for="tidescrub">+0.0 شهر</output>'],
-  ['.scrolldown', 'خدماتنا ↓'],
+  ['.scrolldown', 'قدّم عقارك ↓'],
 
   ['#submit .kicker', '<span class="no">§ 1</span> قدّم عقارك'],
   ['.lform label:nth-of-type(1) .flabel', 'عنوان العقار <span class="req">*</span>'],
@@ -1019,32 +940,14 @@ const AR_HTML = [
   ['#sendbtn', 'قيّد العقار ←'],
   ['.recent-h', 'أحدث القيود · من قاعدة بيانات الاستوديو'],
 
-  ['#services .kicker', '<span class="no">§ 2</span> الخدمات — أربعة تخصصات، استوديو واحد'],
-  ['#services .station:nth-child(1) h3', 'إطلاق القوائم'],
-  ['#services .station:nth-child(1) .coords', 'كل عقار يُعامَل كسفينة رائدة'],
-  ['#services .station:nth-child(1) tbody', '<tr><td>تصوير HDR</td><td class="h">+40 لقطة</td></tr><tr><td>جولة سينمائية</td><td class="h">60–90 ث</td></tr><tr><td>تصوير جوي بالدرون</td><td class="h">مرخّص</td></tr><tr><td>جولة افتراضية ثلاثية الأبعاد</td><td class="h">مخطط كامل</td></tr><tr><td>النشر على البوابات</td><td class="h">+40 موقعًا</td></tr><tr><td>بريد يوم الإطلاق</td><td class="h">شبكة الوكلاء</td></tr>'],
-  ['#services .station:nth-child(1) .z0', 'ابتداءً من $1,450 لكل قائمة · تسليم خلال 5 أيام'],
-  ['#services .station:nth-child(2) h3', 'التواصل والمحتوى'],
-  ['#services .station:nth-child(2) .coords', 'حسابات تبيع قبل المعاينة'],
-  ['#services .station:nth-child(2) tbody', '<tr><td>ريلز وفيديو قصير</td><td class="h">8 / شهر</td></tr><tr><td>تقويم المحتوى</td><td class="h">30 يومًا مقدمًا</td></tr><tr><td>حملات ممولة</td><td class="h">Meta + Google</td></tr><tr><td>أضواء على الأحياء</td><td class="h">شهريًا</td></tr><tr><td>إدارة المجتمع</td><td class="h">7 أيام / أسبوع</td></tr><tr><td>تقرير الأداء</td><td class="h">شهريًا</td></tr>'],
-  ['#services .station:nth-child(2) .z0', 'ابتداءً من $950 / شهر · ألغِ مع أي مدّ'],
-  ['#services .station:nth-child(3) h3', 'الهوية والتصميم'],
-  ['#services .station:nth-child(3) .coords', 'هوية يتذكرها المشترون'],
-  ['#services .station:nth-child(3) tbody', '<tr><td>هوية الوكيل</td><td class="h">شعار + نظام</td></tr><tr><td>حقيبة عرض القوائم</td><td class="h">مطبوع + رقمي</td></tr><tr><td>لافتات وإعلانات ميدانية</td><td class="h">جاهزة للإنتاج</td></tr><tr><td>موقع إلكتروني مع IDX</td><td class="h">مخصص</td></tr><tr><td>مكتبة قوالب</td><td class="h">+50 قطعة</td></tr><tr><td>دليل الهوية</td><td class="h">موثّق</td></tr>'],
-  ['#services .station:nth-child(3) .z0', 'ابتداءً من $2,800 دفعة واحدة · ملكك للأبد'],
-  ['#services .station:nth-child(4) h3', 'محرك العملاء'],
-  ['#services .station:nth-child(4) .coords', 'خط أنابيب يملأ نفسه'],
-  ['#services .station:nth-child(4) tbody', '<tr><td>صفحات هبوط</td><td class="h">لكل حملة</td></tr><tr><td>إعلانات البحث (PPC)</td><td class="h">مُدارة</td></tr><tr><td>إعداد CRM وتوجيه العملاء</td><td class="h">مشمول</td></tr><tr><td>تسلسلات رعاية</td><td class="h">آلية</td></tr><tr><td>التقاط زوار البيت المفتوح</td><td class="h">QR + نماذج</td></tr><tr><td>لوحة الإحالة</td><td class="h">مباشرة</td></tr>'],
-  ['#services .station:nth-child(4) .z0', 'ابتداءً من $1,200 / شهر + الإنفاق الإعلاني'],
-  ['#services .tables-note', 'الأسعار بالعملة المحلية وقبل الإنفاق الإعلاني. الحملات مجموع مكوّنات صغيرة كثيرة ولا تأخذ الطقس في الحسبان؛ فرفعٌ ثابت للفائدة قد يؤخر السوق نصف موسم، وقد فعل تاريخيًا ما هو أسوأ. المواعيد بتوقيت الاستوديو.'],
 
   ['#skyline figcaption', '<b>عمل ميداني · واجهة هاربورفيو البحرية</b>تصوير خارجي عند الشفق، بعد 22 دقيقة من الغروب — النافذة التي يبدو فيها كل عقار وكأنه صُمم ليُسكَن منذ الأزل.'],
 
-  ['#cycle .kicker', '<span class="no">§ 3</span> الجسم الرافع للسوق'],
+  ['#cycle .kicker', '<span class="no">§ 2</span> الجسم الرافع للسوق'],
   ['#cycle .phase-data', 'ثقة المشترين <span id="illum">—</span><br>اليوم <span id="moonage">—</span> من دورة مبيعات مدتها 29.5 يومًا<br>الذروة التالية بعد <span id="springs">—</span>'],
   ['#cycle .hint', 'انقر القرص لتستعجل الدورة · السوق لن يتبعك'],
 
-  ['#notices .kicker', '<span class="no">§ 4</span> إشعارات للوكلاء'],
+  ['#notices .kicker', '<span class="no">§ 3</span> إشعارات للوكلاء'],
   ['#notices li:nth-child(1) .tag', 'إطلاق'],
   ['#notices li:nth-child(1) .body', '<b>بنتهاوس هاربورفيو — الحملة مباشرة</b>انطلقت حزمة الإطلاق الكاملة لبنتهاوس رصيف 9 يوم الاثنين: جلسة شفق، وكشف جوي، وجولة ثلاثية الأبعاد، وريل حقق أول عشرة آلاف مشاهدة قبل أن تُغرس اللافتة في الحديقة. ويُنصح الوكلاء الذين ألفوا التسويق بالكلام المتناقل أن يتوقفوا.'],
   ['#notices li:nth-child(2) .tag', 'بيع'],
@@ -1063,7 +966,7 @@ const AR_HTML = [
   ['#passage p:nth-of-type(3)', 'يقيس الاستوديو كل هذا بالنقرة، والقياس يغيّر كل شيء، وهذا هو المغزى.'],
   ['#passage .attr', '— من دفتر الاستوديو الميداني، بلا توقيع، كالعادة'],
 
-  ['#contact .kicker', '<span class="no">§ 5</span> ارفع مدّك'],
+  ['#contact .kicker', '<span class="no">§ 4</span> ارفع مدّك'],
   ['#contact .cell:nth-child(1) .lbl', 'حملات جديدة'],
   ['#contact .cell:nth-child(2) .lbl', 'خط الاستوديو'],
   ['#contact .cell:nth-child(3) .lbl', 'زورونا'],
