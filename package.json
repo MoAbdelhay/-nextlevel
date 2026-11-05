@@ -1,8 +1,8 @@
 {
-  "name": "nextlevel",
+  "name": "mouj",
   "version": "1.0.0",
   "private": true,
-  "description": "NextLevel — real estate marketing studio site with listing submissions",
+  "description": "Mouj — real estate marketing studio site with listing submissions",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

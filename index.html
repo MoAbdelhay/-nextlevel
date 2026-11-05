@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEXTLEVEL — Real Estate Marketing Studio</title>
+<title>MOUJ — Real Estate Marketing Studio</title>
 <meta name="description" content="Full-service real estate marketing: listing launches, media production, brand design and lead generation. The market moves like a tide — we read it to the centimetre.">
-<meta property="og:title" content="NEXTLEVEL — Real Estate Marketing">
+<meta property="og:title" content="MOUJ — Real Estate Marketing">
 <meta property="og:description" content="Listing launches, media, brand and lead generation. One studio, one rising tide.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1628'/%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%23dce6f2' stroke-width='2.5' opacity='.35'/%3E%3Cpath d='M18 34l14-14 14 14' fill='none' stroke='%23d9a44a' stroke-width='5.5' stroke-linecap='square'/%3E%3Cpath d='M10 42c4-2.6 7.5-2.6 11.5 0s7.5 2.6 11.5 0 7.5-2.6 11.5 0 7.5 2.6 11 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M14 50c3.5-2.2 6.5-2.2 10 0s6.5 2.2 10 0 6.5-2.2 10 0 6.5 2.2 10 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E">
@@ -103,10 +103,6 @@ header .est{display:none}
   display:flex;align-items:center;gap:.45em;
 }
 .hero-title h1 .mark{width:1.35em;height:1.35em;flex:none;color:#eef3fa;filter:drop-shadow(0 1px 14px rgba(10,22,40,.45))}
-.hero-title p{
-  margin-top:.9rem;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;
-  color:rgba(238,243,250,.75);
-}
 .hero-cta{
   display:inline-block;margin-top:2.2rem;
   font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;text-decoration:none;
@@ -298,7 +294,7 @@ html[lang=ar] input[type=range]{direction:ltr}
 </svg>
 
 <header>
-  <a class="wordmark" href="#hero" aria-label="NEXTLEVEL home"><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span>NEXT<b>LEVEL</b></span></a>
+  <a class="wordmark" href="#hero" aria-label="Mouj home"><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span>MOUJ</span></a>
   <span class="est">Real Estate Marketing Studio · Harborview · Est. 2016</span>
 </header>
 
@@ -314,8 +310,7 @@ html[lang=ar] input[type=range]{direction:ltr}
   <div class="hero-grid">
     <div class="hero-left">
       <div class="hero-title">
-        <h1><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span>NEXT<b>LEVEL</b></span></h1>
-        <p>Real estate marketing · listings launched · one rising tide</p>
+        <h1><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span>MOUJ</span></h1>
         <div class="hero-ctas">
           <a class="hero-cta alt" href="listings">Browse listings →</a>
         </div>
@@ -402,7 +397,7 @@ html[lang=ar] input[type=range]{direction:ltr}
 <footer>
   <div class="shell">
     <div class="cols">
-      <span>NEXTLEVEL · Real Estate Marketing</span>
+      <span>MOUJ · Real Estate Marketing</span>
     </div>
     <span>
       Powered by <a href="https://takween-studio.com" target="_blank" rel="noopener">Takween Studio</a>
@@ -424,9 +419,9 @@ const TXT = {
     limit:'Twelve photos is the studio limit.',
     filed:(ref, n) => '<b>' + ref + '</b> — listing filed with ' + n + ' photo' + (n === 1 ? '' : 's') +
       '. The register has been amended; the market has been notified of nothing.',
-    offline:'The studio server is not answering. Start it with <b>npm start</b> in the nextlevel folder and open http://localhost:3000.',
+    offline:'The studio server is not answering. Start it with <b>npm start</b> in the project folder and open http://localhost:3000.',
     refused:'Submission refused.',
-    title:'NEXTLEVEL — Real Estate Marketing Studio',
+    title:'MOUJ — Real Estate Marketing Studio',
   },
   ar: {
     mo:' شهر',
@@ -435,9 +430,9 @@ const TXT = {
     limit:'اثنتا عشرة صورة هي حدّ الاستوديو.',
     filed:(ref, n) => '<b>' + ref + '</b> — تم قيد العقار مع ' + (n === 1 ? 'صورة واحدة' : n + ' صور') +
       '. عُدِّل السجل؛ ولم يُخطَر السوق بشيء.',
-    offline:'خادم الاستوديو لا يستجيب. شغّله بالأمر <b>npm start</b> داخل مجلد nextlevel ثم افتح http://localhost:3000.',
+    offline:'خادم الاستوديو لا يستجيب. شغّله بالأمر <b>npm start</b> داخل مجلد المشروع ثم افتح http://localhost:3000.',
     refused:'رُفض الطلب.',
-    title:'نكست ليفل — استوديو التسويق العقاري',
+    title:'موج — استوديو التسويق العقاري',
   },
 };
 
@@ -543,7 +538,6 @@ lform.addEventListener('submit', async (e) => {
 /* ================= Arabic content + language toggle ================= */
 const AR_HTML = [
   ['header .est', 'استوديو التسويق العقاري · هاربورفيو · تأسس 2016'],
-  ['.hero-title p', 'تسويق عقاري · قوائم تُطلق · مدٌّ واحد صاعد'],
   ['.hero-cta.alt', 'تصفّح العقارات ←'],
   ['.scrub label', 'حرّك السوق <output id="scrubout" for="tidescrub">+0.0 شهر</output>'],
 
@@ -566,7 +560,7 @@ const AR_HTML = [
   ['#contact .cell:nth-child(3) .lbl', 'الدوام'],
   ['#contact .cell:nth-child(3) .big', 'الاثنين–الجمعة 09:00–18:00<br>وجلسات الشفق على مواعيد الضوء'],
 
-  ['footer .cols span:nth-child(1)', 'نكست ليفل · تسويق عقاري'],
+  ['footer .cols span:nth-child(1)', 'موج · تسويق عقاري'],
   ['footer > .shell > span', 'مدعوم من <a href="https://takween-studio.com" target="_blank" rel="noopener">تكوين ستوديو</a>'],
 ];
 const AR_PH = [

@@ -1,4 +1,4 @@
-/* NextLevel studio server — serves the site and the listing-submission API.
+/* Mouj studio server — serves the site and the listing-submission API.
    Storage: SQLite via node:sqlite (data/listings.db), photos on disk in uploads/. */
 
 const path = require('node:path');
@@ -135,6 +135,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`NextLevel studio server — http://localhost:${PORT}`);
+  console.log(`Mouj studio server — http://localhost:${PORT}`);
   console.log(`Database: ${path.join(DATA_DIR, 'listings.db')}`);
 });
