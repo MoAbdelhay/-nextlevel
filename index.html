@@ -339,7 +339,7 @@ html[lang=ar] input[type=range]{direction:ltr}
       <div class="hero-title">
         <h1><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span>MOUJ</span></h1>
         <div class="hero-ctas">
-          <a class="hero-cta alt" href="listings">Browse listings →</a>
+          <a class="hero-cta alt" href="listings.html">Browse listings →</a>
         </div>
       </div>
 
@@ -544,7 +544,7 @@ function renderFloats(){
     const rent = l.purpose === 'rent';
     const a = document.createElement('a');
     a.className = 'float-card';
-    a.href = 'listings' + (rent ? '?for=rent' : '?for=sale');
+    a.href = 'listings.html' + (rent ? '?for=rent' : '?for=sale');
     const ph = document.createElement('div'); ph.className = 'ph';
     if (l.photos && l.photos.length){
       const img = document.createElement('img'); img.src = l.photos[0].url; img.alt = l.title; img.loading = 'lazy';
@@ -564,11 +564,24 @@ function renderFloats(){
     floatsEl.append(a);
   }
 }
-async function loadFloats(){
+/* listings from the studio server; on a static host (no server) fall back to the starter listings file */
+async function fetchListings(){
   try {
     const res = await fetch('api/listings');
-    if (!res.ok) return;
-    FLOATS = (await res.json()).listings || [];
+    const ct = res.headers.get('content-type') || '';
+    if (res.ok && ct.includes('json')) return (await res.json()).listings || [];
+  } catch {}
+  const res = await fetch('seed-listings.json');
+  if (!res.ok) throw new Error('no listings');
+  return (await res.json()).map((l, i) => ({
+    id: i + 1, ref: null, title: l.title, address: l.address || '', city: l.city, price: l.price,
+    purpose: l.purpose === 'rent' ? 'rent' : 'sale', agent_email: l.agent_email,
+    photos: (l.photos || []).map(p => ({ url: p })),
+  }));
+}
+async function loadFloats(){
+  try {
+    FLOATS = await fetchListings();
     renderFloats();
   } catch {}
 }

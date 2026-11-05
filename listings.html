@@ -243,9 +243,23 @@ applyLang(LANG);
 const forParam = new URLSearchParams(location.search).get('for');
 if (forParam === 'sale' || forParam === 'rent') { lpurpose.value = forParam; render(); }
 
-fetch('api/listings')
-  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-  .then(d => { ALL = d.listings || []; render(); })
+/* listings from the studio server; on a static host (no server) fall back to the starter listings file */
+async function fetchListings(){
+  try {
+    const res = await fetch('api/listings');
+    const ct = res.headers.get('content-type') || '';
+    if (res.ok && ct.includes('json')) return (await res.json()).listings || [];
+  } catch {}
+  const res = await fetch('seed-listings.json');
+  if (!res.ok) throw new Error('no listings');
+  return (await res.json()).map((l, i) => ({
+    id: i + 1, ref: null, title: l.title, address: l.address || '', city: l.city, price: l.price,
+    purpose: l.purpose === 'rent' ? 'rent' : 'sale', agent_email: l.agent_email,
+    photos: (l.photos || []).map(p => ({ url: p })),
+  }));
+}
+fetchListings()
+  .then(list => { ALL = list; render(); })
   .catch(() => { FAILED = true; render(); });
 </script>
 </body>
