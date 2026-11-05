@@ -116,20 +116,6 @@ header .est{display:none}
 .hero-ctas .hero-cta{margin-top:0}
 .hero-cta.alt{color:var(--ink);border-color:rgba(220,230,242,.55)}
 .hero-cta.alt:hover{background:var(--ink);color:#0a1628}
-.gauge-panel{
-  align-self:flex-start;
-  background:rgba(10,22,40,.6);backdrop-filter:blur(6px);
-  border:1px solid var(--line);
-  padding:1rem 1.2rem;min-width:270px;
-  font-size:.8rem;
-}
-.gauge-panel .lbl{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
-.gauge-panel .height{
-  font-size:2rem;font-weight:500;letter-spacing:.02em;line-height:1.2;
-  font-variant-numeric:tabular-nums;color:#eef3fa;
-}
-.gauge-panel .meta{color:var(--dim);font-variant-numeric:tabular-nums;font-size:.72rem;letter-spacing:.06em}
-.gauge-panel svg{display:block;margin-top:.7rem;width:100%;height:44px}
 .scrub{
   background:rgba(10,22,40,.6);backdrop-filter:blur(6px);
   border:1px solid var(--line);
@@ -168,7 +154,6 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
   .hero-title{order:1;padding:2vh 0 1rem}
   #submit{order:2}
   .scrub{order:3}
-  .gauge-panel{order:4;align-self:stretch;min-width:0}
 }
 @media(max-width:420px){
   .formglass{padding:1.2rem 1rem 1.3rem}
@@ -275,6 +260,9 @@ footer .cols{display:flex;flex-wrap:wrap;gap:1rem 3rem}
   transition:border-color .3s,color .3s;
 }
 .langtoggle:hover{border-color:var(--accent);color:var(--accent)}
+html[lang=ar] header,html[lang=ar] .hero-grid{direction:ltr}
+html[lang=ar] header > *,html[lang=ar] .hero-right{direction:rtl}
+html[lang=ar] .hero-title{text-align:left}
 html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
 html[lang=ar] *{letter-spacing:0!important}
 html[lang=ar] .hero-title h1{letter-spacing:.42em!important}
@@ -316,16 +304,6 @@ html[lang=ar] input[type=range]{direction:ltr}
         <div class="hero-ctas">
           <a class="hero-cta alt" href="listings">Browse listings →</a>
         </div>
-      </div>
-
-      <div class="gauge-panel" aria-live="off">
-        <div class="lbl">Harborview metro · buyer demand</div>
-        <div class="height"><span id="ht">——.—</span> <abbr title="NextLevel demand index" style="text-decoration:none">pts</abbr></div>
-        <div class="meta"><span id="trend">—</span> · <span id="simclock">——:——</span> sim · blended metro index</div>
-        <svg id="curve" viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true">
-          <path id="curvepath" fill="none" stroke="rgba(220,230,242,.35)" stroke-width="1.2" d=""/>
-          <line id="curvenow" x1="0" y1="0" x2="0" y2="44" stroke="rgba(220,230,242,.8)" stroke-width="1"/>
-        </svg>
       </div>
 
     </div>
@@ -383,7 +361,6 @@ html[lang=ar] input[type=range]{direction:ltr}
 
 <main>
 
-
 <!-- ============ CONTACT ============ -->
 <section id="contact">
   <div class="shell">
@@ -420,14 +397,13 @@ html[lang=ar] input[type=range]{direction:ltr}
 
 <script>
 /* ================= shared market-tide model (no WebGL dependency) ================= */
-const TAU = Math.PI * 2;
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ================= language ================= */
 let LANG = localStorage.getItem('nl-lang') === 'ar' ? 'ar' : 'en';
 const TXT = {
   en: {
-    rising:'RISING ▲', cooling:'COOLING ▼', holding:'HOLDING —', mo:' mo', d:' d',
+    mo:' mo',
     filing:'Filing…',
     photoBig: n => n + ' is over 8 MB — left on the quay.',
     limit:'Twelve photos is the studio limit.',
@@ -438,7 +414,7 @@ const TXT = {
     title:'NEXTLEVEL — Real Estate Marketing Studio',
   },
   ar: {
-    rising:'صاعد ▲', cooling:'هابط ▼', holding:'ثابت —', mo:' شهر', d:' ي',
+    mo:' شهر',
     filing:'جارٍ القيد…',
     photoBig: n => n + ' تتجاوز 8 ميغابايت — تُركت على الرصيف.',
     limit:'اثنتا عشرة صورة هي حدّ الاستوديو.',
@@ -450,19 +426,6 @@ const TXT = {
   },
 };
 
-/* Harmonic constituents: period in hours — the market breathes like a sea */
-const PERIOD = { M2: 12.4206012, S2: 12.0, K1: 23.9344697, O1: 25.8193417 };
-const SPEED = {}; for (const k in PERIOD) SPEED[k] = TAU / PERIOD[k]; /* rad per hour */
-
-/* Harborview metro: mean level + amplitude (m) and phase (rad) per constituent */
-const METRO = { z0:2.10, H:{M2:[1.42,0.6], S2:[0.48,1.1], K1:[0.11,2.9], O1:[0.09,2.1]} };
-
-function tideHeight(st, tHours){
-  let h = st.z0;
-  for (const k in st.H) h += st.H[k][0] * Math.cos(SPEED[k] * tHours - st.H[k][1]);
-  return h;
-}
-
 /* Simulated time: hours since epoch. Starts from real clock, advances 90x, plus scrub offset. */
 const t0real = Date.now();
 const simEpochHours = (t0real / 3600000) % 10000;
@@ -472,38 +435,6 @@ const TIMESCALE = REDUCED ? 0 : 90;
 function simHours(){
   return simEpochHours + ((Date.now() - t0real) / 3600000) * TIMESCALE + scrubOffset;
 }
-function simClockString(t){
-  const mins = Math.round((t % 24) * 60);
-  const hh = String(Math.floor(mins / 60) % 24).padStart(2,'0');
-  const mm = String(mins % 60).padStart(2,'0');
-  return hh + ':' + mm;
-}
-
-/* ---------- hero readout ---------- */
-const curvePath = document.getElementById('curvepath');
-const curveNow = document.getElementById('curvenow');
-function updateReadout(){
-  const t = simHours();
-  const h = tideHeight(METRO, t);
-  const dh = tideHeight(METRO, t + 0.05) - h;
-  const T = TXT[LANG];
-  document.getElementById('ht').textContent = (h * 23.6).toFixed(1);   /* metres → index points */
-  document.getElementById('trend').textContent = Math.abs(dh) < 0.002 ? T.holding : (dh > 0 ? T.rising : T.cooling);
-  document.getElementById('simclock').textContent = simClockString(t);
-  /* sparkline: −12.4h .. +12.4h around the unscrubbed now, marker follows scrub */
-  const tc = t - scrubOffset;
-  const min = METRO.z0 - 2.2, max = METRO.z0 + 2.2;
-  let d = '';
-  for (let i = 0; i <= 96; i++){
-    const th = tc - 12.4 + (i / 96) * 24.8;
-    const y = 40 - (tideHeight(METRO, th) - min) / (max - min) * 36;
-    d += (i ? 'L' : 'M') + (i / 96 * 240).toFixed(1) + ',' + y.toFixed(1);
-  }
-  curvePath.setAttribute('d', d);
-  const nx = ((scrubOffset + 12.4) / 24.8 * 240).toFixed(1);
-  curveNow.setAttribute('x1', nx); curveNow.setAttribute('x2', nx);
-}
-updateReadout();
 
 /* ---------- scrub slider ---------- */
 const scrub = document.getElementById('tidescrub');
@@ -511,7 +442,6 @@ scrub.addEventListener('input', () => {
   scrubOffset = parseFloat(scrub.value);
   document.getElementById('scrubout').textContent =
     (scrubOffset >= 0 ? '+' : '−') + Math.abs(scrubOffset).toFixed(1) + TXT[LANG].mo;
-  updateReadout();
 });
 
 /* ---------- header hides once the hero is gone ---------- */
@@ -525,9 +455,6 @@ const io = new IntersectionObserver(es => {
   for (const e of es) if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-/* slow ticker for the hero readout */
-setInterval(updateReadout, 1000);
 
 /* ================= listing submission ================= */
 const lform = document.getElementById('listingform');
@@ -603,9 +530,6 @@ const AR_HTML = [
   ['header .est', 'استوديو التسويق العقاري · هاربورفيو · تأسس 2016'],
   ['.hero-title p', 'تسويق عقاري · قوائم تُطلق · مدٌّ واحد صاعد'],
   ['.hero-cta.alt', 'تصفّح العقارات ←'],
-  ['.gauge-panel .lbl', 'هاربورفيو الكبرى · طلب المشترين'],
-  ['.gauge-panel .height', '<span id="ht">——.—</span> <abbr title="مؤشر الطلب — نكست ليفل" style="text-decoration:none">نقطة</abbr>'],
-  ['.gauge-panel .meta', '<span id="trend">—</span> · <span id="simclock">——:——</span> محاكاة · مؤشر المدينة المدمج'],
   ['.scrub label', 'حرّك السوق <output id="scrubout" for="tidescrub">+0.0 شهر</output>'],
 
   ['#submit .kicker', '<span class="no">§ 1</span> قدّم عقارك'],
@@ -657,7 +581,6 @@ function applyLang(lang){
   document.getElementById('langtoggle').textContent = lang === 'ar' ? 'English' : 'عربي';
   document.getElementById('scrubout').textContent =
     (scrubOffset >= 0 ? '+' : '−') + Math.abs(scrubOffset).toFixed(1) + TXT[lang].mo;
-  updateReadout();
 }
 document.getElementById('langtoggle').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
 if (LANG === 'ar') applyLang('ar');
