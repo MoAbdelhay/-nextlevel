@@ -49,7 +49,7 @@ html{scrollbar-color:#24364f var(--bg);scrollbar-width:thin}
 header{
   position:fixed;inset:0 0 auto 0;z-index:20;
   display:flex;justify-content:space-between;align-items:baseline;
-  padding:1.1rem 1.4rem 2.2rem;
+  padding:1.1rem 7.5rem 2.2rem 1.4rem;
   background:linear-gradient(rgba(10,22,40,.66),rgba(10,22,40,0));
   transition:opacity .6s cubic-bezier(.22,.61,.36,1);
   font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
@@ -66,7 +66,7 @@ header .est{display:none}
 
 /* ---------- hero ---------- */
 #hero{
-  position:relative;height:100vh;height:100svh;min-height:540px;
+  position:relative;min-height:100vh;min-height:100svh;
   overflow:hidden;
   background:linear-gradient(#4a6488 0%,#7d97b8 46%,#1b3a66 60%,#0b1a33 100%);
 }
@@ -85,12 +85,16 @@ header .est{display:none}
   display:block;position:absolute;inset:0;
   background:linear-gradient(#56709a 0%,#7d97b8 44%,#1f4170 58%,#0b1a33 100%);
 }
-.hero-title{
-  position:absolute;top:18%;left:50%;transform:translateX(-50%);
-  text-align:center;z-index:5;width:min(92vw,60rem);
+.hero-grid{
+  position:relative;z-index:5;min-height:100vh;min-height:100svh;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,450px);gap:2rem 3rem;
+  padding:5.2rem clamp(1.4rem,4vw,3.5rem) 1.4rem;
 }
+.hero-left{display:flex;flex-direction:column;justify-content:space-between;gap:2rem}
+.hero-right{display:flex;flex-direction:column;justify-content:flex-end;gap:.9rem}
+.hero-title{text-align:start;padding-top:1vh}
 .hero-title h1{
-  font-weight:300;letter-spacing:.42em;text-indent:.42em;
+  font-weight:300;letter-spacing:.42em;
   font-size:clamp(1.7rem,5.6vw,4.1rem);
   color:#eef3fa;
   text-shadow:0 1px 24px rgba(10,22,40,.45);
@@ -108,13 +112,13 @@ header .est{display:none}
   transition:background .3s,color .3s;
 }
 .hero-cta:hover{background:var(--accent);color:#0a1628}
-.hero-ctas{display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center;margin-top:2.2rem}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:.9rem;justify-content:flex-start;margin-top:2rem}
 .hero-ctas .hero-cta{margin-top:0}
 .hero-cta.alt{color:var(--ink);border-color:rgba(220,230,242,.55)}
 .hero-cta.alt:hover{background:var(--ink);color:#0a1628}
 .gauge-panel{
-  position:absolute;z-index:6;left:1.4rem;bottom:1.4rem;
-  background:rgba(10,22,40,.72);backdrop-filter:blur(6px);
+  align-self:flex-start;
+  background:rgba(10,22,40,.6);backdrop-filter:blur(6px);
   border:1px solid var(--line);
   padding:1rem 1.2rem;min-width:270px;
   font-size:.8rem;
@@ -127,9 +131,7 @@ header .est{display:none}
 .gauge-panel .meta{color:var(--dim);font-variant-numeric:tabular-nums;font-size:.72rem;letter-spacing:.06em}
 .gauge-panel svg{display:block;margin-top:.7rem;width:100%;height:44px}
 .scrub{
-  position:absolute;z-index:6;right:1.4rem;bottom:1.4rem;
-  width:min(320px,60vw);
-  background:rgba(10,22,40,.72);backdrop-filter:blur(6px);
+  background:rgba(10,22,40,.6);backdrop-filter:blur(6px);
   border:1px solid var(--line);
   padding:.9rem 1.2rem 1rem;
 }
@@ -146,16 +148,31 @@ input[type=range]::-webkit-slider-thumb{
 }
 input[type=range]::-moz-range-track{height:2px;background:var(--faint)}
 input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:none}
-.scrolldown{
-  position:absolute;left:50%;bottom:1.6rem;transform:translateX(-50%);z-index:5;
-  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(238,243,250,.5);
-  text-decoration:none;
+/* submit form floating over the sea */
+.formglass{
+  background:rgba(10,22,40,.48);backdrop-filter:blur(12px) saturate(1.15);-webkit-backdrop-filter:blur(12px) saturate(1.15);
+  border:1px solid rgba(220,230,242,.16);
+  padding:1.4rem 1.5rem 1.5rem;
 }
-@media(max-width:720px){
-  .hero-title{top:14%}
-  .gauge-panel{left:1rem;right:1rem;bottom:5.4rem;min-width:0}
-  .scrub{left:1rem;right:1rem;bottom:1rem;width:auto}
-  .scrolldown{display:none}
+.formglass .kicker{margin-bottom:1.1rem;color:rgba(220,230,242,.75)}
+.formglass .flabel{color:rgba(220,230,242,.78)!important}
+.formglass .dropzone .sub{color:rgba(220,230,242,.6)}
+.formglass .lform{gap:.85rem 1rem}
+.formglass .lform input:not([type=radio]):not([type=file]){background:rgba(10,22,40,.5)}
+.formglass .dropzone{background:rgba(10,22,40,.35);padding:1rem}
+.formglass .seg span{padding:.55rem 1.3rem}
+.formglass .sendbtn{background:rgba(10,22,40,.4);width:100%}
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;padding-top:4.6rem}
+  .hero-left,.hero-right{display:contents}
+  .hero-title{order:1;padding:2vh 0 1rem}
+  #submit{order:2}
+  .scrub{order:3}
+  .gauge-panel{order:4;align-self:stretch;min-width:0}
+}
+@media(max-width:420px){
+  .formglass{padding:1.2rem 1rem 1.3rem}
+  .formglass .lform{grid-template-columns:1fr}
 }
 
 /* ---------- shared section chrome ---------- */
@@ -174,9 +191,7 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
 .reveal.in{opacity:1;transform:none}
 
 /* ---------- submit a listing ---------- */
-#submit .panelbox{background:var(--bg2);border:1px solid var(--line);padding:2.2rem 2rem 2.4rem}
 .lform{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem 1.6rem;max-width:56rem}
-@media(max-width:720px){.lform{grid-template-columns:1fr}#submit .panelbox{padding:1.5rem 1.1rem 1.7rem}}
 .lform .full{grid-column:1/-1}
 .lform label .flabel{
   display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
@@ -293,84 +308,81 @@ html[lang=ar] input[type=range]{direction:ltr}
   <div class="cloudveil"></div>
   <div class="grain"></div>
 
-  <div class="hero-title">
-    <h1>NEXTLEVEL</h1>
-    <p>Real estate marketing · listings launched · one rising tide</p>
-    <div class="hero-ctas">
-      <a class="hero-cta" href="#submit">Submit listing →</a>
-      <a class="hero-cta alt" href="listings">Browse listings →</a>
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-title">
+        <h1>NEXTLEVEL</h1>
+        <p>Real estate marketing · listings launched · one rising tide</p>
+        <div class="hero-ctas">
+          <a class="hero-cta alt" href="listings">Browse listings →</a>
+        </div>
+      </div>
+
+      <div class="gauge-panel" aria-live="off">
+        <div class="lbl">Harborview metro · buyer demand</div>
+        <div class="height"><span id="ht">——.—</span> <abbr title="NextLevel demand index" style="text-decoration:none">pts</abbr></div>
+        <div class="meta"><span id="trend">—</span> · <span id="simclock">——:——</span> sim · blended metro index</div>
+        <svg id="curve" viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true">
+          <path id="curvepath" fill="none" stroke="rgba(220,230,242,.35)" stroke-width="1.2" d=""/>
+          <line id="curvenow" x1="0" y1="0" x2="0" y2="44" stroke="rgba(220,230,242,.8)" stroke-width="1"/>
+        </svg>
+      </div>
+
+    </div>
+    <div class="hero-right">
+      <div id="submit" class="formglass">
+        <div class="kicker"><span class="no">§ 1</span> Submit a listing</div>
+        <form id="listingform" novalidate>
+          <div class="lform">
+            <div class="full purpose" role="radiogroup" aria-label="Listing for">
+              <span class="flabel">Listing for <span class="req">*</span></span>
+              <div class="seg">
+                <label><input type="radio" name="purpose" value="sale" checked><span>For sale</span></label>
+                <label><input type="radio" name="purpose" value="rent"><span>For rent</span></label>
+              </div>
+            </div>
+            <label class="full">
+              <span class="flabel">Property title <span class="req">*</span></span>
+              <input type="text" name="title" maxlength="140" placeholder="e.g. Waterfront four-bed with private mooring" required>
+            </label>
+            <label>
+              <span class="flabel">Location <span class="req">*</span></span>
+              <input type="text" name="city" maxlength="120" placeholder="Harborview" required>
+            </label>
+            <label>
+              <span class="flabel">Price ($) <span class="req">*</span></span>
+              <input type="number" name="price" min="1" step="1" placeholder="850000" required>
+            </label>
+            <label class="full">
+              <span class="flabel">Contact email <span class="req">*</span></span>
+              <input type="email" name="agent_email" maxlength="200" placeholder="you@brokerage.com" required>
+            </label>
+            <div class="full">
+              <span class="flabel" style="display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.45rem">Photos</span>
+              <label class="dropzone" id="dropzone">
+                <span class="dz-main">Drop photos here or click to browse</span>
+                <span class="sub">JPEG · PNG · WebP · up to 12 photos · 8 MB each</span>
+                <input type="file" id="photoinput" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" multiple>
+              </label>
+              <div class="previews" id="previews"></div>
+            </div>
+            <div class="full">
+              <button type="submit" class="sendbtn" id="sendbtn">File the listing →</button>
+              <div class="formstatus" id="formstatus" role="status"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="scrub">
+        <label for="tidescrub">Scrub the market <output id="scrubout" for="tidescrub">+0.0 mo</output></label>
+        <input type="range" id="tidescrub" min="-12.4" max="12.4" step="0.05" value="0" aria-label="Advance the simulated market, plus or minus twelve months">
+      </div>
     </div>
   </div>
-
-  <div class="gauge-panel" aria-live="off">
-    <div class="lbl">Harborview metro · buyer demand</div>
-    <div class="height"><span id="ht">——.—</span> <abbr title="NextLevel demand index" style="text-decoration:none">pts</abbr></div>
-    <div class="meta"><span id="trend">—</span> · <span id="simclock">——:——</span> sim · blended metro index</div>
-    <svg id="curve" viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true">
-      <path id="curvepath" fill="none" stroke="rgba(220,230,242,.35)" stroke-width="1.2" d=""/>
-      <line id="curvenow" x1="0" y1="0" x2="0" y2="44" stroke="rgba(220,230,242,.8)" stroke-width="1"/>
-    </svg>
-  </div>
-
-  <div class="scrub">
-    <label for="tidescrub">Scrub the market <output id="scrubout" for="tidescrub">+0.0 mo</output></label>
-    <input type="range" id="tidescrub" min="-12.4" max="12.4" step="0.05" value="0" aria-label="Advance the simulated market, plus or minus twelve months">
-  </div>
-
-  <a class="scrolldown" href="#submit">Submit a listing ↓</a>
 </div>
 
 <main>
 
-<!-- ============ SUBMIT A LISTING ============ -->
-<section id="submit">
-  <div class="shell">
-    <div class="kicker reveal"><span class="no">§ 1</span> Submit a listing</div>
-    <div class="panelbox reveal">
-      <form id="listingform" novalidate>
-        <div class="lform">
-          <div class="full purpose" role="radiogroup" aria-label="Listing for">
-            <span class="flabel">Listing for <span class="req">*</span></span>
-            <div class="seg">
-              <label><input type="radio" name="purpose" value="sale" checked><span>For sale</span></label>
-              <label><input type="radio" name="purpose" value="rent"><span>For rent</span></label>
-            </div>
-          </div>
-          <label class="full">
-            <span class="flabel">Property title <span class="req">*</span></span>
-            <input type="text" name="title" maxlength="140" placeholder="e.g. Waterfront four-bed with private mooring" required>
-          </label>
-          <label>
-            <span class="flabel">Location <span class="req">*</span></span>
-            <input type="text" name="city" maxlength="120" placeholder="Harborview" required>
-          </label>
-          <label>
-            <span class="flabel">Price ($) <span class="req">*</span></span>
-            <input type="number" name="price" min="1" step="1" placeholder="850000" required>
-          </label>
-          <label class="full">
-            <span class="flabel">Contact email <span class="req">*</span></span>
-            <input type="email" name="agent_email" maxlength="200" placeholder="you@brokerage.com" required>
-          </label>
-          <div class="full">
-            <span class="flabel" style="display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.45rem">Photos</span>
-            <label class="dropzone" id="dropzone">
-              <span class="dz-main">Drop photos here or click to browse</span>
-              <span class="sub">JPEG · PNG · WebP · up to 12 photos · 8 MB each</span>
-              <input type="file" id="photoinput" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" multiple>
-            </label>
-            <div class="previews" id="previews"></div>
-          </div>
-          <div class="full">
-            <button type="submit" class="sendbtn" id="sendbtn">File the listing →</button>
-            <div class="formstatus" id="formstatus" role="status"></div>
-          </div>
-        </div>
-      </form>
-
-    </div>
-  </div>
-</section>
 
 <!-- ============ CONTACT ============ -->
 <section id="contact">
@@ -590,13 +602,11 @@ lform.addEventListener('submit', async (e) => {
 const AR_HTML = [
   ['header .est', 'استوديو التسويق العقاري · هاربورفيو · تأسس 2016'],
   ['.hero-title p', 'تسويق عقاري · قوائم تُطلق · مدٌّ واحد صاعد'],
-  ['.hero-cta:not(.alt)', 'قدّم عقارك ←'],
   ['.hero-cta.alt', 'تصفّح العقارات ←'],
   ['.gauge-panel .lbl', 'هاربورفيو الكبرى · طلب المشترين'],
   ['.gauge-panel .height', '<span id="ht">——.—</span> <abbr title="مؤشر الطلب — نكست ليفل" style="text-decoration:none">نقطة</abbr>'],
   ['.gauge-panel .meta', '<span id="trend">—</span> · <span id="simclock">——:——</span> محاكاة · مؤشر المدينة المدمج'],
   ['.scrub label', 'حرّك السوق <output id="scrubout" for="tidescrub">+0.0 شهر</output>'],
-  ['.scrolldown', 'قدّم عقارك ↓'],
 
   ['#submit .kicker', '<span class="no">§ 1</span> قدّم عقارك'],
   ['.lform label:nth-of-type(1) .flabel', 'عنوان العقار <span class="req">*</span>'],
@@ -782,6 +792,7 @@ if (THREE) try {
   }
   resize();
   addEventListener('resize', resize);
+  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(hero);
 
   /* ---------- render loop, becalmed ---------- */
   const t0 = performance.now();
