@@ -1,0 +1,17 @@
+# Render Blueprint: New → Blueprint → pick this repository.
+# Render asks for the two Supabase values marked sync: false when you create it.
+services:
+  - type: web
+    name: mouj
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22.12.0"
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
