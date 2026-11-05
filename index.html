@@ -23,12 +23,13 @@
   --line:rgba(220,230,242,.13);
   --sea:#16325a;
   --accent:#d9a44a;
+  --abyss:#040b18;
   --serif:'Newsreader',Georgia,serif;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-html,body{background:var(--bg)}
+html,body{background:var(--abyss)}
 body{
   font-family:var(--mono);
   color:var(--ink);
@@ -75,7 +76,7 @@ header .est{display:none}
 #sea{position:absolute;inset:0;width:100%;height:100%;display:block}
 #hero .cloudveil{
   position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(rgba(10,22,40,.55) 0%,rgba(10,22,40,0) 34%,rgba(10,22,40,0) 72%,rgba(10,22,40,.72) 100%);
+  background:linear-gradient(rgba(10,22,40,.55) 0%,rgba(10,22,40,0) 34%,rgba(10,22,40,0) 66%,rgba(8,20,40,.55) 84%,#081428 100%);
 }
 #hero .grain{
   position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
@@ -161,7 +162,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 }
 
 /* ---------- shared section chrome ---------- */
-main{position:relative;z-index:2;background:var(--bg)}
+main{position:relative;z-index:2;background:var(--abyss)}
 section{padding:6rem 1.4rem}
 .shell{max-width:72rem;margin:0 auto}
 .kicker{
@@ -235,7 +236,7 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
 /* ---------- the deep ---------- */
 #depths{
   position:relative;height:240vh;min-height:1500px;padding:0;overflow:hidden;
-  background:linear-gradient(#0b1a33 0%,#07142a 18%,#050f21 45%,#030915 75%,#030915 92%,var(--bg) 100%);
+  background:linear-gradient(#081428 0%,#071328 12%,#050f21 40%,#040c1b 70%,var(--abyss) 100%);
 }
 #deepcanvas,#bubbles{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
 #deepcanvas{z-index:2}
@@ -280,7 +281,7 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
 
 /* ---------- footer ---------- */
 footer{
-  padding:3.4rem 1.4rem 3rem;border-top:1px solid var(--line);
+  padding:3.4rem 1.4rem 3rem;border-top:1px solid var(--line);background:var(--abyss);
   font-size:.68rem;color:var(--faint);letter-spacing:.08em;
 }
 footer .shell{display:flex;flex-wrap:wrap;gap:1.2rem 3rem;justify-content:space-between}

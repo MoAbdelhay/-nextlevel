@@ -43,12 +43,12 @@
     bctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   }
 
-  function drawJelly(j, sx, sy, t){
+  function drawJelly(j, sx, sy, t, fade){
     const r = j.r;
     const beat = Math.sin(t * j.rate * 2.2 + j.phase);   /* bell contracts and relaxes */
     const squeeze = 1 + beat * .07;
     const bw = r * (1 - beat * .06), bh = r * .92 * squeeze;
-    const alpha = .35 + j.z * .65;
+    const alpha = (.35 + j.z * .65) * fade;
 
     ctx.save();
     ctx.translate(sx, sy);
@@ -111,6 +111,14 @@
     ctx.restore();
   }
 
+  /* 0 at the section's top/bottom edge, 1 once ~25% of a screen inside, so nothing is cut off */
+  function edgeFade(y, r){
+    const band = Math.max(160, H * .28);
+    const top = (y - r.top) / band, bot = (r.bottom - y) / band;
+    const f = Math.max(0, Math.min(1, top, bot));
+    return f * f * (3 - 2 * f);
+  }
+
   /* pointer: jellies ease away from the hand */
   let pX = -9999, pY = -9999;
   addEventListener('pointermove', e => { pX = e.clientX; pY = e.clientY; }, { passive: true });
@@ -131,7 +139,7 @@
         if (!REDUCED){ s.y -= s.v * dt * .15; if (s.y < 0) s.y += 1; }
         const y = r.top + s.y * r.height * .98;
         if (y < -5 || y > H + 5) continue;
-        const a = s.a * (.6 + .4 * Math.sin(t * 1.3 + s.tw));
+        const a = s.a * (.6 + .4 * Math.sin(t * 1.3 + s.tw)) * edgeFade(y, r);
         ctx.beginPath(); ctx.arc(s.x * W, y, s.s, 0, 6.28);
         ctx.fillStyle = `rgba(150,220,220,${a})`; ctx.fill();
       }
@@ -157,7 +165,8 @@
         j.vx *= Math.exp(-dt * 2.2); j.vy *= Math.exp(-dt * 2.2);
         j.px = (j.px + j.vx * dt * 6) * Math.exp(-dt * .6);
         j.py = (j.py + j.vy * dt * 6) * Math.exp(-dt * .6);
-        drawJelly(j, sx, sy, t);
+        const fade = edgeFade(sy, r);
+        if (fade > 0.01) drawJelly(j, sx, sy, t, fade);
       }
       ctx.restore();
     }
