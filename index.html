@@ -60,7 +60,7 @@ header.gone{opacity:0}
 header.gone a{pointer-events:none}
 @media(prefers-reduced-motion:reduce){header{transition:none}}
 header a{pointer-events:auto;text-decoration:none}
-header .wordmark{color:var(--ink);font-weight:600;letter-spacing:.22em;display:inline-flex;align-items:center;gap:.6rem;direction:ltr}
+header .wordmark{color:var(--ink);font-weight:600;letter-spacing:.1em;font-size:.85rem;display:inline-flex;align-items:center;gap:.6rem;direction:ltr}
 header .wordmark .mark{width:26px;height:26px;flex:none}
 header .wordmark b,.hero-title h1 b{font-weight:inherit;color:var(--accent)}
 header .est{display:none}
@@ -96,7 +96,7 @@ header .est{display:none}
 .hero-right{display:flex;flex-direction:column;justify-content:flex-end;gap:.9rem}
 .hero-title{text-align:start;padding-top:1vh}
 .hero-title h1{
-  font-weight:300;letter-spacing:.42em;
+  font-weight:300;letter-spacing:.12em;
   font-size:clamp(1.7rem,4.6vw,3.5rem);
   color:#eef3fa;
   text-shadow:0 1px 24px rgba(10,22,40,.45);
@@ -264,12 +264,10 @@ html[lang=ar] header,html[lang=ar] .hero-grid{direction:ltr}
 html[lang=ar] header > *,html[lang=ar] .hero-right{direction:rtl}
 html[lang=ar] .hero-title{text-align:left}
 html[lang=ar] header .wordmark{direction:ltr}
-html[lang=ar] header .wordmark *,html[lang=ar] .hero-title h1 *{letter-spacing:inherit!important}
-html[lang=ar] header .wordmark,html[lang=ar] .hero-title h1{font-family:var(--mono)}
+html[lang=ar] .hero-title h1{font-weight:500}
+html[lang=ar] header .wordmark{font-size:1.05rem}
 html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
 html[lang=ar] *{letter-spacing:0!important}
-html[lang=ar] .hero-title h1{letter-spacing:.42em!important}
-html[lang=ar] header .wordmark{letter-spacing:.22em!important}
 html[lang=ar] button,html[lang=ar] input,html[lang=ar] select,html[lang=ar] textarea{
   font-family:'IBM Plex Sans Arabic',var(--mono);
 }
@@ -538,6 +536,8 @@ lform.addEventListener('submit', async (e) => {
 /* ================= Arabic content + language toggle ================= */
 const AR_HTML = [
   ['header .est', 'استوديو التسويق العقاري · هاربورفيو · تأسس 2016'],
+  ['header .wordmark span', 'موج'],
+  ['.hero-title h1 span', 'موج'],
   ['.hero-cta.alt', 'تصفّح العقارات ←'],
   ['.scrub label', 'حرّك السوق <output id="scrubout" for="tidescrub">+0.0 شهر</output>'],
 
