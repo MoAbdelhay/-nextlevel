@@ -77,16 +77,28 @@ const insPhoto = db.prepare('INSERT INTO photos (listing_id, filename, original)
 const recentListings = db.prepare('SELECT * FROM listings ORDER BY id DESC LIMIT 60');
 const photosFor = db.prepare('SELECT filename, original FROM photos WHERE listing_id = ? ORDER BY id');
 
-/* starter listings: added once if they are not in the database yet */
+/* starter listings: added once if they are not in the database yet (photos too) */
 try {
   const seeds = JSON.parse(fs.readFileSync(path.join(ROOT, 'seed-listings.json'), 'utf8'));
   const exists = db.prepare('SELECT id FROM listings WHERE title = ? AND city = ?');
+  const photoCount = db.prepare('SELECT COUNT(*) AS n FROM photos WHERE listing_id = ?');
   for (const l of seeds) {
-    if (exists.get(l.title, l.city)) continue;
-    const info = insListing.run(l.title, l.address || '', l.city, l.price, 'house',
-      null, null, null, '', '', l.agent_email, l.purpose === 'rent' ? 'rent' : 'sale');
-    const id = Number(info.lastInsertRowid);
-    setRef.run('LST 2026/' + String(130 + id).padStart(3, '0'), id);
+    let id = exists.get(l.title, l.city)?.id;
+    if (!id) {
+      const info = insListing.run(l.title, l.address || '', l.city, l.price, 'house',
+        null, null, null, '', '', l.agent_email, l.purpose === 'rent' ? 'rent' : 'sale');
+      id = Number(info.lastInsertRowid);
+      setRef.run('LST 2026/' + String(130 + id).padStart(3, '0'), id);
+    }
+    if (l.photos?.length && photoCount.get(id).n === 0) {
+      for (const rel of l.photos) {
+        const src = path.join(ROOT, rel);
+        if (!fs.existsSync(src)) continue;
+        const name = 'seed-' + id + '-' + path.basename(rel);
+        fs.copyFileSync(src, path.join(UPLOAD_DIR, name));
+        insPhoto.run(id, name, path.basename(rel));
+      }
+    }
   }
 } catch (e) {
   if (e.code !== 'ENOENT') console.warn('Could not load seed-listings.json:', e.message);

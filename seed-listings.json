@@ -5,6 +5,9 @@
     "city": "As-Safa, Jeddah",
     "price": 25000,
     "purpose": "rent",
-    "agent_email": "info@takween-studio.com"
+    "agent_email": "info@takween-studio.com",
+    "photos": [
+      "seed/7035-ahmed-laary-as-safa.jpg"
+    ]
   }
 ]
