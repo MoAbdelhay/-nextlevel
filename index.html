@@ -274,13 +274,6 @@ html[lang=ar] .float-card .tag{left:auto;right:.5rem;letter-spacing:0}
 .formstatus.ok b{color:var(--accent);letter-spacing:.14em}
 .formstatus.err{display:block;border-color:#c25c3f;color:#d8a091}
 /* ---------- one screen: the page doesn't scroll, the wheel only stirs the sea ---------- */
-#bubbles{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:40}
-.darter{position:fixed;z-index:41;pointer-events:none}
-.fish .fill{fill:rgba(170,215,240,.75)}
-.fish.gold .fill{fill:rgba(217,164,74,.85)}
-.fish .eye{fill:#0a1628}
-.fish{display:block;filter:drop-shadow(0 0 5px rgba(140,210,255,.45))}
-.fish.gold{filter:drop-shadow(0 0 5px rgba(217,164,74,.5))}
 @media(min-width:901px) and (min-height:640px){
   html,body{height:100%;overflow:hidden;overscroll-behavior:none}
   #hero,.hero-grid{height:100vh;height:100svh}
@@ -840,7 +833,5 @@ if (THREE) try {
 window.__simHours = simHours;
 window.__reducedMotion = REDUCED;
 </script>
-<canvas id="bubbles" aria-hidden="true"></canvas>
-<script src="bubbles.js" defer></script>
 </body>
 </html>
