@@ -22,7 +22,7 @@
   --faint:#5b6e88;
   --line:rgba(220,230,242,.13);
   --sea:#16325a;
-  --accent:#d9a44a;
+  --accent:#dce6f2;          /* buttons + form highlights: same as the Browse listings hover */
   --abyss:#040b18;
   --serif:'Newsreader',Georgia,serif;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
@@ -137,6 +137,43 @@ input[type=range]::-webkit-slider-thumb{
 }
 input[type=range]::-moz-range-track{height:2px;background:var(--faint)}
 input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:none}
+/* latest listings bobbing on the water, between the title and the form */
+.hero-grid{position:relative}
+.hero-floats{
+  position:absolute;z-index:6;bottom:9%;
+  left:clamp(1.4rem,4vw,3.5rem);right:calc(clamp(1.4rem,4vw,3.5rem) + 450px + 3rem);
+  display:flex;justify-content:center;align-items:flex-end;gap:1.1rem;pointer-events:none;
+}
+.float-card{
+  pointer-events:auto;flex:0 0 200px;display:block;text-decoration:none;color:var(--ink);
+  background:rgba(10,22,40,.5);backdrop-filter:blur(10px) saturate(1.15);-webkit-backdrop-filter:blur(10px) saturate(1.15);
+  border:1px solid rgba(220,230,242,.18);
+  box-shadow:0 18px 30px -18px rgba(2,8,20,.8);
+  animation:bobcard 6s ease-in-out infinite;
+  transition:border-color .3s,background .3s;
+}
+.float-card:nth-child(2){animation-duration:6.8s;animation-delay:-2.1s}
+.float-card:nth-child(3){animation-duration:5.6s;animation-delay:-3.7s}
+.float-card:hover{border-color:rgba(220,230,242,.55);background:rgba(10,22,40,.66)}
+@keyframes bobcard{0%,100%{transform:translateY(0) rotate(-.7deg)}50%{transform:translateY(-10px) rotate(.7deg)}}
+.float-card .ph{position:relative;height:108px;overflow:hidden;
+  background:radial-gradient(120% 90% at 30% 20%,#1d4f86 0%,#10213a 60%,#0a1628 100%);
+  display:flex;align-items:center;justify-content:center}
+.float-card .ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
+.float-card .ph .mark{width:46px;height:46px;color:#dce6f2;opacity:.55}
+.float-card .tag{position:absolute;top:.5rem;left:.5rem;font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:.2rem .45rem;background:var(--ink);color:#0a1628;font-weight:600}
+.float-card .tag.rent{background:rgba(10,22,40,.75);color:var(--ink);border:1px solid rgba(220,230,242,.55)}
+.float-card .tx{padding:.7rem .85rem .8rem}
+.float-card .tt{font-size:.74rem;font-weight:500;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.float-card .lc{font-size:.62rem;color:var(--dim);letter-spacing:.06em;margin-top:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.float-card .pr{font-size:.74rem;margin-top:.4rem;font-variant-numeric:tabular-nums;letter-spacing:.05em}
+.float-card .pr small{color:var(--dim);font-size:.62rem}
+@media(max-width:1180px){.float-card:nth-child(3){display:none}}
+@media(prefers-reduced-motion:reduce){.float-card{animation:none}}
+html[lang=ar] .float-card .tx{direction:rtl;text-align:right}
+html[lang=ar] .float-card .tag{left:auto;right:.5rem;letter-spacing:0}
+
 /* submit form floating over the sea */
 .formglass{
   background:rgba(10,22,40,.48);backdrop-filter:blur(12px) saturate(1.15);-webkit-backdrop-filter:blur(12px) saturate(1.15);
@@ -155,6 +192,10 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
   .hero-grid{grid-template-columns:1fr;padding-top:4.6rem}
   .hero-left,.hero-right{display:contents}
   .hero-title{order:1;padding:2vh 0 1rem}
+  .hero-floats{position:static;order:2;justify-content:flex-start;overflow-x:auto;padding:.4rem .2rem 1rem;margin:0 -.2rem;scrollbar-width:none}
+  .hero-floats:empty{display:none}
+  .float-card{flex-basis:180px}
+  .float-card:nth-child(3){display:block}
   #submit{order:2}
   .scrub{order:3}
 }
@@ -305,6 +346,7 @@ html[lang=ar] input[type=range]{direction:ltr}
       </div>
 
     </div>
+    <div class="hero-floats" id="floats" aria-label="Latest listings"></div>
     <div class="hero-right">
       <div id="submit" class="formglass">
         <div class="kicker">Submit a listing</div>
@@ -374,6 +416,7 @@ const TXT = {
     offline:'The studio server is not answering. Start it with <b>npm start</b> in the project folder and open http://localhost:3000.',
     refused:'Submission refused.',
     title:'MOUJ — Real Estate Marketing Studio',
+    sale:'For sale', rent:'For rent', perMonth:' / month',
   },
   ar: {
     mo:' شهر',
@@ -385,6 +428,7 @@ const TXT = {
     offline:'خادم الاستوديو لا يستجيب. شغّله بالأمر <b>npm start</b> داخل مجلد المشروع ثم افتح http://localhost:3000.',
     refused:'رُفض الطلب.',
     title:'موج — استوديو التسويق العقاري',
+    sale:'للبيع', rent:'للإيجار', perMonth:' / شهريًا',
   },
 };
 
@@ -473,6 +517,7 @@ lform.addEventListener('submit', async (e) => {
     lform.reset();
     photoFiles = [];
     renderPreviews();
+    loadFloats();
   } catch (err) {
     const offline = err instanceof TypeError;
     showStatus('err', offline ? TXT[LANG].offline : err.message);
@@ -480,6 +525,48 @@ lform.addEventListener('submit', async (e) => {
     sendbtn.disabled = false;
   }
 });
+
+/* ================= latest listings floating on the water ================= */
+const floatsEl = document.getElementById('floats');
+const money = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:0 });
+let FLOATS = [];
+function renderFloats(){
+  const T = TXT[LANG];
+  floatsEl.innerHTML = '';
+  for (const l of FLOATS.slice(0, 3)){
+    const rent = l.purpose === 'rent';
+    const a = document.createElement('a');
+    a.className = 'float-card';
+    a.href = 'listings' + (rent ? '?for=rent' : '?for=sale');
+    const ph = document.createElement('div'); ph.className = 'ph';
+    if (l.photos && l.photos.length){
+      const img = document.createElement('img'); img.src = l.photos[0].url; img.alt = l.title; img.loading = 'lazy';
+      ph.append(img);
+    } else {
+      ph.innerHTML = '<svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg>';
+    }
+    const tag = document.createElement('span'); tag.className = 'tag' + (rent ? ' rent' : ''); tag.textContent = rent ? T.rent : T.sale;
+    ph.append(tag);
+    const tx = document.createElement('div'); tx.className = 'tx';
+    const tt = document.createElement('div'); tt.className = 'tt'; tt.textContent = l.title;
+    const lc = document.createElement('div'); lc.className = 'lc'; lc.textContent = l.city || '';
+    const pr = document.createElement('div'); pr.className = 'pr'; pr.textContent = money.format(l.price);
+    if (rent){ const sm = document.createElement('small'); sm.textContent = T.perMonth; pr.append(sm); }
+    tt.dir = 'auto'; lc.dir = 'auto';
+    tx.append(tt, lc, pr);
+    a.append(ph, tx);
+    floatsEl.append(a);
+  }
+}
+async function loadFloats(){
+  try {
+    const res = await fetch('api/listings');
+    if (!res.ok) return;
+    FLOATS = (await res.json()).listings || [];
+    renderFloats();
+  } catch {}
+}
+loadFloats();
 
 /* ================= Arabic content + language toggle ================= */
 const AR_HTML = [
@@ -530,6 +617,7 @@ function applyLang(lang){
   document.getElementById('langtoggle').textContent = lang === 'ar' ? 'English' : 'عربي';
   document.getElementById('scrubout').textContent =
     (scrubOffset >= 0 ? '+' : '−') + Math.abs(scrubOffset).toFixed(1) + TXT[lang].mo;
+  renderFloats();
 }
 document.getElementById('langtoggle').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
 if (LANG === 'ar') applyLang('ar');

@@ -77,6 +77,21 @@ const insPhoto = db.prepare('INSERT INTO photos (listing_id, filename, original)
 const recentListings = db.prepare('SELECT * FROM listings ORDER BY id DESC LIMIT 60');
 const photosFor = db.prepare('SELECT filename, original FROM photos WHERE listing_id = ? ORDER BY id');
 
+/* starter listings: added once if they are not in the database yet */
+try {
+  const seeds = JSON.parse(fs.readFileSync(path.join(ROOT, 'seed-listings.json'), 'utf8'));
+  const exists = db.prepare('SELECT id FROM listings WHERE title = ? AND city = ?');
+  for (const l of seeds) {
+    if (exists.get(l.title, l.city)) continue;
+    const info = insListing.run(l.title, l.address || '', l.city, l.price, 'house',
+      null, null, null, '', '', l.agent_email, l.purpose === 'rent' ? 'rent' : 'sale');
+    const id = Number(info.lastInsertRowid);
+    setRef.run('LST 2026/' + String(130 + id).padStart(3, '0'), id);
+  }
+} catch (e) {
+  if (e.code !== 'ENOENT') console.warn('Could not load seed-listings.json:', e.message);
+}
+
 app.post('/api/listings', upload.array('photos', 12), (req, res) => {
   const b = req.body || {};
   const clean = (v, max = 300) => String(v ?? '').trim().slice(0, max);
