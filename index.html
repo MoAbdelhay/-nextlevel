@@ -8,7 +8,7 @@
 <meta property="og:title" content="NEXTLEVEL — Real Estate Marketing">
 <meta property="og:description" content="Listing launches, media, brand and lead generation. One studio, one rising tide.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a1628'/%3E%3Cpath d='M8 52V30h8v22zm12 0V18h10v34zm14 0V26h8v26zm12 0V36h8v16z' fill='%233a5578'/%3E%3Crect x='22' y='22' width='3' height='3' fill='%23d9a44a'/%3E%3Crect x='27' y='30' width='3' height='3' fill='%23dce6f2'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1628'/%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%23dce6f2' stroke-width='2.5' opacity='.35'/%3E%3Cpath d='M18 34l14-14 14 14' fill='none' stroke='%23d9a44a' stroke-width='5.5' stroke-linecap='square'/%3E%3Cpath d='M10 42c4-2.6 7.5-2.6 11.5 0s7.5 2.6 11.5 0 7.5-2.6 11.5 0 7.5 2.6 11 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M14 50c3.5-2.2 6.5-2.2 10 0s6.5 2.2 10 0 6.5-2.2 10 0 6.5 2.2 10 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
@@ -48,7 +48,7 @@ html{scrollbar-color:#24364f var(--bg);scrollbar-width:thin}
 /* ---------- header ---------- */
 header{
   position:fixed;inset:0 0 auto 0;z-index:20;
-  display:flex;justify-content:space-between;align-items:baseline;
+  display:flex;justify-content:space-between;align-items:center;
   padding:1.1rem 7.5rem 2.2rem 1.4rem;
   background:linear-gradient(rgba(10,22,40,.66),rgba(10,22,40,0));
   transition:opacity .6s cubic-bezier(.22,.61,.36,1);
@@ -60,7 +60,9 @@ header.gone{opacity:0}
 header.gone a{pointer-events:none}
 @media(prefers-reduced-motion:reduce){header{transition:none}}
 header a{pointer-events:auto;text-decoration:none}
-header .wordmark{color:var(--ink);font-weight:600;letter-spacing:.22em}
+header .wordmark{color:var(--ink);font-weight:600;letter-spacing:.22em;display:inline-flex;align-items:center;gap:.6rem;direction:ltr}
+header .wordmark .mark{width:26px;height:26px;flex:none}
+header .wordmark b,.hero-title h1 b{font-weight:inherit;color:var(--accent)}
 header .est{display:none}
 @media(min-width:720px){header .est{display:block}}
 
@@ -95,10 +97,12 @@ header .est{display:none}
 .hero-title{text-align:start;padding-top:1vh}
 .hero-title h1{
   font-weight:300;letter-spacing:.42em;
-  font-size:clamp(1.7rem,5.6vw,4.1rem);
+  font-size:clamp(1.7rem,4.6vw,3.5rem);
   color:#eef3fa;
   text-shadow:0 1px 24px rgba(10,22,40,.45);
+  display:flex;align-items:center;gap:.45em;
 }
+.hero-title h1 .mark{width:1.35em;height:1.35em;flex:none;color:#eef3fa;filter:drop-shadow(0 1px 14px rgba(10,22,40,.45))}
 .hero-title p{
   margin-top:.9rem;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;
   color:rgba(238,243,250,.75);
@@ -263,6 +267,9 @@ footer .cols{display:flex;flex-wrap:wrap;gap:1rem 3rem}
 html[lang=ar] header,html[lang=ar] .hero-grid{direction:ltr}
 html[lang=ar] header > *,html[lang=ar] .hero-right{direction:rtl}
 html[lang=ar] .hero-title{text-align:left}
+html[lang=ar] header .wordmark{direction:ltr}
+html[lang=ar] header .wordmark *,html[lang=ar] .hero-title h1 *{letter-spacing:inherit!important}
+html[lang=ar] header .wordmark,html[lang=ar] .hero-title h1{font-family:var(--mono)}
 html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
 html[lang=ar] *{letter-spacing:0!important}
 html[lang=ar] .hero-title h1{letter-spacing:.42em!important}
@@ -281,9 +288,17 @@ html[lang=ar] input[type=range]{direction:ltr}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="nl-mark" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".35"/>
+    <path d="M18 34l14-14 14 14" fill="none" stroke="#d9a44a" stroke-width="5" stroke-linecap="square"/>
+    <path d="M10 42c4-2.6 7.5-2.6 11.5 0s7.5 2.6 11.5 0 7.5-2.6 11.5 0 7.5 2.6 11 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <path d="M14 50c3.5-2.2 6.5-2.2 10 0s6.5 2.2 10 0 6.5-2.2 10 0 6.5 2.2 10 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+  </symbol>
+</svg>
 
 <header>
-  <a class="wordmark" href="#hero">NEXTLEVEL</a>
+  <a class="wordmark" href="#hero" aria-label="NEXTLEVEL home"><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span>NEXT<b>LEVEL</b></span></a>
   <span class="est">Real Estate Marketing Studio · Harborview · Est. 2016</span>
 </header>
 
@@ -299,7 +314,7 @@ html[lang=ar] input[type=range]{direction:ltr}
   <div class="hero-grid">
     <div class="hero-left">
       <div class="hero-title">
-        <h1>NEXTLEVEL</h1>
+        <h1><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span>NEXT<b>LEVEL</b></span></h1>
         <p>Real estate marketing · listings launched · one rising tide</p>
         <div class="hero-ctas">
           <a class="hero-cta alt" href="listings">Browse listings →</a>
