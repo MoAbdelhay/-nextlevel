@@ -208,9 +208,11 @@ function render(){
     const prc = document.createElement('div'); prc.className = 'prc'; prc.append(priceEl(l.price, purpose === 'rent' ? T.perYear : ''));
     ttl.dir = 'auto'; loc.dir = 'auto';
     inner.append(ttl, loc, prc);
-    if (l.agent_email){
+    const phone = (l.agent_phone || '').replace(/[^+0-9]/g, '');
+    if (phone || l.agent_email){
       const a = document.createElement('a'); a.className = 'enq';
-      a.href = 'mailto:' + l.agent_email + '?subject=' + encodeURIComponent('Enquiry: ' + l.title + (l.ref ? ' (' + l.ref + ')' : ''));
+      a.href = phone ? 'tel:' + phone
+        : 'mailto:' + l.agent_email + '?subject=' + encodeURIComponent('Enquiry: ' + l.title + (l.ref ? ' (' + l.ref + ')' : ''));
       a.textContent = T.enquire;
       inner.append(a);
     }
@@ -254,7 +256,7 @@ async function fetchListings(){
   if (!res.ok) throw new Error('no listings');
   return (await res.json()).map((l, i) => ({
     id: i + 1, ref: null, title: l.title, address: l.address || '', city: l.city, price: l.price,
-    purpose: l.purpose === 'rent' ? 'rent' : 'sale', agent_email: l.agent_email,
+    purpose: l.purpose === 'rent' ? 'rent' : 'sale', agent_email: l.agent_email, agent_phone: l.agent_phone,
     photos: (l.photos || []).map(p => ({ url: p })),
   }));
 }

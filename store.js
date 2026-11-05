@@ -102,6 +102,7 @@ function sqliteStore() {
       description TEXT,
       agent_name  TEXT NOT NULL,
       agent_email TEXT NOT NULL,
+      agent_phone TEXT,
       created_at  TEXT NOT NULL DEFAULT (datetime('now'))
     );
     CREATE TABLE IF NOT EXISTS photos (
@@ -111,14 +112,14 @@ function sqliteStore() {
       original   TEXT
     );
   `);
-  /* older databases: add the sale/rent column if it is missing */
-  if (!db.prepare('PRAGMA table_info(listings)').all().some((c) => c.name === 'purpose')) {
-    db.exec("ALTER TABLE listings ADD COLUMN purpose TEXT NOT NULL DEFAULT 'sale'");
-  }
+  /* older databases: add newer columns if they are missing */
+  const cols = db.prepare('PRAGMA table_info(listings)').all().map((c) => c.name);
+  if (!cols.includes('purpose')) db.exec("ALTER TABLE listings ADD COLUMN purpose TEXT NOT NULL DEFAULT 'sale'");
+  if (!cols.includes('agent_phone')) db.exec('ALTER TABLE listings ADD COLUMN agent_phone TEXT');
 
   const insListing = db.prepare(`
-    INSERT INTO listings (title, address, city, price, type, beds, baths, sqft, description, agent_name, agent_email, purpose)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+    INSERT INTO listings (title, address, city, price, type, beds, baths, sqft, description, agent_name, agent_email, agent_phone, purpose)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
   const setRef = db.prepare('UPDATE listings SET ref = ? WHERE id = ?');
   const insPhoto = db.prepare('INSERT INTO photos (listing_id, filename, original) VALUES (?, ?, ?)');
   const recent = db.prepare('SELECT * FROM listings ORDER BY id DESC LIMIT 60');
@@ -128,7 +129,7 @@ function sqliteStore() {
 
   function insert(f) {
     const info = insListing.run(f.title, f.address, f.city, f.price, f.type, f.beds, f.baths, f.sqft,
-      f.description, f.agent_name, f.agent_email, f.purpose);
+      f.description, f.agent_name, f.agent_email || '', f.agent_phone || null, f.purpose);
     const id = Number(info.lastInsertRowid);
     const ref = makeRef(id);
     setRef.run(ref, id);
@@ -173,7 +174,7 @@ function sqliteStore() {
 function seedFields(l) {
   return {
     title: l.title, address: l.address || '', city: l.city, price: l.price, type: 'house',
-    beds: null, baths: null, sqft: null, description: '', agent_name: '', agent_email: l.agent_email,
+    beds: null, baths: null, sqft: null, description: '', agent_name: '', agent_email: l.agent_email || '', agent_phone: l.agent_phone || null,
     purpose: l.purpose === 'rent' ? 'rent' : 'sale',
   };
 }

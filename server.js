@@ -40,7 +40,7 @@ app.post('/api/listings', upload.array('photos', 12), async (req, res, next) => 
 
     const title = clean(b.title, 140);
     const city = clean(b.city, 120);
-    const agentEmail = clean(b.agent_email, 200);
+    const agentPhone = clean(b.agent_phone, 20);
     const price = Math.round(Number(b.price));
     const purpose = clean(b.purpose, 10);
 
@@ -49,7 +49,7 @@ app.post('/api/listings', upload.array('photos', 12), async (req, res, next) => 
     if (!city) errors.push('Location is required.');
     if (purpose !== 'sale' && purpose !== 'rent') errors.push('Choose Sale or Rent.');
     if (!Number.isFinite(price) || price <= 0) errors.push('Asking price must be a positive number.');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(agentEmail)) errors.push('A valid contact email is required.');
+    if (!/^\+?[0-9 ()-]{7,20}$/.test(agentPhone) || agentPhone.replace(/\D/g, '').length < 7) errors.push('A valid contact phone number is required.');
     if (errors.length) return res.status(400).json({ ok: false, errors });
 
     const num = (v) => { const n = Number(v); return v !== '' && v != null && Number.isFinite(n) && n >= 0 ? n : null; };
@@ -60,7 +60,7 @@ app.post('/api/listings', upload.array('photos', 12), async (req, res, next) => 
       title, address: clean(b.address, 200), city, price, type,
       beds: num(b.beds), baths: num(b.baths), sqft: num(b.sqft),
       description: clean(b.description, 4000), agent_name: clean(b.agent_name, 120),
-      agent_email: agentEmail, purpose,
+      agent_email: '', agent_phone: agentPhone, purpose,
     }, req.files || []);
     res.status(201).json({ ok: true, ...result });
   } catch (e) { next(e); }

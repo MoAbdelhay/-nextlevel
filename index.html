@@ -370,8 +370,8 @@ html[lang=ar] input[type=range]{direction:ltr}
               <input type="number" name="price" min="1" step="1" placeholder="850000" required>
             </label>
             <label class="full">
-              <span class="flabel">Contact email <span class="req">*</span></span>
-              <input type="email" name="agent_email" maxlength="200" placeholder="you@brokerage.com" required>
+              <span class="flabel">Contact phone <span class="req">*</span></span>
+              <input type="tel" name="agent_phone" maxlength="20" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="05X XXX XXXX" pattern="[+0-9 ()\-]{7,20}" required>
             </label>
             <div class="full">
               <span class="flabel" style="display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.45rem">Photos</span>
@@ -575,7 +575,7 @@ async function fetchListings(){
   if (!res.ok) throw new Error('no listings');
   return (await res.json()).map((l, i) => ({
     id: i + 1, ref: null, title: l.title, address: l.address || '', city: l.city, price: l.price,
-    purpose: l.purpose === 'rent' ? 'rent' : 'sale', agent_email: l.agent_email,
+    purpose: l.purpose === 'rent' ? 'rent' : 'sale', agent_email: l.agent_email, agent_phone: l.agent_phone,
     photos: (l.photos || []).map(p => ({ url: p })),
   }));
 }
@@ -599,7 +599,7 @@ const AR_HTML = [
   ['.lform label:nth-of-type(1) .flabel', 'عنوان العقار <span class="req">*</span>'],
   ['.lform label:nth-of-type(2) .flabel', 'الموقع <span class="req">*</span>'],
   ['.lform label:nth-of-type(3) .flabel', 'السعر (<svg class="riyal" role="img" aria-label="SAR"><use href="#riyal"/></svg>) <span class="req">*</span>'],
-  ['.lform label:nth-of-type(4) .flabel', 'البريد الإلكتروني للتواصل <span class="req">*</span>'],
+  ['.lform label:nth-of-type(4) .flabel', 'رقم الجوال للتواصل <span class="req">*</span>'],
   ['.purpose .flabel', 'نوع العرض <span class="req">*</span>'],
   ['.seg label:nth-child(1) span', 'للبيع'],
   ['.seg label:nth-child(2) span', 'للإيجار'],
