@@ -64,8 +64,10 @@ header a{pointer-events:auto;text-decoration:none}
 header .wordmark{color:var(--ink);font-weight:600;letter-spacing:.1em;font-size:.85rem;display:inline-flex;align-items:center;gap:.6rem;direction:ltr}
 header .wordmark .mark{width:26px;height:26px;flex:none}
 header .wordmark b,.hero-title h1 b{font-weight:inherit;color:var(--accent)}
-header .est{display:none}
-@media(min-width:720px){header .est{display:block}}
+header .credit{letter-spacing:.12em;text-transform:none;font-size:.7rem}
+header .credit a{color:var(--ink);border-bottom:1px solid var(--line)}
+header .credit a:hover{color:var(--accent);border-color:var(--accent)}
+@media(max-width:520px){header .credit{font-size:.58rem;letter-spacing:.04em;line-height:1.35;text-align:end;max-width:8.5rem}}
 
 /* ---------- hero ---------- */
 #hero{
@@ -76,7 +78,7 @@ header .est{display:none}
 #sea{position:absolute;inset:0;width:100%;height:100%;display:block}
 #hero .cloudveil{
   position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(rgba(10,22,40,.55) 0%,rgba(10,22,40,0) 34%,rgba(10,22,40,0) 66%,rgba(8,20,40,.55) 84%,#081428 100%);
+  background:linear-gradient(rgba(10,22,40,.55) 0%,rgba(10,22,40,0) 34%,rgba(10,22,40,0) 72%,rgba(10,22,40,.72) 100%);
 }
 #hero .grain{
   position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
@@ -162,19 +164,12 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 }
 
 /* ---------- shared section chrome ---------- */
-main{position:relative;z-index:2;background:var(--abyss)}
-section{padding:6rem 1.4rem}
-.shell{max-width:72rem;margin:0 auto}
 .kicker{
   font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);
   display:flex;align-items:center;gap:1rem;margin-bottom:2.6rem;
 }
 .kicker::after{content:'';flex:1;height:1px;background:var(--line)}
 .kicker .no{color:var(--dim)}
-h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);margin-bottom:1.2rem}
-
-.reveal{opacity:0;transform:translateY(14px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
-.reveal.in{opacity:1;transform:none}
 
 /* ---------- submit a listing ---------- */
 .lform{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem 1.6rem;max-width:56rem}
@@ -233,61 +228,18 @@ h2{font-weight:400;letter-spacing:.06em;font-size:clamp(1.3rem,2.6vw,1.9rem);mar
 .formstatus.ok{display:block;border-color:var(--accent);color:var(--ink)}
 .formstatus.ok b{color:var(--accent);letter-spacing:.14em}
 .formstatus.err{display:block;border-color:#c25c3f;color:#d8a091}
-/* ---------- the deep ---------- */
-#depths{
-  position:relative;height:240vh;min-height:1500px;padding:0;overflow:hidden;
-  background:linear-gradient(#081428 0%,#071328 12%,#050f21 40%,#040c1b 70%,var(--abyss) 100%);
-}
-#deepcanvas,#bubbles{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
-#deepcanvas{z-index:2}
-#bubbles{z-index:40}
-#depths .zone{position:absolute;left:clamp(1rem,3vw,2.4rem);z-index:4;display:flex;flex-direction:column;gap:.2rem;
-  font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(150,200,220,.45)}
-#depths .zone span{color:rgba(120,235,225,.7)}
-#depths .zone em{font-style:normal}
-#depths .zone::before{content:'';width:2.2rem;height:1px;background:rgba(120,235,225,.35);margin-bottom:.4rem}
-#depths .deep-hint{position:absolute;left:0;right:0;top:3%;text-align:center;z-index:4;
-  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(160,210,230,.45)}
-.cr-lane{position:absolute;left:0;right:0;height:90px;z-index:3;pointer-events:none}
-.cr.swims{position:absolute;top:0;left:0;animation:swimL 30s linear infinite}
-.cr.swims.to-right{animation-name:swimR}
-.cr.swims.to-right .school{transform:scaleX(-1)}
-@keyframes swimL{from{transform:translateX(105vw)}to{transform:translateX(-260px)}}
-@keyframes swimR{from{transform:translateX(-260px)}to{transform:translateX(105vw)}}
-.school{position:relative;width:200px;height:90px}
-.school .fish{position:absolute;animation:bob 2.2s ease-in-out infinite}
-@keyframes bob{50%{translate:0 -5px}}
-.fish .fill{fill:rgba(170,215,240,.7)}
-.fish.gold .fill,.school.gold .fill{fill:rgba(217,164,74,.85)}
-.fish .eye{fill:#0a1628}
-.cr-art{display:block;filter:drop-shadow(0 0 5px rgba(140,210,255,.45))}
-.school.gold .cr-art,.fish.gold{filter:drop-shadow(0 0 5px rgba(217,164,74,.5))}
+/* ---------- one screen: the page doesn't scroll, the wheel only stirs the sea ---------- */
+#bubbles{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:40}
 .darter{position:fixed;z-index:41;pointer-events:none}
-#depthgauge{position:fixed;left:1.2rem;bottom:1.2rem;z-index:15;pointer-events:none;
-  font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(160,210,230,.6);
-  background:rgba(4,10,22,.55);border:1px solid rgba(120,235,225,.2);padding:.55rem .8rem;
-  opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
-#depthgauge.on{opacity:1;transform:none}
-#depthgauge b{color:rgba(120,235,225,.95);font-weight:500;font-size:.9rem;letter-spacing:.06em;font-variant-numeric:tabular-nums}
-@media(prefers-reduced-motion:reduce){.cr.swims,.school .fish{animation:none}.cr.swims{transform:translateX(30vw)}}
-
-/* ---------- contact ---------- */
-#contact .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-#contact .cell{background:var(--bg2);padding:1.6rem 1.5rem 1.8rem}
-#contact .cell .lbl{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.6rem}
-#contact .cell .big{font-size:.95rem;color:var(--ink);letter-spacing:.04em}
-#contact .cell a{text-decoration:none;border-bottom:1px solid var(--line)}
-#contact .cell a:hover{color:var(--accent);border-color:var(--accent)}
-
-/* ---------- footer ---------- */
-footer{
-  padding:3.4rem 1.4rem 3rem;border-top:1px solid var(--line);background:var(--abyss);
-  font-size:.68rem;color:var(--faint);letter-spacing:.08em;
+.fish .fill{fill:rgba(170,215,240,.75)}
+.fish.gold .fill{fill:rgba(217,164,74,.85)}
+.fish .eye{fill:#0a1628}
+.fish{display:block;filter:drop-shadow(0 0 5px rgba(140,210,255,.45))}
+.fish.gold{filter:drop-shadow(0 0 5px rgba(217,164,74,.5))}
+@media(min-width:901px) and (min-height:640px){
+  html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+  #hero,.hero-grid{height:100vh;height:100svh}
 }
-footer .shell{display:flex;flex-wrap:wrap;gap:1.2rem 3rem;justify-content:space-between}
-footer a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
-footer a:hover{color:var(--ink)}
-footer .cols{display:flex;flex-wrap:wrap;gap:1rem 3rem}
 
 /* ---------- language toggle + Arabic (RTL) ---------- */
 .langtoggle{
@@ -315,7 +267,6 @@ html[lang=ar] input[type=range]{direction:ltr}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .reveal{opacity:1;transform:none;transition:none}
   #moonbtn{transition:none}
 }
 </style>
@@ -332,7 +283,7 @@ html[lang=ar] input[type=range]{direction:ltr}
 
 <header>
   <a class="wordmark" href="#hero" aria-label="Mouj home"><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span>MOUJ</span></a>
-  <span class="est">Real Estate Marketing Studio · Harborview · Est. 2016</span>
+  <span class="credit">Powered by <a href="https://takween-studio.com" target="_blank" rel="noopener">Takween Studio</a></span>
 </header>
 
 <button class="langtoggle" id="langtoggle" type="button" aria-label="Switch language / تغيير اللغة">عربي</button>
@@ -356,7 +307,7 @@ html[lang=ar] input[type=range]{direction:ltr}
     </div>
     <div class="hero-right">
       <div id="submit" class="formglass">
-        <div class="kicker"><span class="no">§ 1</span> Submit a listing</div>
+        <div class="kicker">Submit a listing</div>
         <form id="listingform" novalidate>
           <div class="lform">
             <div class="full purpose" role="radiogroup" aria-label="Listing for">
@@ -405,54 +356,6 @@ html[lang=ar] input[type=range]{direction:ltr}
     </div>
   </div>
 </div>
-
-<!-- ============ THE DEEP ============ -->
-<section id="depths" aria-label="The deep: jellyfish and fish drifting below the surface">
-  <div class="zone" style="top:6%"><span>10 m</span><em>Sunlit water</em></div>
-  <div class="zone" style="top:32%"><span>200 m</span><em>Twilight zone</em></div>
-  <div class="zone" style="top:58%"><span>600 m</span><em>Midnight zone</em></div>
-  <div class="zone" style="top:82%"><span>1000 m</span><em>The abyss</em></div>
-  <p class="deep-hint">Move through the water gently · click for bubbles</p>
-</section>
-<canvas id="deepcanvas" aria-hidden="true"></canvas>
-<canvas id="bubbles" aria-hidden="true"></canvas>
-<div id="depthgauge" aria-hidden="true">Depth <b>0</b> m</div>
-
-<main>
-
-<!-- ============ CONTACT ============ -->
-<section id="contact">
-  <div class="shell">
-    <div class="kicker reveal"><span class="no">§ 2</span> Raise your tide</div>
-    <div class="grid reveal">
-      <div class="cell">
-        <div class="lbl">New campaigns</div>
-        <div class="big"><a href="mailto:info@takween-studio.com">info@takween-studio.com</a></div>
-      </div>
-      <div class="cell">
-        <div class="lbl">Studio line</div>
-        <div class="big"><a href="tel:+15550194200">+1 (555) 019-4200</a></div>
-      </div>
-      <div class="cell">
-        <div class="lbl">Hours</div>
-        <div class="big">Mon–Fri 09:00–18:00<br>Twilight shoots by the light</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<footer>
-  <div class="shell">
-    <div class="cols">
-      <span>MOUJ · Real Estate Marketing</span>
-    </div>
-    <span>
-      Powered by <a href="https://takween-studio.com" target="_blank" rel="noopener">Takween Studio</a>
-    </span>
-  </div>
-</footer>
 
 <script>
 /* ================= shared market-tide model (no WebGL dependency) ================= */
@@ -508,12 +411,6 @@ const hdr = document.querySelector('header');
 new IntersectionObserver(es => {
   for (const e of es) hdr.classList.toggle('gone', !e.isIntersecting);
 }, { threshold: 0.04 }).observe(document.getElementById('hero'));
-
-/* ---------- scroll reveals ---------- */
-const io = new IntersectionObserver(es => {
-  for (const e of es) if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ================= listing submission ================= */
 const lform = document.getElementById('listingform');
@@ -586,13 +483,13 @@ lform.addEventListener('submit', async (e) => {
 
 /* ================= Arabic content + language toggle ================= */
 const AR_HTML = [
-  ['header .est', 'استوديو التسويق العقاري · هاربورفيو · تأسس 2016'],
+  ['header .credit', 'مدعوم من <a href="https://takween-studio.com" target="_blank" rel="noopener">تكوين ستوديو</a>'],
   ['header .wordmark span', 'موج'],
   ['.hero-title h1 span', 'موج'],
   ['.hero-cta.alt', 'تصفّح العقارات ←'],
   ['.scrub label', 'حرّك السوق <output id="scrubout" for="tidescrub">+0.0 شهر</output>'],
 
-  ['#submit .kicker', '<span class="no">§ 1</span> قدّم عقارك'],
+  ['#submit .kicker', 'قدّم عقارك'],
   ['.lform label:nth-of-type(1) .flabel', 'عنوان العقار <span class="req">*</span>'],
   ['.lform label:nth-of-type(2) .flabel', 'الموقع <span class="req">*</span>'],
   ['.lform label:nth-of-type(3) .flabel', 'السعر ($) <span class="req">*</span>'],
@@ -605,20 +502,6 @@ const AR_HTML = [
   ['.dropzone .sub', 'JPEG · PNG · WebP · حتى 12 صورة · 8 م.ب لكل صورة'],
   ['#sendbtn', 'قيّد العقار ←'],
 
-  ['#depths .zone:nth-of-type(1) em', 'المياه المضيئة'],
-  ['#depths .zone:nth-of-type(2) em', 'منطقة الشفق'],
-  ['#depths .zone:nth-of-type(3) em', 'منطقة منتصف الليل'],
-  ['#depths .zone:nth-of-type(4) em', 'الأعماق السحيقة'],
-  ['#depths .deep-hint', 'تحرّك في الماء بهدوء · انقر لتظهر الفقاعات'],
-  ['#depthgauge', 'العمق <b>0</b> م'],
-  ['#contact .kicker', '<span class="no">§ 2</span> ارفع مدّك'],
-  ['#contact .cell:nth-child(1) .lbl', 'حملات جديدة'],
-  ['#contact .cell:nth-child(2) .lbl', 'خط الاستوديو'],
-  ['#contact .cell:nth-child(3) .lbl', 'الدوام'],
-  ['#contact .cell:nth-child(3) .big', 'الاثنين–الجمعة 09:00–18:00<br>وجلسات الشفق على مواعيد الضوء'],
-
-  ['footer .cols span:nth-child(1)', 'موج · تسويق عقاري'],
-  ['footer > .shell > span', 'مدعوم من <a href="https://takween-studio.com" target="_blank" rel="noopener">تكوين ستوديو</a>'],
 ];
 const AR_PH = [
   ['.lform input[name=title]', 'مثال: منزل بأربع غرف على الواجهة البحرية مع مرسى خاص'],
@@ -856,6 +739,7 @@ if (THREE) try {
 window.__simHours = simHours;
 window.__reducedMotion = REDUCED;
 </script>
-<script src="sea-life.js" defer></script>
+<canvas id="bubbles" aria-hidden="true"></canvas>
+<script src="bubbles.js" defer></script>
 </body>
 </html>
