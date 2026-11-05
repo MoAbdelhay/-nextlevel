@@ -629,6 +629,7 @@ if (THREE) try {
   const uniforms = {
     uTime:  { value: 0 },
     uTide:  { value: 0 },              /* metres relative to mean level */
+    uRough: { value: 1 },              /* wave steepness multiplier, stirred by scrolling */
     uDeep:  { value: new THREE.Color(0x0b2a55) },
     uShal:  { value: new THREE.Color(0x1d4f86) },
     uSky:   { value: FOGCOL.clone() },
@@ -638,7 +639,7 @@ if (THREE) try {
   const mat = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: /* glsl */`
-      uniform float uTime, uTide;
+      uniform float uTime, uTide, uRough;
       varying vec3 vPos;
       varying vec3 vNormal;
       varying float vCrest;
@@ -650,6 +651,7 @@ if (THREE) try {
         float k = 6.28318 / len;
         float c = sqrt(9.8 / k);              /* deep-water celerity */
         float f = k * (dot(d, p0.xz) - c * uTime);
+        steep *= uRough;
         float a = steep / k;
         float S = sin(f), C = cos(f);
         disp += vec3(d.x * a * C, a * S, d.y * a * C);
@@ -727,7 +729,6 @@ if (THREE) try {
   if ('ResizeObserver' in window) new ResizeObserver(resize).observe(hero);
 
   /* ---------- render loop, becalmed ---------- */
-  const t0 = performance.now();
   const METRO = { z0:2.10, H:{M2:[1.42,0.6], S2:[0.48,1.1], K1:[0.11,2.9], O1:[0.09,2.1]} };
   const PERIOD = { M2:12.4206012, S2:12.0, K1:23.9344697, O1:25.8193417 };
   function tideRel(tH){
@@ -735,10 +736,50 @@ if (THREE) try {
     for (const k in METRO.H) h += METRO.H[k][0] * Math.cos((Math.PI*2/PERIOD[k]) * tH - METRO.H[k][1]);
     return h;
   }
+  /* ---------- the sea reacts to scrolling ----------
+     Every wheel / touch / scroll movement adds "energy" that roughens and speeds up
+     the waves, then bleeds away. Scrolling down the page also lowers the camera
+     toward the water. */
+  const CALM = window.__reducedMotion;
+  let energy = 0, surge = 0, surgeTarget = 0, phase = 0, camY = 2.6, last = performance.now();
+  function stir(amount, dir){
+    if (CALM) return;
+    energy = Math.min(1, energy + amount);
+    surgeTarget = Math.max(-1, Math.min(1, surgeTarget + dir * amount * 1.6));
+  }
+  addEventListener('wheel', e => {
+    const px = Math.abs(e.deltaY) * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1);
+    stir(Math.min(px, 400) / 900, Math.sign(e.deltaY));
+  }, { passive: true });
+  let touchY = null;
+  addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+  addEventListener('touchmove', e => {
+    const y = e.touches[0].clientY;
+    if (touchY != null) stir(Math.min(Math.abs(touchY - y), 120) / 260, Math.sign(touchY - y));
+    touchY = y;
+  }, { passive: true });
+  let lastScroll = scrollY;
+  addEventListener('scroll', () => {
+    const d = scrollY - lastScroll; lastScroll = scrollY;
+    stir(Math.min(Math.abs(d), 300) / 1400, Math.sign(d));
+  }, { passive: true });
+
   function draw(){
     const now = performance.now();
-    uniforms.uTime.value = (now - t0) / 1000 * (window.__reducedMotion ? 0 : 0.55);
-    uniforms.uTide.value = tideRel(window.__simHours ? window.__simHours() : 0);
+    const dt = Math.min((now - last) / 1000, 0.1); last = now;
+    energy *= Math.exp(-dt * 0.9);                       /* settles over ~2-3 s */
+    surgeTarget *= Math.exp(-dt * 1.4);
+    surge += (surgeTarget - surge) * Math.min(1, dt * 3);
+    const speed = CALM ? 0 : 0.55 * (1 + energy * 1.6);
+    phase += dt * speed;
+    uniforms.uTime.value = phase;
+    uniforms.uRough.value = 1 + energy * 0.75;           /* capped so crests never fold over */
+    uniforms.uTide.value = tideRel(window.__simHours ? window.__simHours() : 0) + surge * 0.7;
+    const prog = Math.min(1, scrollY / Math.max(1, hero.offsetHeight));
+    const targetY = 2.6 - prog * 1.3 + surge * 0.25;
+    camY += (targetY - camY) * Math.min(1, dt * 4);
+    camera.position.y = camY;
+    camera.lookAt(0, 0.2 - prog * 2, -60);
     renderer.render(scene, camera);
   }
   function frame(){
