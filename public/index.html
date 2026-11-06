@@ -174,6 +174,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 @media(max-width:1180px){.float-card:nth-child(3){display:none}}
 @media(prefers-reduced-motion:reduce){.float-card{animation:none}}
 html[lang=ar] .float-card .tx{direction:rtl;text-align:right}
+html[lang=ar] .float-card .tt,html[lang=ar] .float-card .lc{text-align:right}
 html[lang=ar] .float-card .tag{left:auto;right:.5rem;letter-spacing:0}
 
 .riyal{display:inline-block;height:.82em;width:.86em;vertical-align:-.04em;fill:currentColor;margin-inline-end:.3em}
@@ -190,7 +191,7 @@ html[lang=ar] .float-card .tag{left:auto;right:.5rem;letter-spacing:0}
 .formglass .flabel{color:rgba(220,230,242,.78)!important}
 .formglass .dropzone .sub{color:rgba(220,230,242,.6)}
 .formglass .lform{gap:.85rem 1rem}
-.formglass .lform input:not([type=radio]):not([type=file]){background:rgba(10,22,40,.5)}
+.formglass .lform input:not([type=radio]):not([type=file]),.formglass .lform select,.formglass .lform textarea{background-color:rgba(10,22,40,.5)}
 .formglass .dropzone{background:rgba(10,22,40,.35);padding:1rem}
 .formglass .seg span{padding:.55rem 1.3rem}
 .formglass .sendbtn{background:rgba(10,22,40,.4);width:100%}
@@ -241,7 +242,23 @@ html[lang=ar] .float-card .tag{left:auto;right:.5rem;letter-spacing:0}
   transition:border-color .3s;
 }
 .lform input:focus,.lform select:focus,.lform textarea:focus{outline:none;border-color:var(--dim)}
-.lform textarea{resize:vertical;min-height:7.5rem}
+.lform textarea{resize:vertical;min-height:5rem}
+.more{border:1px solid rgba(220,230,242,.16)}
+.more summary{cursor:pointer;list-style:none;padding:.6rem .8rem;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:.4rem}
+.more summary::-webkit-details-marker{display:none}
+.more summary::before{content:'+';width:1em;color:var(--dim)}
+.more[open] summary::before{content:'−'}
+.more summary small{color:var(--dim);font-size:.9em;letter-spacing:.1em;text-transform:none}
+.subgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem 1rem;padding:.2rem .8rem .9rem}
+.subgrid .full{grid-column:1/-1}
+.subgrid .pin .flabel{display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(220,230,242,.78);margin-bottom:.45rem}
+html[lang=ar] .subgrid .pin .flabel{letter-spacing:0}
+#pickmap{height:180px;border:1px solid var(--line);background:#13243d;cursor:crosshair}
+#pickmap .leaflet-tile-pane{filter:invert(1) hue-rotate(195deg) brightness(.85) contrast(.9) saturate(.6)}
+.pinbar{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-top:.4rem;font-size:.62rem;color:var(--dim)}
+.pinbar button{background:none;border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.62rem;padding:.25rem .5rem;cursor:pointer}
+.pinbar button:hover{border-color:var(--ink)}
+.float-card .fx{font-size:.6rem;color:var(--dim);margin-top:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lform select{appearance:none;-webkit-appearance:none;cursor:pointer;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238fa3bd'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right .8rem center;
@@ -279,6 +296,8 @@ html[lang=ar] .float-card .tag{left:auto;right:.5rem;letter-spacing:0}
 @media(min-width:901px) and (min-height:640px){
   html,body{height:100%;overflow:hidden;overscroll-behavior:none}
   #hero,.hero-grid{height:100vh;height:100svh}
+  .hero-right{min-height:0}
+  #submit{overflow-y:auto;min-height:0;scrollbar-width:thin;scrollbar-color:rgba(220,230,242,.25) transparent}
 }
 
 /* ---------- language toggle + Arabic (RTL) ---------- */
@@ -303,6 +322,7 @@ html[lang=ar] button,html[lang=ar] input,html[lang=ar] select,html[lang=ar] text
   font-family:'IBM Plex Sans Arabic',var(--mono);
 }
 html[lang=ar] .lform select{background-position:left .8rem center;padding-left:2rem}
+html[lang=ar] .more summary,html[lang=ar] .more summary small{letter-spacing:0}
 html[lang=ar] input[type=range]{direction:ltr}
 
 @media(prefers-reduced-motion:reduce){
@@ -365,7 +385,7 @@ html[lang=ar] input[type=range]{direction:ltr}
             </label>
             <label>
               <span class="flabel">Location <span class="req">*</span></span>
-              <input type="text" name="city" maxlength="120" placeholder="Harborview" required>
+              <input type="text" name="city" maxlength="120" placeholder="Jeddah" required>
             </label>
             <label>
               <span class="flabel">Price (<svg class="riyal" role="img" aria-label="SAR"><use href="#riyal"/></svg>) <span class="req">*</span></span>
@@ -375,6 +395,29 @@ html[lang=ar] input[type=range]{direction:ltr}
               <span class="flabel">Contact phone <span class="req">*</span></span>
               <input type="tel" name="agent_phone" maxlength="20" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="05X XXX XXXX" pattern="[+0-9 ()\-]{7,20}" required>
             </label>
+            <details class="full more" id="more">
+              <summary><span class="m-t">More details</span> <small class="m-o">(optional)</small></summary>
+              <div class="subgrid">
+                <label><span class="flabel f-type">Property type</span>
+                  <select name="type"><option value="">—</option><option value="villa">Villa</option><option value="apartment">Apartment</option>
+                    <option value="floor">Floor</option><option value="townhouse">Townhouse</option><option value="land">Land</option>
+                    <option value="building">Building</option><option value="commercial">Commercial</option></select></label>
+                <label><span class="flabel f-district">District</span><input type="text" name="district" maxlength="120" placeholder="As-Safa"></label>
+                <label><span class="flabel f-beds">Bedrooms</span><input type="number" name="beds" min="0" max="30" step="1" inputmode="numeric"></label>
+                <label><span class="flabel f-baths">Bathrooms</span><input type="number" name="baths" min="0" max="30" step="1" inputmode="numeric"></label>
+                <label><span class="flabel f-area">Area (m²)</span><input type="number" name="area_m2" min="1" step="1" inputmode="numeric"></label>
+                <label><span class="flabel f-furn">Furnished</span>
+                  <select name="furnished"><option value="">—</option><option value="yes">Yes</option><option value="no">No</option></select></label>
+                <label class="full"><span class="flabel f-desc">Description</span><textarea name="description" maxlength="4000" rows="3"></textarea></label>
+                <div class="full pin">
+                  <span class="flabel f-pin">Map pin</span>
+                  <div id="pickmap"></div>
+                  <div class="pinbar"><small class="pinhint">Tap the map to place the pin</small>
+                    <span><button type="button" id="mylocation">Use my location</button> <button type="button" id="clearpin">Clear</button></span></div>
+                  <input type="hidden" name="lat"><input type="hidden" name="lng">
+                </div>
+              </div>
+            </details>
             <div class="full">
               <span class="flabel" style="display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:.45rem">Photos</span>
               <label class="dropzone" id="dropzone">
@@ -399,6 +442,7 @@ html[lang=ar] input[type=range]{direction:ltr}
   </div>
 </div>
 
+<script src="mouj.js"></script>
 <script>
 /* ================= shared market-tide model (no WebGL dependency) ================= */
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -546,7 +590,7 @@ function renderFloats(){
     const rent = l.purpose === 'rent';
     const a = document.createElement('a');
     a.className = 'float-card';
-    a.href = 'listings.html' + (rent ? '?for=rent' : '?for=sale');
+    a.href = Moujj.listingUrl(l);
     const ph = document.createElement('div'); ph.className = 'ph';
     if (l.photos && l.photos.length){
       const img = document.createElement('img'); img.src = l.photos[0].url; img.alt = l.title; img.loading = 'lazy';
@@ -558,36 +602,60 @@ function renderFloats(){
     ph.append(tag);
     const tx = document.createElement('div'); tx.className = 'tx';
     const tt = document.createElement('div'); tt.className = 'tt'; tt.textContent = l.title;
-    const lc = document.createElement('div'); lc.className = 'lc'; lc.textContent = l.city || '';
+    const lc = document.createElement('div'); lc.className = 'lc'; lc.textContent = Moujj.place(l);
     const pr = document.createElement('div'); pr.className = 'pr'; pr.append(priceEl(l.price, rent ? T.perYear : ''));
     tt.dir = 'auto'; lc.dir = 'auto';
-    tx.append(tt, lc, pr);
+    tx.append(tt, lc);
+    const f = Moujj.facts(l, LANG).slice(1, 4);
+    if (f.length){ const fx = document.createElement('div'); fx.className = 'fx'; fx.textContent = f.join(' · '); tx.append(fx); }
+    tx.append(pr);
     a.append(ph, tx);
     floatsEl.append(a);
   }
 }
-/* listings from the studio server; on a static host (no server) fall back to the starter listings file */
-async function fetchListings(){
-  try {
-    const res = await fetch('api/listings');
-    const ct = res.headers.get('content-type') || '';
-    if (res.ok && ct.includes('json')) return (await res.json()).listings || [];
-  } catch {}
-  const res = await fetch('seed-listings.json');
-  if (!res.ok) throw new Error('no listings');
-  return (await res.json()).map((l, i) => ({
-    id: i + 1, ref: null, title: l.title, address: l.address || '', city: l.city, price: l.price,
-    purpose: l.purpose === 'rent' ? 'rent' : 'sale', agent_email: l.agent_email, agent_phone: l.agent_phone,
-    photos: (l.photos || []).map(p => ({ url: p })),
-  }));
-}
 async function loadFloats(){
   try {
-    FLOATS = await fetchListings();
+    FLOATS = await Moujj.fetchListings();
     renderFloats();
   } catch {}
 }
 loadFloats();
+
+/* ================= map pin in the form ================= */
+let pickMap = null, pickPin = null;
+function loadLeaflet(){
+  if (window.L) return Promise.resolve();
+  if (!loadLeaflet.p) loadLeaflet.p = new Promise((ok, fail) => {
+    const css = document.createElement('link'); css.rel = 'stylesheet';
+    css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css'; document.head.append(css);
+    const js = document.createElement('script'); js.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+    js.onload = ok; js.onerror = fail; document.head.append(js);
+  });
+  return loadLeaflet.p;
+}
+function setPin(lat, lng){
+  lform.elements.lat.value = lat == null ? '' : lat.toFixed(6);
+  lform.elements.lng.value = lng == null ? '' : lng.toFixed(6);
+  if (!pickMap) return;
+  if (pickPin) { pickPin.remove(); pickPin = null; }
+  if (lat != null) pickPin = L.circleMarker([lat, lng], { radius: 8, color: '#dce6f2', weight: 2, fillColor: '#d9a44a', fillOpacity: 1 }).addTo(pickMap);
+}
+document.getElementById('more').addEventListener('toggle', async e => {
+  if (!e.target.open) return;
+  try { await loadLeaflet(); } catch { return; }
+  if (pickMap) return pickMap.invalidateSize();
+  pickMap = L.map('pickmap', { scrollWheelZoom: false }).setView([21.55, 39.17], 11);   /* Jeddah */
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(pickMap);
+  pickMap.on('click', ev => setPin(ev.latlng.lat, ev.latlng.lng));
+});
+document.getElementById('clearpin').addEventListener('click', () => setPin(null, null));
+document.getElementById('mylocation').addEventListener('click', () => {
+  navigator.geolocation?.getCurrentPosition(p => {
+    setPin(p.coords.latitude, p.coords.longitude);
+    pickMap?.setView([p.coords.latitude, p.coords.longitude], 16);
+  });
+});
+lform.addEventListener('reset', () => setTimeout(() => setPin(null, null)));
 
 /* ================= Arabic content + language toggle ================= */
 const AR_HTML = [
@@ -598,10 +666,16 @@ const AR_HTML = [
   ['.scrub label', 'حرّك السوق <output id="scrubout" for="tidescrub">+0.0 شهر</output>'],
 
   ['#submit .kicker', 'قدّم عقارك'],
-  ['.lform label:nth-of-type(1) .flabel', 'عنوان العقار <span class="req">*</span>'],
-  ['.lform label:nth-of-type(2) .flabel', 'الموقع <span class="req">*</span>'],
-  ['.lform label:nth-of-type(3) .flabel', 'السعر (<svg class="riyal" role="img" aria-label="SAR"><use href="#riyal"/></svg>) <span class="req">*</span>'],
-  ['.lform label:nth-of-type(4) .flabel', 'رقم الجوال للتواصل <span class="req">*</span>'],
+  ['.more .m-t', 'تفاصيل إضافية'], ['.more .m-o', '(اختياري)'],
+  ['.more .f-type', 'نوع العقار'], ['.more .f-district', 'الحي'], ['.more .f-beds', 'غرف النوم'], ['.more .f-baths', 'دورات المياه'],
+  ['.more .f-area', 'المساحة (م²)'], ['.more .f-furn', 'مفروش'], ['.more .f-desc', 'الوصف'], ['.more .f-pin', 'الموقع على الخريطة'],
+  ['.more select[name=type]', '<option value="">—</option><option value="villa">فيلا</option><option value="apartment">شقة</option><option value="floor">دور</option><option value="townhouse">تاون هاوس</option><option value="land">أرض</option><option value="building">عمارة</option><option value="commercial">تجاري</option>'],
+  ['.more select[name=furnished]', '<option value="">—</option><option value="yes">نعم</option><option value="no">لا</option>'],
+  ['.pinhint', 'انقر على الخريطة لوضع الدبوس'], ['#mylocation', 'موقعي الحالي'], ['#clearpin', 'مسح'],
+  ['.lform > label:nth-of-type(1) .flabel', 'عنوان العقار <span class="req">*</span>'],
+  ['.lform > label:nth-of-type(2) .flabel', 'الموقع <span class="req">*</span>'],
+  ['.lform > label:nth-of-type(3) .flabel', 'السعر (<svg class="riyal" role="img" aria-label="SAR"><use href="#riyal"/></svg>) <span class="req">*</span>'],
+  ['.lform > label:nth-of-type(4) .flabel', 'رقم الجوال للتواصل <span class="req">*</span>'],
   ['.purpose .flabel', 'نوع العرض <span class="req">*</span>'],
   ['.seg label:nth-child(1) span', 'للبيع'],
   ['.seg label:nth-child(2) span', 'للإيجار'],
@@ -613,7 +687,8 @@ const AR_HTML = [
 ];
 const AR_PH = [
   ['.lform input[name=title]', 'مثال: منزل بأربع غرف على الواجهة البحرية مع مرسى خاص'],
-  ['.lform input[name=city]', 'هاربورفيو'],
+  ['.lform input[name=city]', 'جدة'],
+  ['.lform input[name=district]', 'الصفا'],
 ];
 
 const I18N_EN = new Map();

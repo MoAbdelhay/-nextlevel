@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 :root{
   --bg:#0a1628; --bg2:#0d1b30; --ink:#dce6f2; --dim:#8fa3bd; --faint:#5b6e88;
@@ -46,6 +47,19 @@ h1{font-size:1.5rem;font-weight:500;letter-spacing:.14em;text-transform:uppercas
 .lbar input:focus,.lbar select:focus{outline:none;border-color:var(--dim)}
 .lbar select{cursor:pointer}
 .lcount{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.lbar input.num{flex:0 1 9rem}
+.lbar2{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:-.4rem 0 1.2rem}
+.viewtabs{display:flex;border:1px solid var(--line)}
+.viewtabs button{background:none;border:0;color:var(--dim);font-family:inherit;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;padding:.45rem .9rem;cursor:pointer}
+.viewtabs button[aria-selected=true]{background:var(--ink);color:#0a1628}
+#lmap{height:min(70vh,560px);border:1px solid var(--line);background:#13243d}
+.leaflet-tile-pane{filter:invert(1) hue-rotate(195deg) brightness(.85) contrast(.9) saturate(.6)}
+.mapnote{font-size:.68rem;color:var(--faint);margin-top:.6rem}
+.leaflet-popup-content{font-family:var(--mono);font-size:.74rem;margin:.7rem .9rem}
+.leaflet-popup-content a{color:#0a1628;font-weight:600}
+.card{text-decoration:none;color:inherit;transition:border-color .25s}
+.card:hover{border-color:rgba(220,230,242,.45)}
+.facts{font-size:.66rem;color:var(--dim);margin-top:.35rem;letter-spacing:.03em}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem}
 .card{background:var(--bg2);border:1px solid var(--line);padding:0 0 1.1rem;display:flex;flex-direction:column}
@@ -76,6 +90,8 @@ html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
 html[lang=ar] .kicker,html[lang=ar] h1,html[lang=ar] .lcount,html[lang=ar] .back,html[lang=ar] .enq{letter-spacing:0}
 html[lang=ar] .pcount{right:auto;left:.5rem}
 html[lang=ar] .badge{left:auto;right:.5rem;letter-spacing:0}
+html[lang=ar] .ttl,html[lang=ar] .loc{text-align:right}
+html[lang=ar] .viewtabs button{letter-spacing:0;font-family:'IBM Plex Sans Arabic',var(--mono)}
 html[lang=ar] .lbar input,html[lang=ar] .lbar select,html[lang=ar] .langtoggle{font-family:'IBM Plex Sans Arabic',var(--mono)}
 </style>
 </head>
@@ -111,13 +127,27 @@ html[lang=ar] .lbar input,html[lang=ar] .lbar select,html[lang=ar] .langtoggle{f
         <option value="sale">For sale</option>
         <option value="rent">For rent</option>
       </select>
+      <select id="ltype" aria-label="Property type"><option value="">Any type</option></select>
+      <select id="lbeds" aria-label="Bedrooms">
+        <option value="">Any beds</option><option value="1">1+</option><option value="2">2+</option>
+        <option value="3">3+</option><option value="4">4+</option><option value="5">5+</option>
+      </select>
+      <input type="number" id="lmin" class="num" min="0" step="1000" inputmode="numeric" aria-label="Minimum price">
+      <input type="number" id="lmax" class="num" min="0" step="1000" inputmode="numeric" aria-label="Maximum price">
       <select id="lsort" aria-label="Sort listings">
         <option value="new">Newest first</option>
         <option value="low">Price: low to high</option>
         <option value="high">Price: high to low</option>
       </select>
-      <span class="lcount" id="lcount"></span>
     </div>
+    <div class="lbar2">
+      <span class="lcount" id="lcount"></span>
+      <div class="viewtabs" role="tablist">
+        <button type="button" id="vgrid" role="tab" aria-selected="true">Grid</button>
+        <button type="button" id="vmap" role="tab" aria-selected="false">Map</button>
+      </div>
+    </div>
+    <div id="mapview" hidden><div id="lmap"></div><p class="mapnote" id="mapnote"></p></div>
     <div class="grid" id="grid" hidden></div>
     <div class="empty" id="empty">Loading…</div>
   </div>
@@ -127,25 +157,33 @@ html[lang=ar] .lbar input,html[lang=ar] .lbar select,html[lang=ar] .langtoggle{f
   <div class="shell">Powered by <a href="https://takween-studio.com" target="_blank" rel="noopener">Takween Studio</a> · <a href="mailto:info@takween-studio.com">info@takween-studio.com</a></div>
 </footer>
 
+<script src="mouj.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
 <script>
 const TXT = {
   en: {
     brand:'MOUJJ', title:'Listings — MOUJJ', back:'← Home', kicker:'Listings', h1:'Browse listings',
     lead:'Properties submitted to the studio. Have one to add? <a href="./#submit">Submit a listing →</a>',
-    search:'Search by location or title', purposeOpts:['Sale & rent','For sale','For rent'], sale:'For sale', rent:'For rent', perYear:' / year', sort:['Newest first','Price: low to high','Price: high to low'],
+    search:'Search by district, city or title', purposeOpts:['Sale & rent','For sale','For rent'],
+    anyType:'Any type', anyBeds:'Any beds', min:'Min price', max:'Max price',
+    sort:['Newest first','Price: low to high','Price: high to low'], grid:'Grid', map:'Map',
     count: n => n + (n === 1 ? ' listing' : ' listings'),
-    photos: n => n + ' photos', noPhoto:'No photo', enquire:'Enquire →',
-    empty:'No listings yet — be the first to submit one.', noMatch:'No listings match your search.',
+    photos: n => n + ' photos', noPhoto:'No photo', view:'View →',
+    noPin: n => n === 1 ? '1 matching listing has no map pin and is only in the grid.' : n + ' matching listings have no map pin and are only in the grid.',
+    empty:'No listings yet — be the first to submit one.', noMatch:'No listings match your filters.',
     offline:'Listings are unavailable right now — the studio server is not answering.',
     loading:'Loading…',
   },
   ar: {
     brand:'موج', title:'العقارات — موج', back:'الرئيسية →', kicker:'العقارات', h1:'تصفّح العقارات',
     lead:'العقارات المقدَّمة إلى الاستوديو. لديك عقار؟ <a href="./#submit">قدّم عقارك ←</a>',
-    search:'ابحث بالموقع أو العنوان', purposeOpts:['بيع وإيجار','للبيع','للإيجار'], sale:'للبيع', rent:'للإيجار', perYear:' / سنويًا', sort:['الأحدث أولًا','السعر: من الأقل','السعر: من الأعلى'],
+    search:'ابحث بالحي أو المدينة أو العنوان', purposeOpts:['بيع وإيجار','للبيع','للإيجار'],
+    anyType:'كل الأنواع', anyBeds:'كل الغرف', min:'أقل سعر', max:'أعلى سعر',
+    sort:['الأحدث أولًا','السعر: من الأقل','السعر: من الأعلى'], grid:'شبكة', map:'خريطة',
     count: n => n + ' عقار',
-    photos: n => n + ' صور', noPhoto:'بلا صورة', enquire:'استفسر ←',
-    empty:'لا توجد عقارات بعد — كن أول من يضيف عقارًا.', noMatch:'لا توجد عقارات مطابقة لبحثك.',
+    photos: n => n + ' صور', noPhoto:'بلا صورة', view:'عرض ←',
+    noPin: n => n + ' من العقارات المطابقة بلا موقع على الخريطة وتظهر في الشبكة فقط.',
+    empty:'لا توجد عقارات بعد — كن أول من يضيف عقارًا.', noMatch:'لا توجد عقارات مطابقة.',
     offline:'العقارات غير متاحة حاليًا — خادم الاستوديو لا يستجيب.',
     loading:'جارٍ التحميل…',
   },
@@ -153,25 +191,51 @@ const TXT = {
 let LANG = 'en';
 try { if (localStorage.getItem('nl-lang') === 'ar') LANG = 'ar'; } catch {}
 
-const grid = document.getElementById('grid');
-const empty = document.getElementById('empty');
-const lsearch = document.getElementById('lsearch');
-const lsort = document.getElementById('lsort');
-const lpurpose = document.getElementById('lpurpose');
-const lcount = document.getElementById('lcount');
-/* price with the Saudi Riyal sign in front (official symbol, U+20C1) */
-const NUM = new Intl.NumberFormat('en-US', { maximumFractionDigits:0 });
-function priceEl(value, suffix){
-  const span = document.createElement('span');
-  span.className = 'price'; span.dir = 'ltr';
-  span.innerHTML = '<svg class="riyal" role="img" aria-label="SAR"><use href="#riyal"/></svg>';
-  span.append(NUM.format(value));
-  if (suffix){ const sm = document.createElement('small'); sm.textContent = suffix; span.append(sm); }
-  return span;
-}
-let ALL = null, FAILED = false;
+const $ = id => document.getElementById(id);
+const grid = $('grid'), empty = $('empty'), lcount = $('lcount');
+const lsearch = $('lsearch'), lpurpose = $('lpurpose'), ltype = $('ltype'), lbeds = $('lbeds'), lmin = $('lmin'), lmax = $('lmax'), lsort = $('lsort');
+let ALL = null, FAILED = false, VIEW = 'grid', map = null, layer = null;
 
-function showEmpty(msg){ grid.hidden = true; empty.hidden = false; empty.textContent = msg; }
+for (const k of Object.keys(Moujj.TYPES)) { const o = document.createElement('option'); o.value = k; ltype.append(o); }
+
+function showEmpty(msg){ grid.hidden = true; $('mapview').hidden = true; empty.hidden = false; empty.textContent = msg; }
+
+function filtered(){
+  const q = lsearch.value.trim().toLowerCase();
+  const want = lpurpose.value, type = ltype.value, beds = Number(lbeds.value) || 0;
+  const min = Number(lmin.value) || 0, max = Number(lmax.value) || Infinity;
+  let list = ALL.filter(l =>
+    (want === 'all' || (l.purpose || 'sale') === want) &&
+    (!type || l.type === type) &&
+    (!beds || (l.beds != null && l.beds >= beds)) &&
+    l.price >= min && l.price <= max &&
+    (!q || [l.title, l.district, l.city, l.address].join(' ').toLowerCase().includes(q)));
+  if (lsort.value === 'low') list = [...list].sort((a, b) => a.price - b.price);
+  else if (lsort.value === 'high') list = [...list].sort((a, b) => b.price - a.price);
+  return list;
+}
+
+function card(l){
+  const T = TXT[LANG], W = Moujj.WORDS[LANG], rent = l.purpose === 'rent';
+  const a = document.createElement('a'); a.className = 'card'; a.href = Moujj.listingUrl(l);
+  const thumb = document.createElement('div'); thumb.className = 'thumb';
+  if (l.photos && l.photos.length){
+    const img = document.createElement('img'); img.src = l.photos[0].url; img.alt = l.title; img.loading = 'lazy'; thumb.append(img);
+    if (l.photos.length > 1){ const n = document.createElement('span'); n.className = 'pcount'; n.textContent = T.photos(l.photos.length); thumb.append(n); }
+  } else thumb.textContent = T.noPhoto;
+  const badge = document.createElement('span'); badge.className = 'badge' + (rent ? ' rent' : ''); badge.textContent = rent ? W.rent : W.sale; thumb.append(badge);
+  const inner = document.createElement('div'); inner.className = 'in';
+  const ttl = document.createElement('div'); ttl.className = 'ttl'; ttl.textContent = l.title; ttl.dir = 'auto';
+  const loc = document.createElement('div'); loc.className = 'loc'; loc.textContent = Moujj.place(l); loc.dir = 'auto';
+  inner.append(ttl, loc);
+  const f = Moujj.facts(l, LANG);
+  if (f.length){ const fx = document.createElement('div'); fx.className = 'facts'; fx.textContent = f.join(' · '); inner.append(fx); }
+  const prc = document.createElement('div'); prc.className = 'prc'; prc.append(Moujj.priceEl(l.price, rent ? W.perYear : ''));
+  const v = document.createElement('span'); v.className = 'enq'; v.textContent = T.view;
+  inner.append(prc, v);
+  a.append(thumb, inner);
+  return a;
+}
 
 function render(){
   const T = TXT[LANG];
@@ -179,48 +243,48 @@ function render(){
   if (FAILED) { lcount.textContent = ''; return showEmpty(T.offline); }
   if (!ALL) return showEmpty(T.loading);
   if (!ALL.length) { lcount.textContent = ''; return showEmpty(T.empty); }
-  const q = lsearch.value.trim().toLowerCase();
-  const want = lpurpose.value;
-  let list = ALL.filter(l => (want === 'all' || (l.purpose || 'sale') === want) &&
-    (!q || [l.title, l.city, l.address].join(' ').toLowerCase().includes(q)));
-  if (lsort.value === 'low') list = [...list].sort((a, b) => a.price - b.price);
-  else if (lsort.value === 'high') list = [...list].sort((a, b) => b.price - a.price);
+  const list = filtered();
   lcount.textContent = T.count(list.length);
   if (!list.length) return showEmpty(T.noMatch);
-  for (const l of list){
-    const card = document.createElement('article'); card.className = 'card';
-    const thumb = document.createElement('div'); thumb.className = 'thumb';
-    if (l.photos && l.photos.length){
-      const img = document.createElement('img');
-      img.src = l.photos[0].url; img.alt = l.title; img.loading = 'lazy';
-      thumb.append(img);
-      if (l.photos.length > 1){
-        const n = document.createElement('span'); n.className = 'pcount'; n.textContent = T.photos(l.photos.length);
-        thumb.append(n);
-      }
-    } else thumb.textContent = T.noPhoto;
-    const purpose = l.purpose === 'rent' ? 'rent' : 'sale';
-    const badge = document.createElement('span'); badge.className = 'badge ' + purpose; badge.textContent = T[purpose];
-    thumb.append(badge);
-    const inner = document.createElement('div'); inner.className = 'in';
-    const ttl = document.createElement('div'); ttl.className = 'ttl'; ttl.textContent = l.title;
-    const loc = document.createElement('div'); loc.className = 'loc';
-    loc.textContent = [l.address, l.city].filter(Boolean).join(', ');
-    const prc = document.createElement('div'); prc.className = 'prc'; prc.append(priceEl(l.price, purpose === 'rent' ? T.perYear : ''));
-    ttl.dir = 'auto'; loc.dir = 'auto';
-    inner.append(ttl, loc, prc);
-    const phone = (l.agent_phone || '').replace(/[^+0-9]/g, '');
-    if (phone || l.agent_email){
-      const a = document.createElement('a'); a.className = 'enq';
-      a.href = phone ? 'tel:' + phone
-        : 'mailto:' + l.agent_email + '?subject=' + encodeURIComponent('Enquiry: ' + l.title + (l.ref ? ' (' + l.ref + ')' : ''));
-      a.textContent = T.enquire;
-      inner.append(a);
-    }
-    card.append(thumb, inner);
-    grid.append(card);
+  empty.hidden = true;
+  if (VIEW === 'grid'){
+    $('mapview').hidden = true; grid.hidden = false;
+    for (const l of list) grid.append(card(l));
+  } else {
+    grid.hidden = true; $('mapview').hidden = false;
+    drawMap(list);
   }
-  grid.hidden = false; empty.hidden = true;
+}
+
+function drawMap(list){
+  if (!window.L) return setTimeout(() => drawMap(list), 150);
+  const T = TXT[LANG], W = Moujj.WORDS[LANG];
+  if (!map){
+    map = window.L.map('lmap', { scrollWheelZoom: true }).setView([21.55, 39.17], 11);   /* Jeddah */
+    window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+  }
+  setTimeout(() => map.invalidateSize(), 0);
+  if (layer) layer.remove();
+  layer = window.L.layerGroup().addTo(map);
+  const pinned = list.filter(l => l.lat != null && l.lng != null);
+  for (const l of pinned){
+    const rent = l.purpose === 'rent';
+    const box = document.createElement('div');
+    const b = document.createElement('b'); b.textContent = l.title; b.dir = 'auto'; box.append(b, document.createElement('br'));
+    box.append(Moujj.priceEl(l.price, rent ? W.perYear : ''), document.createElement('br'));
+    const a = document.createElement('a'); a.href = Moujj.listingUrl(l); a.textContent = T.view; box.append(a);
+    window.L.circleMarker([l.lat, l.lng], { radius: 9, color: '#dce6f2', weight: 2, fillColor: '#d9a44a', fillOpacity: 1 }).bindPopup(box).addTo(layer);
+  }
+  if (pinned.length) map.fitBounds(window.L.latLngBounds(pinned.map(l => [l.lat, l.lng])).pad(0.3), { maxZoom: 15 });
+  const missing = list.length - pinned.length;
+  $('mapnote').textContent = missing ? T.noPin(missing) : '';
+}
+
+function setView(v){
+  VIEW = v;
+  $('vgrid').setAttribute('aria-selected', v === 'grid');
+  $('vmap').setAttribute('aria-selected', v === 'map');
+  render();
 }
 
 function applyLang(lang){
@@ -231,37 +295,26 @@ function applyLang(lang){
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   document.title = T.title;
   document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = T[el.dataset.t]; });
-  lsearch.placeholder = T.search;
+  lsearch.placeholder = T.search; lmin.placeholder = T.min; lmax.placeholder = T.max;
   [...lsort.options].forEach((o, i) => { o.textContent = T.sort[i]; });
   [...lpurpose.options].forEach((o, i) => { o.textContent = T.purposeOpts[i]; });
-  document.getElementById('langtoggle').textContent = lang === 'ar' ? 'English' : 'عربي';
+  [...ltype.options].forEach(o => { o.textContent = o.value ? Moujj.typeLabel(o.value, lang) : T.anyType; });
+  lbeds.options[0].textContent = T.anyBeds;
+  $('vgrid').textContent = T.grid; $('vmap').textContent = T.map;
+  $('langtoggle').textContent = lang === 'ar' ? 'English' : 'عربي';
   render();
 }
 
-lsearch.addEventListener('input', render);
-lsort.addEventListener('change', render);
-lpurpose.addEventListener('change', render);
-document.getElementById('langtoggle').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
+for (const e of [lsearch, lmin, lmax]) e.addEventListener('input', render);
+for (const e of [lsort, lpurpose, ltype, lbeds]) e.addEventListener('change', render);
+$('vgrid').addEventListener('click', () => setView('grid'));
+$('vmap').addEventListener('click', () => setView('map'));
+$('langtoggle').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
+const qs = new URLSearchParams(location.search);
+if (qs.get('for') === 'sale' || qs.get('for') === 'rent') lpurpose.value = qs.get('for');
 applyLang(LANG);
-const forParam = new URLSearchParams(location.search).get('for');
-if (forParam === 'sale' || forParam === 'rent') { lpurpose.value = forParam; render(); }
 
-/* listings from the studio server; on a static host (no server) fall back to the starter listings file */
-async function fetchListings(){
-  try {
-    const res = await fetch('api/listings');
-    const ct = res.headers.get('content-type') || '';
-    if (res.ok && ct.includes('json')) return (await res.json()).listings || [];
-  } catch {}
-  const res = await fetch('seed-listings.json');
-  if (!res.ok) throw new Error('no listings');
-  return (await res.json()).map((l, i) => ({
-    id: i + 1, ref: null, title: l.title, address: l.address || '', city: l.city, price: l.price,
-    purpose: l.purpose === 'rent' ? 'rent' : 'sale', agent_email: l.agent_email, agent_phone: l.agent_phone,
-    photos: (l.photos || []).map(p => ({ url: p })),
-  }));
-}
-fetchListings()
+Moujj.fetchListings()
   .then(list => { ALL = list; render(); })
   .catch(() => { FAILED = true; render(); });
 </script>

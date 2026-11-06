@@ -3,6 +3,7 @@
    This script only handles the listings API and /healthz; data lives in Supabase
    (secrets SUPABASE_URL and SUPABASE_SECRET_KEY). */
 import { createClient } from '@supabase/supabase-js';
+import { validateListing } from '../lib/listing.js';
 
 const BUCKET = 'photos';
 const MAX_PHOTOS = 12;
@@ -50,8 +51,10 @@ function seedOnce(sb, env, origin) {
       let id = found.data[0]?.id;
       const hasPhotos = (found.data[0]?.photos || []).length > 0;
       if (!id) id = (await insertListing(sb, {
-        title: l.title, address: l.address || '', city: l.city, price: l.price, type: 'house',
-        description: '', agent_name: '', agent_email: l.agent_email || '', agent_phone: l.agent_phone || null,
+        title: l.title, address: l.address || '', city: l.city, price: l.price, type: l.type || '',
+        beds: l.beds ?? null, baths: l.baths ?? null, area_m2: l.area_m2 ?? null, district: l.district || null,
+        furnished: l.furnished ?? null, lat: l.lat ?? null, lng: l.lng ?? null,
+        description: l.description || '', agent_name: '', agent_email: l.agent_email || '', agent_phone: l.agent_phone || null,
         purpose: l.purpose === 'rent' ? 'rent' : 'sale',
       })).id;
       if (!hasPhotos) for (const rel of l.photos || []) {
@@ -68,41 +71,35 @@ async function listListings(sb) {
     .select('*, photos(filename, original, id)')
     .order('id', { ascending: false }).limit(60);
   if (error) throw new Error('Database: ' + error.message);
+  return data.map((l) => withUrls(sb, l));
+}
+
+function withUrls(sb, l) {
   const publicUrl = (p) => sb.storage.from(BUCKET).getPublicUrl(p).data.publicUrl;
-  return data.map((l) => ({
+  return {
     ...l,
     photos: (l.photos || []).sort((a, b) => a.id - b.id).map((p) => ({ url: publicUrl(p.filename), original: p.original })),
-  }));
+  };
+}
+
+async function getListing(sb, id) {
+  const { data, error } = await sb.from('listings').select('*, photos(filename, original, id)').eq('id', id).maybeSingle();
+  if (error) throw new Error('Database: ' + error.message);
+  return data ? withUrls(sb, data) : null;
 }
 
 async function createListing(sb, request) {
   let form;
   try { form = await request.formData(); } catch { return json({ ok: false, errors: ['Could not read the form.'] }, 400); }
-  const clean = (v, max = 300) => String(v ?? '').trim().slice(0, max);
-
-  const title = clean(form.get('title'), 140);
-  const city = clean(form.get('city'), 120);
-  const agentPhone = clean(form.get('agent_phone'), 20);
-  const price = Math.round(Number(form.get('price')));
-  const purpose = clean(form.get('purpose'), 10);
   const files = form.getAll('photos').filter((f) => typeof f === 'object' && f && f.size > 0);
-
-  const errors = [];
-  if (!title) errors.push('Property title is required.');
-  if (!city) errors.push('Location is required.');
-  if (purpose !== 'sale' && purpose !== 'rent') errors.push('Choose Sale or Rent.');
-  if (!Number.isFinite(price) || price <= 0) errors.push('Asking price must be a positive number.');
-  if (!/^\+?[0-9 ()-]{7,20}$/.test(agentPhone) || agentPhone.replace(/\D/g, '').length < 7) errors.push('A valid contact phone number is required.');
+  const { errors, fields } = validateListing((name) => form.get(name));
   if (files.length > MAX_PHOTOS) errors.push('Twelve photos is the limit.');
   if (files.some((f) => !IMAGE_TYPES.test(f.type))) errors.push('Photos must be JPEG, PNG, WebP, GIF or AVIF.');
   if (files.some((f) => f.size > MAX_BYTES)) errors.push('Each photo must be 8 MB or smaller.');
   if (errors.length) return json({ ok: false, errors }, 400);
 
-  const { id, ref } = await insertListing(sb, {
-    title, address: clean(form.get('address'), 200), city, price, type: 'house',
-    description: clean(form.get('description'), 4000), agent_name: '', agent_email: '', agent_phone: agentPhone, purpose,
-  });
-  for (const f of files) await addPhoto(sb, id, await f.arrayBuffer(), clean(f.name, 200), f.type);
+  const { id, ref } = await insertListing(sb, fields);
+  for (const f of files) await addPhoto(sb, id, await f.arrayBuffer(), String(f.name || '').slice(0, 200), f.type);
   return json({ ok: true, id, ref, photos: files.length }, 201);
 }
 
@@ -122,6 +119,13 @@ export default {
           return await createListing(sb, request);
         }
         return json({ ok: false, errors: ['Method not allowed.'] }, 405);
+      }
+      const one = url.pathname.match(/^\/api\/listings\/(\d+)$/);
+      if (one && request.method === 'GET') {
+        const sb = client(env);
+        await seedOnce(sb, env, url.origin);
+        const listing = await getListing(sb, Number(one[1]));
+        return listing ? json({ ok: true, listing }) : json({ ok: false, errors: ['Listing not found.'] }, 404);
       }
       return env.ASSETS.fetch(request);
     } catch (e) {

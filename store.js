@@ -22,6 +22,10 @@ function supabaseStore(url, key) {
   const { createClient } = require('@supabase/supabase-js');
   const sb = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
   const publicUrl = (p) => sb.storage.from(BUCKET).getPublicUrl(p).data.publicUrl;
+  const withUrls = (l) => ({
+    ...l,
+    photos: (l.photos || []).sort((a, b) => a.id - b.id).map((p) => ({ url: publicUrl(p.filename), original: p.original })),
+  });
 
   async function insertListing(fields) {
     const { data, error } = await sb.from('listings').insert(fields).select('id').single();
@@ -51,11 +55,12 @@ function supabaseStore(url, key) {
         .select('*, photos(filename, original, id)')
         .order('id', { ascending: false }).limit(60);
       if (error) throw new Error('Database: ' + error.message);
-      return data.map((l) => ({
-        ...l,
-        photos: (l.photos || []).sort((a, b) => a.id - b.id)
-          .map((p) => ({ url: publicUrl(p.filename), original: p.original })),
-      }));
+      return data.map(withUrls);
+    },
+    async getListing(id) {
+      const { data, error } = await sb.from('listings').select('*, photos(filename, original, id)').eq('id', id).maybeSingle();
+      if (error) throw new Error('Database: ' + error.message);
+      return data ? withUrls(data) : null;
     },
     async seed(seeds) {
       for (const l of seeds) {
@@ -116,10 +121,15 @@ function sqliteStore() {
   const cols = db.prepare('PRAGMA table_info(listings)').all().map((c) => c.name);
   if (!cols.includes('purpose')) db.exec("ALTER TABLE listings ADD COLUMN purpose TEXT NOT NULL DEFAULT 'sale'");
   if (!cols.includes('agent_phone')) db.exec('ALTER TABLE listings ADD COLUMN agent_phone TEXT');
+  for (const [c, t] of [['district', 'TEXT'], ['area_m2', 'INTEGER'], ['furnished', 'INTEGER'], ['lat', 'REAL'], ['lng', 'REAL']]) {
+    if (!cols.includes(c)) db.exec(`ALTER TABLE listings ADD COLUMN ${c} ${t}`);
+  }
 
   const insListing = db.prepare(`
-    INSERT INTO listings (title, address, city, price, type, beds, baths, sqft, description, agent_name, agent_email, agent_phone, purpose)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+    INSERT INTO listings (title, address, city, price, type, beds, baths, description, agent_name, agent_email, agent_phone, purpose,
+                          district, area_m2, furnished, lat, lng)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+  const oneListing = db.prepare('SELECT * FROM listings WHERE id = ?');
   const setRef = db.prepare('UPDATE listings SET ref = ? WHERE id = ?');
   const insPhoto = db.prepare('INSERT INTO photos (listing_id, filename, original) VALUES (?, ?, ?)');
   const recent = db.prepare('SELECT * FROM listings ORDER BY id DESC LIMIT 60');
@@ -128,13 +138,19 @@ function sqliteStore() {
   const photoCount = db.prepare('SELECT COUNT(*) AS n FROM photos WHERE listing_id = ?');
 
   function insert(f) {
-    const info = insListing.run(f.title, f.address, f.city, f.price, f.type, f.beds, f.baths, f.sqft,
-      f.description, f.agent_name, f.agent_email || '', f.agent_phone || null, f.purpose);
+    const info = insListing.run(f.title, f.address || '', f.city, f.price, f.type || '', f.beds ?? null, f.baths ?? null,
+      f.description || '', f.agent_name || '', f.agent_email || '', f.agent_phone || null, f.purpose,
+      f.district || null, f.area_m2 ?? null, f.furnished == null ? null : (f.furnished ? 1 : 0), f.lat ?? null, f.lng ?? null);
     const id = Number(info.lastInsertRowid);
     const ref = makeRef(id);
     setRef.run(ref, id);
     return { id, ref };
   }
+  const shape = (l) => ({
+    ...l,
+    furnished: l.furnished == null ? null : Boolean(l.furnished),
+    photos: photosFor.all(l.id).map((p) => ({ url: '/uploads/' + p.filename, original: p.original })),
+  });
   function savePhoto(id, buffer, original) {
     const name = photoName(original);
     fs.writeFileSync(path.join(UPLOAD_DIR, name), buffer);
@@ -150,10 +166,11 @@ function sqliteStore() {
       return { id, ref, photos: files.length };
     },
     async listListings() {
-      return recent.all().map((l) => ({
-        ...l,
-        photos: photosFor.all(l.id).map((p) => ({ url: '/uploads/' + p.filename, original: p.original })),
-      }));
+      return recent.all().map(shape);
+    },
+    async getListing(id) {
+      const l = oneListing.get(id);
+      return l ? shape(l) : null;
     },
     async seed(seeds) {
       for (const l of seeds) {
@@ -173,8 +190,10 @@ function sqliteStore() {
 
 function seedFields(l) {
   return {
-    title: l.title, address: l.address || '', city: l.city, price: l.price, type: 'house',
-    beds: null, baths: null, sqft: null, description: '', agent_name: '', agent_email: l.agent_email || '', agent_phone: l.agent_phone || null,
+    title: l.title, address: l.address || '', city: l.city, price: l.price, type: l.type || '',
+    beds: l.beds ?? null, baths: l.baths ?? null, area_m2: l.area_m2 ?? null, district: l.district || null,
+    furnished: l.furnished ?? null, lat: l.lat ?? null, lng: l.lng ?? null,
+    description: l.description || '', agent_name: '', agent_email: l.agent_email || '', agent_phone: l.agent_phone || null,
     purpose: l.purpose === 'rent' ? 'rent' : 'sale',
   };
 }

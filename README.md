@@ -9,7 +9,7 @@ Cloudflare Workers serves the pages and runs the small listings API (free plan, 
 ### 1. Supabase: database and photo storage
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Open **SQL Editor → New query**, paste everything in [`supabase/setup.sql`](supabase/setup.sql), and press **Run** (safe to run again).
+2. Open **SQL Editor → New query**, paste everything in [`supabase/setup.sql`](supabase/setup.sql), and press **Run** (safe to run again). Run it again whenever this file changes, to add new columns.
 3. Copy the **Project URL** (Project Settings → Data API, like `https://abcd1234.supabase.co`) and the **Secret key** (Project Settings → API Keys, starts with `sb_secret_`; or the legacy `service_role` key). Keep the secret key private.
 
 ### 2. Cloudflare Worker: the site
@@ -45,7 +45,10 @@ Then open http://localhost:3000 (or `npm run cf:dev` to run the Cloudflare Worke
 ## Files
 
 - `public/index.html`: the ocean page, form and floating listings
-- `public/listings.html`: all listings, with search, sale/rent filter and sort
+- `public/listings.html`: all listings, with search, filters (sale/rent, type, beds, price) and a map view
+- `public/listing.html`: one listing: photo gallery, key facts, WhatsApp / call / share, description and map
+- `public/mouj.js`: helpers shared by the pages
+- `lib/listing.js`: checks submitted listings (used by both servers)
 - `public/seed-listings.json` and `public/seed/`: starter listings and their photos
 - `worker/index.js` + `wrangler.jsonc`: the Cloudflare Worker (listings API) and its settings
 - `server.js` + `store.js`: Node server for running on your own computer (SQLite) or any Node host

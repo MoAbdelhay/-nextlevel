@@ -7,6 +7,7 @@ const fs = require('node:fs');
 const express = require('express');
 const multer = require('multer');
 const { openStore } = require('./store');
+const { validateListing } = require('./lib/listing');
 
 const ROOT = __dirname;
 const PUBLIC_DIR = path.join(ROOT, 'public');   /* the site's pages and images */
@@ -28,7 +29,8 @@ const app = express();
 const page = (file) => (req, res) => res.sendFile(path.join(PUBLIC_DIR, file));
 app.get(['/', '/index.html'], page('index.html'));
 app.get(['/listings', '/listings.html'], page('listings.html'));
-for (const f of ['seed-listings.json', 'logo.svg', 'logo-mark.svg']) app.get('/' + f, page(f));
+app.get(['/listing', '/listing.html'], page('listing.html'));
+for (const f of ['seed-listings.json', 'logo.svg', 'logo-mark.svg', 'mouj.js']) app.get('/' + f, page(f));
 app.use('/seed', express.static(path.join(PUBLIC_DIR, 'seed'), { maxAge: '7d' }));
 if (store.uploadDir) app.use('/uploads', express.static(store.uploadDir, { maxAge: '7d', immutable: true }));
 
@@ -37,33 +39,19 @@ app.get('/healthz', (req, res) => res.json({ ok: true, storage: store.kind }));
 app.post('/api/listings', upload.array('photos', 12), async (req, res, next) => {
   try {
     const b = req.body || {};
-    const clean = (v, max = 300) => String(v ?? '').trim().slice(0, max);
-
-    const title = clean(b.title, 140);
-    const city = clean(b.city, 120);
-    const agentPhone = clean(b.agent_phone, 20);
-    const price = Math.round(Number(b.price));
-    const purpose = clean(b.purpose, 10);
-
-    const errors = [];
-    if (!title) errors.push('Property title is required.');
-    if (!city) errors.push('Location is required.');
-    if (purpose !== 'sale' && purpose !== 'rent') errors.push('Choose Sale or Rent.');
-    if (!Number.isFinite(price) || price <= 0) errors.push('Asking price must be a positive number.');
-    if (!/^\+?[0-9 ()-]{7,20}$/.test(agentPhone) || agentPhone.replace(/\D/g, '').length < 7) errors.push('A valid contact phone number is required.');
+    const { errors, fields } = validateListing((name) => b[name]);
     if (errors.length) return res.status(400).json({ ok: false, errors });
-
-    const num = (v) => { const n = Number(v); return v !== '' && v != null && Number.isFinite(n) && n >= 0 ? n : null; };
-    const TYPES = new Set(['house', 'condo', 'townhouse', 'land', 'multi-family', 'commercial']);
-    const type = TYPES.has(clean(b.type, 40)) ? clean(b.type, 40) : 'house';
-
-    const result = await store.createListing({
-      title, address: clean(b.address, 200), city, price, type,
-      beds: num(b.beds), baths: num(b.baths), sqft: num(b.sqft),
-      description: clean(b.description, 4000), agent_name: clean(b.agent_name, 120),
-      agent_email: '', agent_phone: agentPhone, purpose,
-    }, req.files || []);
+    const result = await store.createListing(fields, req.files || []);
     res.status(201).json({ ok: true, ...result });
+  } catch (e) { next(e); }
+});
+
+app.get('/api/listings/:id', async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    const listing = Number.isInteger(id) && id > 0 ? await store.getListing(id) : null;
+    if (!listing) return res.status(404).json({ ok: false, errors: ['Listing not found.'] });
+    res.json({ ok: true, listing });
   } catch (e) { next(e); }
 });
 

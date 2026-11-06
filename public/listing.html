@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listing — MOUJJ</title>
+<meta name="description" content="Property listed with Moujj.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1628'/%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%23dce6f2' stroke-width='2.5' opacity='.35'/%3E%3Cpath d='M18 34l14-14 14 14' fill='none' stroke='%23d9a44a' stroke-width='5.5' stroke-linecap='square'/%3E%3Cpath d='M10 42c4-2.6 7.5-2.6 11.5 0s7.5 2.6 11.5 0 7.5-2.6 11.5 0 7.5 2.6 11 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M14 50c3.5-2.2 6.5-2.2 10 0s6.5 2.2 10 0 6.5-2.2 10 0 6.5 2.2 10 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{
+  --bg:#0a1628; --bg2:#0d1b30; --panel:#10213a; --ink:#dce6f2; --dim:#8fa3bd; --faint:#5b6e88;
+  --line:rgba(220,230,242,.13); --accent:#dce6f2;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg)}
+body{font-family:var(--mono);color:var(--ink);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:1.5px solid var(--dim);outline-offset:3px}
+.shell{max-width:72rem;margin:0 auto}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.2rem 1.4rem;border-bottom:1px solid var(--line)}
+.wordmark{font-size:.9rem;letter-spacing:.1em;text-decoration:none;font-weight:500;display:inline-flex;align-items:center;gap:.6rem;direction:ltr}
+.wordmark .mark{width:28px;height:28px;flex:none}
+.hdr-r{display:flex;align-items:center;gap:1rem}
+.back{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--dim)}
+.back:hover{color:var(--ink)}
+.langtoggle{background:none;border:1px solid var(--line);color:var(--ink);font-family:var(--mono);font-size:.72rem;padding:.35rem .8rem;cursor:pointer}
+.langtoggle:hover{border-color:var(--accent);color:var(--accent)}
+
+main{padding:2.4rem 1.4rem 5rem}
+.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:2.4rem;align-items:start}
+@media(max-width:860px){.layout{grid-template-columns:1fr;gap:1.6rem}}
+
+/* gallery */
+.stage{position:relative;aspect-ratio:16/10;background:#13243d;overflow:hidden;border:1px solid var(--line);touch-action:pan-y}
+.stage img{width:100%;height:100%;object-fit:cover;display:block}
+.stage .none{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.stage .none svg{width:90px;height:90px;color:var(--ink);opacity:.4}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border:1px solid rgba(220,230,242,.35);
+  background:rgba(10,22,40,.6);backdrop-filter:blur(6px);color:var(--ink);font-size:1.1rem;cursor:pointer;font-family:var(--mono)}
+.nav:hover{background:rgba(10,22,40,.85)}
+.nav.prev{left:.7rem}.nav.next{right:.7rem}
+.counter{position:absolute;bottom:.6rem;right:.6rem;background:rgba(10,22,40,.8);font-size:.62rem;letter-spacing:.12em;padding:.2rem .5rem}
+.thumbs{display:flex;gap:.5rem;margin-top:.6rem;overflow-x:auto;scrollbar-width:thin}
+.thumbs button{flex:0 0 84px;height:58px;border:1px solid var(--line);padding:0;background:none;cursor:pointer;opacity:.6}
+.thumbs button[aria-current=true]{opacity:1;border-color:var(--ink)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* details */
+.tag{display:inline-block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;padding:.22rem .55rem;background:var(--ink);color:#0a1628;font-weight:600}
+.tag.rent{background:transparent;color:var(--ink);border:1px solid rgba(220,230,242,.55)}
+h1{font-size:1.35rem;font-weight:500;letter-spacing:.02em;line-height:1.35;margin:.8rem 0 .3rem}
+.place{color:var(--dim);font-size:.8rem;letter-spacing:.04em}
+.bigprice{font-size:1.6rem;font-weight:500;margin:1.1rem 0 .2rem;font-variant-numeric:tabular-nums}
+.riyal{display:inline-block;height:.82em;width:.86em;vertical-align:-.04em;fill:currentColor;margin-inline-end:.3em}
+.price small{color:var(--dim);font-size:.55em;margin-inline-start:.2em}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 1.4rem}
+.chips span{border:1px solid var(--line);background:var(--bg2);padding:.35rem .7rem;font-size:.72rem;letter-spacing:.04em}
+.actions{display:grid;gap:.6rem}
+.btn{display:flex;align-items:center;justify-content:center;gap:.6rem;text-decoration:none;font-family:var(--mono);font-size:.74rem;
+  letter-spacing:.2em;text-transform:uppercase;padding:.9rem 1rem;border:1px solid rgba(220,230,242,.55);color:var(--ink);background:none;cursor:pointer;
+  transition:background .25s,color .25s}
+.btn:hover{background:var(--ink);color:#0a1628}
+.btn.primary{background:var(--ink);color:#0a1628;border-color:var(--ink)}
+.btn.primary:hover{background:#fff}
+.btn svg{width:18px;height:18px;flex:none;fill:currentColor}
+.ref{margin-top:1rem;font-size:.62rem;color:var(--faint);letter-spacing:.12em}
+.section{margin-top:2.6rem}
+.section h2{font-size:.66rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.section h2::after{content:'';flex:1;height:1px;background:var(--line)}
+.desc{white-space:pre-line;color:#c9d6e6;font-size:.86rem;max-width:44rem}
+#map{height:320px;border:1px solid var(--line);background:#13243d}
+.leaflet-tile-pane{filter:invert(1) hue-rotate(195deg) brightness(.85) contrast(.9) saturate(.6)}
+.maplink{display:inline-block;margin-top:.6rem;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.state{padding:4rem 0;text-align:center;color:var(--dim)}
+.state a{color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:1.4rem;transform:translateX(-50%);background:var(--ink);color:#0a1628;padding:.5rem .9rem;font-size:.74rem;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.on{opacity:1}
+
+footer{border-top:1px solid var(--line);padding:2rem 1.4rem;font-size:.66rem;color:var(--faint);letter-spacing:.06em}
+footer a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
+
+html[lang=ar] header{direction:ltr}
+html[lang=ar] .hdr-r{direction:rtl}
+html[lang=ar] .wordmark{font-size:1.05rem}
+html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
+html[lang=ar] .back,html[lang=ar] .tag,html[lang=ar] .btn,html[lang=ar] .section h2,html[lang=ar] .ref{letter-spacing:0}
+html[lang=ar] .btn,html[lang=ar] .langtoggle{font-family:'IBM Plex Sans Arabic',var(--mono)}
+html[lang=ar] .counter{right:auto;left:.6rem}
+html[lang=ar] h1,html[lang=ar] .place,html[lang=ar] .desc{text-align:right}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="riyal" viewBox="40 0 1150 1270"><path d="M750,1119 C730,1163,716,1211,711,1262 C711,1262,1136,1172,1136,1172 C1156,1127,1169,1079,1174,1028 C1174,1028,750,1119,750,1119Z M1136,901 C1136,901,1136,901,1136,901 C1156,857,1169,809,1174,758 C1174,758,843,828,843,828 C843,828,843,693,843,693 C843,693,1136,631,1136,631 C1156,587,1169,538,1174,488 C1174,488,843,558,843,558 C843,558,843,72,843,72 C793,100,748,138,711,183 C711,183,711,586,711,586 C711,586,579,614,579,614 C579,614,579,6,579,6 C528,34,483,72,447,117 C447,117,447,642,447,642 C447,642,151,705,151,705 C131,750,117,798,112,849 C112,849,447,777,447,777 C447,777,447,948,447,948 C447,948,88,1024,88,1024 C68,1068,55,1117,50,1167 C50,1167,425,1088,425,1088 C456,1081,482,1063,499,1038 C499,1038,568,936,568,936 C568,936,568,936,568,936 C575,926,579,913,579,899 C579,899,579,749,579,749 C579,749,711,721,711,721 C711,721,711,992,711,992 C711,992,1136,901,1136,901Z"/></symbol>
+  <symbol id="nl-mark" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".35"/>
+    <path d="M18 34l14-14 14 14" fill="none" stroke="#d9a44a" stroke-width="5" stroke-linecap="square"/>
+    <path d="M10 42c4-2.6 7.5-2.6 11.5 0s7.5 2.6 11.5 0 7.5-2.6 11.5 0 7.5 2.6 11 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <path d="M14 50c3.5-2.2 6.5-2.2 10 0s6.5 2.2 10 0 6.5-2.2 10 0 6.5 2.2 10 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+  </symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></symbol>
+  <symbol id="i-call" viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M18 16a3 3 0 0 0-2.4 1.2l-6.7-3.4a3 3 0 0 0 0-1.6l6.7-3.4A3 3 0 1 0 15 7l-6.7 3.4a3 3 0 1 0 0 3.2L15 17a3 3 0 1 0 3-1Z"/></symbol>
+</svg>
+
+<header>
+  <a class="wordmark" href="./" aria-label="Moujj home"><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span data-t="brand">MOUJJ</span></a>
+  <div class="hdr-r">
+    <a class="back" href="listings.html" data-t="all">← All listings</a>
+    <button class="langtoggle" id="langtoggle" type="button" aria-label="Switch language / تغيير اللغة">عربي</button>
+  </div>
+</header>
+
+<main>
+  <div class="shell" id="app"><div class="state" data-t="loading">Loading…</div></div>
+</main>
+
+<footer>
+  <div class="shell">Powered by <a href="https://takween-studio.com" target="_blank" rel="noopener">Takween Studio</a></div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="mouj.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script>
+const TXT = {
+  en: { brand:'MOUJJ', all:'← All listings', loading:'Loading…', missing:'This listing could not be found.',
+        back:'See all listings', offline:'This listing is unavailable right now. Please try again shortly.',
+        whatsapp:'WhatsApp', call:'Call', share:'Share', copied:'Link copied',
+        details:'Details', location:'Location', openMap:'Open in Google Maps →', ref:'Ref.',
+        waText:(t, url) => 'Hello, I am interested in "' + t + '" on MOUJJ: ' + url,
+        prev:'Previous photo', next:'Next photo' },
+  ar: { brand:'موج', all:'كل العقارات →', loading:'جارٍ التحميل…', missing:'تعذّر العثور على هذا العقار.',
+        back:'تصفّح كل العقارات', offline:'هذا العقار غير متاح حاليًا. حاول بعد قليل.',
+        whatsapp:'واتساب', call:'اتصال', share:'مشاركة', copied:'تم نسخ الرابط',
+        details:'التفاصيل', location:'الموقع', openMap:'افتح في خرائط Google ←', ref:'رقم',
+        waText:(t, url) => 'مرحبًا، أنا مهتم بالعقار "' + t + '" على موج: ' + url,
+        prev:'الصورة السابقة', next:'الصورة التالية' },
+};
+let LANG = 'en';
+try { if (localStorage.getItem('nl-lang') === 'ar') LANG = 'ar'; } catch {}
+const app = document.getElementById('app');
+const id = new URLSearchParams(location.search).get('id');
+let L = null, STATE = 'loading', idx = 0, map = null;
+
+function el(tag, cls, text){ const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function toast(msg){ const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('on'); setTimeout(() => t.classList.remove('on'), 1800); }
+
+function render(){
+  const T = TXT[LANG];
+  app.innerHTML = '';
+  if (STATE !== 'ok'){
+    const s = el('div', 'state', STATE === 'loading' ? T.loading : STATE === 'missing' ? T.missing : T.offline);
+    if (STATE !== 'loading'){ s.append(document.createElement('br')); const a = el('a', '', T.back); a.href = 'listings.html'; s.append(a); }
+    app.append(s); return;
+  }
+  const W = Moujj.WORDS[LANG], rent = L.purpose === 'rent';
+  document.title = L.title + ' — ' + T.brand;
+  const layout = el('div', 'layout');
+
+  /* gallery */
+  const gal = el('div');
+  const stage = el('div', 'stage');
+  const photos = L.photos || [];
+  if (photos.length){
+    const img = document.createElement('img'); img.src = photos[idx].url; img.alt = L.title; stage.append(img);
+    if (photos.length > 1){
+      const prev = el('button', 'nav prev', LANG === 'ar' ? '→' : '←'); prev.setAttribute('aria-label', T.prev); prev.onclick = () => go(-1);
+      const next = el('button', 'nav next', LANG === 'ar' ? '←' : '→'); next.setAttribute('aria-label', T.next); next.onclick = () => go(1);
+      stage.append(prev, next, el('span', 'counter', (idx + 1) + ' / ' + photos.length));
+      let x0 = null;
+      stage.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+      stage.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1); x0 = null; });
+    }
+  } else {
+    const n = el('div', 'none'); n.innerHTML = '<svg aria-hidden="true"><use href="#nl-mark"/></svg>'; stage.append(n);
+  }
+  gal.append(stage);
+  if (photos.length > 1){
+    const th = el('div', 'thumbs');
+    photos.forEach((p, i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-current', i === idx);
+      const im = document.createElement('img'); im.src = p.url; im.alt = ''; im.loading = 'lazy'; b.append(im);
+      b.onclick = () => { idx = i; render(); };
+      th.append(b);
+    });
+    gal.append(th);
+  }
+
+  /* facts + contact */
+  const info = el('div');
+  info.append(el('span', 'tag' + (rent ? ' rent' : ''), rent ? W.rent : W.sale));
+  const h = el('h1', '', L.title); h.dir = 'auto'; info.append(h);
+  const pl = el('div', 'place', Moujj.place(L)); pl.dir = 'auto'; info.append(pl);
+  const pr = el('div', 'bigprice'); pr.append(Moujj.priceEl(L.price, rent ? W.perYear : '')); info.append(pr);
+  const f = Moujj.facts(L, LANG);
+  if (f.length){ const chips = el('div', 'chips'); f.forEach(x => chips.append(el('span', '', x))); info.append(chips); }
+  const actions = el('div', 'actions');
+  const url = location.origin + location.pathname + '?id=' + encodeURIComponent(L.id);
+  const wa = Moujj.waLink(L.agent_phone, T.waText(L.title, url));
+  if (wa){ const a = el('a', 'btn primary'); a.href = wa; a.target = '_blank'; a.rel = 'noopener'; a.innerHTML = '<svg aria-hidden="true"><use href="#i-wa"/></svg>'; a.append(T.whatsapp); actions.append(a); }
+  const tel = Moujj.telLink(L.agent_phone);
+  if (tel){ const a = el('a', 'btn'); a.href = tel; a.innerHTML = '<svg aria-hidden="true"><use href="#i-call"/></svg>'; a.append(T.call); actions.append(a); }
+  else if (L.agent_email){ const a = el('a', 'btn'); a.href = 'mailto:' + L.agent_email + '?subject=' + encodeURIComponent(L.title); a.append('Email'); actions.append(a); }
+  const sh = el('button', 'btn'); sh.type = 'button'; sh.innerHTML = '<svg aria-hidden="true"><use href="#i-share"/></svg>'; sh.append(T.share);
+  sh.onclick = async () => {
+    try { if (navigator.share) return await navigator.share({ title: L.title, url }); } catch { return; }
+    try { await navigator.clipboard.writeText(url); toast(T.copied); } catch { prompt('', url); }
+  };
+  actions.append(sh);
+  info.append(actions);
+  if (L.ref) info.append(el('div', 'ref', T.ref + ' ' + L.ref));
+
+  layout.append(gal, info);
+  app.append(layout);
+
+  if (L.description){
+    const s = el('div', 'section'); s.append(el('h2', '', T.details));
+    const d = el('p', 'desc', L.description); d.dir = 'auto'; s.append(d); app.append(s);
+  }
+  if (L.lat != null && L.lng != null){
+    const s = el('div', 'section'); s.append(el('h2', '', T.location));
+    const m = el('div'); m.id = 'map'; s.append(m);
+    const a = el('a', 'maplink', T.openMap); a.href = 'https://www.google.com/maps?q=' + L.lat + ',' + L.lng; a.target = '_blank'; a.rel = 'noopener'; s.append(a);
+    app.append(s);
+    drawMap();
+  }
+}
+function go(d){ const n = (L.photos || []).length; idx = (idx + d + n) % n; render(); }
+function drawMap(){
+  if (!window.L || !document.getElementById('map')) return setTimeout(drawMap, 150);
+  if (map) { map.remove(); map = null; }
+  map = window.L.map('map', { scrollWheelZoom: false }).setView([L.lat, L.lng], 15);
+  window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+  window.L.circleMarker([L.lat, L.lng], { radius: 9, color: '#dce6f2', weight: 2, fillColor: '#d9a44a', fillOpacity: 1 }).addTo(map);
+}
+
+function applyLang(lang){
+  LANG = lang;
+  try { localStorage.setItem('nl-lang', lang); } catch {}
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-t]').forEach(e => { e.textContent = TXT[lang][e.dataset.t]; });
+  document.getElementById('langtoggle').textContent = lang === 'ar' ? 'English' : 'عربي';
+  render();
+}
+document.getElementById('langtoggle').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
+applyLang(LANG);
+
+(id ? Moujj.fetchListing(id) : Promise.resolve(null))
+  .then(l => { L = l; STATE = l ? 'ok' : 'missing'; render(); })
+  .catch(() => { STATE = 'offline'; render(); });
+</script>
+</body>
+</html>
