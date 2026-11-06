@@ -24,6 +24,15 @@ Render runs the server. Supabase keeps the listings and photos, because Render's
 
 Every push to `main` redeploys automatically. The As-Safa starter listing (from `seed-listings.json`) is added to Supabase on the first start.
 
+### 3. Your domain: moujj.com (bought at IONOS)
+
+1. In Render, open the `mouj` service → **Settings → Custom Domains → Add**, and add `moujj.com`. Render adds `www.moujj.com` with it and shows the DNS records to create.
+2. In IONOS, go to **Domains & SSL → moujj.com → ⋯ → DNS**:
+   - **Delete** any existing `A` and `AAAA` records for `@` and `www` (IONOS's parking page uses them).
+   - **Add** an `A` record: host `@`, points to `216.24.57.1` (Render's address; use the value Render shows if it differs).
+   - **Add** a `CNAME` record: host `www`, points to your Render address, e.g. `mouj.onrender.com` (no `https://`).
+3. Back in Render, press **Verify** next to each domain. Render then issues the free HTTPS certificate. DNS changes usually take minutes, occasionally up to a day.
+
 **Free-plan limits:** after 15 minutes without visitors the Render server sleeps, and the next visit takes about a minute to wake it. Supabase pauses a free project after a week with no activity; un-pause it from the Supabase dashboard.
 
 ## Running on your computer
