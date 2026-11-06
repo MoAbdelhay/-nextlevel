@@ -46,3 +46,16 @@ Then open http://localhost:3000. Without the Supabase settings it stores listing
 - `seed-listings.json` and `seed/`: starter listings and their photos
 - `supabase/setup.sql`: one-time Supabase setup
 - `render.yaml`: Render deployment settings
+
+## Videos (Remotion)
+
+`video/` is a separate [Remotion](https://www.remotion.dev) project for making brand videos in code; it is not part of the website deploy.
+
+```
+cd video
+npm install
+npm run studio     # live editor in the browser
+npm run render     # writes out/mouj-intro.mp4
+```
+
+Starter composition: `MoujIntro` (5 s, 1920×1080), the logo rising over moving waves. Remotion's licence is free for individuals and companies of up to 3 people; larger companies need a company licence.

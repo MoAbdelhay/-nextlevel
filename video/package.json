@@ -1,0 +1,17 @@
+{
+  "name": "mouj-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Remotion videos for Mouj (separate from the website server)",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render MoujIntro out/mouj-intro.mp4",
+    "still": "remotion still MoujIntro out/mouj-intro.png --frame=90"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.537",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.537"
+  }
+}
