@@ -5,7 +5,9 @@
   "description": "Mouj — real estate marketing studio site with listing submissions",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "cf:dev": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",
@@ -14,5 +16,8 @@
   },
   "engines": {
     "node": ">=22.5"
+  },
+  "devDependencies": {
+    "wrangler": "4.152.0"
   }
 }

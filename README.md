@@ -2,42 +2,34 @@
 
 A one-screen site: a live WebGL ocean that the mouse wheel stirs, the latest listings floating on the water, a listing-submission form with photo upload, and a separate listings page. English and Arabic (right-to-left), prices in Saudi Riyal.
 
-## Put it online for free (Render + Supabase)
+## Put it online for free (Cloudflare + Supabase)
 
-Render runs the server. Supabase keeps the listings and photos, because Render's free plan wipes its own disk whenever the server restarts.
+Cloudflare Workers serves the pages and runs the small listings API (free plan, no sleeping). Supabase keeps the listings and photos. The domain moujj.com, HTTPS and email forwarding are all handled in Cloudflare.
 
-### 1. Supabase: database and photo storage (about 3 minutes)
+### 1. Supabase: database and photo storage
 
-1. Sign up at [supabase.com](https://supabase.com) and create a **New project** (any name, e.g. `mouj`; pick a region close to your visitors and save the database password somewhere).
-2. When the project is ready, open **SQL Editor → New query**, paste everything in [`supabase/setup.sql`](supabase/setup.sql), and press **Run**. This creates the `listings` and `photos` tables and a public `photos` storage bucket.
-3. Copy two values for Render:
-   - **Project URL**: Project Settings → Data API (looks like `https://abcd1234.supabase.co`).
-   - **Secret key**: Project Settings → API Keys → *Secret keys* (starts with `sb_secret_`). If you only see legacy keys, use the `service_role` key instead.
-   Keep the secret key private: it can read and change everything in the project.
+1. Create a project at [supabase.com](https://supabase.com).
+2. Open **SQL Editor → New query**, paste everything in [`supabase/setup.sql`](supabase/setup.sql), and press **Run** (safe to run again).
+3. Copy the **Project URL** (Project Settings → Data API, like `https://abcd1234.supabase.co`) and the **Secret key** (Project Settings → API Keys, starts with `sb_secret_`; or the legacy `service_role` key). Keep the secret key private.
 
-### 2. Render: the server (about 3 minutes)
+### 2. Cloudflare Worker: the site
 
-1. Sign up at [render.com](https://render.com) with your GitHub account and allow it to see the `-nextlevel` repository.
-2. Click **New → Blueprint**, pick the repository, and Render reads [`render.yaml`](render.yaml).
-3. When asked, paste `SUPABASE_URL` (Project URL) and `SUPABASE_SECRET_KEY` (secret key), then **Apply**.
-4. After the first deploy finishes, your site is at the `onrender.com` address Render shows (for example `https://mouj.onrender.com`). Opening `/healthz` there should say `"storage":"supabase"`.
+1. Cloudflare dashboard → **Workers & Pages → Create → Import a repository** → connect GitHub → pick `-nextlevel`.
+2. Keep the name `mouj`, leave the build command empty, deploy command `npx wrangler deploy`, and deploy. Cloudflare reads [`wrangler.jsonc`](wrangler.jsonc).
+3. In the Worker: **Settings → Variables and Secrets → Add**, type **Secret**, twice: `SUPABASE_URL` and `SUPABASE_SECRET_KEY`. Then **Deployments → redeploy** (or push any change).
+4. Check `https://mouj.<your-subdomain>.workers.dev/healthz` says `"configured":true`. The As-Safa starter listing is added on the first visit.
 
-Every push to `main` redeploys automatically. The As-Safa starter listing (from `seed-listings.json`) is added to Supabase on the first start.
+Every push to `main` redeploys automatically.
 
 ### 3. Your domain: moujj.com (registered at IONOS, DNS on Cloudflare)
 
-Cloudflare handles DNS, HTTPS in front of the site, and forwards email (e.g. info@moujj.com) to an existing inbox.
+1. **Name servers:** add `moujj.com` to Cloudflare (Free plan), then in IONOS → Domains & SSL → moujj.com → Name servers, enter Cloudflare's two (turn off DNSSEC at IONOS first if it is on).
+2. **Clear old records:** Cloudflare → DNS → Records: delete every `A`, `AAAA` and `CNAME` record named `moujj.com` (`@`) or `www` (the IONOS parking ones, or old ones pointing to Render).
+3. **Attach the domain:** Worker → **Settings → Domains & Routes → Add → Custom domain** → `moujj.com`, then again for `www.moujj.com`. Cloudflare creates the DNS records and the HTTPS certificate itself.
+4. **HTTPS:** SSL/TLS → Edge Certificates → **Always Use HTTPS** on.
+5. **Email:** Cloudflare → Email → **Email Routing** → enable (it adds the MX/SPF records; delete old IONOS MX records), verify your inbox under Destination addresses, then create `info@moujj.com` → that inbox. Replies go out from the inbox's own address.
 
-1. **Cloudflare:** add `moujj.com` on the Free plan. Cloudflare shows two name servers (like `xxx.ns.cloudflare.com`).
-2. **IONOS:** Domains & SSL → moujj.com → Name servers → use other name servers → enter Cloudflare's two. Turn off DNSSEC at IONOS first if it is on.
-3. **Cloudflare DNS** (delete any old A/AAAA/CNAME records for `@` and `www` that it copied from IONOS):
-   - `CNAME` `@` → `mouj.onrender.com`, proxy **DNS only** (grey cloud)
-   - `CNAME` `www` → `mouj.onrender.com`, proxy **DNS only**
-4. **Render:** Settings → Custom Domains → **Verify** both, and wait until the certificates show as issued.
-5. **Cloudflare:** switch both records to **Proxied** (orange cloud), then SSL/TLS → mode **Full (strict)** and Edge Certificates → **Always Use HTTPS** on.
-6. **Email:** Cloudflare → Email → Email Routing → enable (it adds the MX/SPF records; remove old IONOS MX records), add and verify your inbox under Destination addresses, then create `info@moujj.com` → send to that inbox. Replies go out from the inbox's own address.
-
-**Free-plan limits:** after 15 minutes without visitors the Render server sleeps, and the next visit takes about a minute to wake it. Supabase pauses a free project after a week with no activity; un-pause it from the Supabase dashboard.
+**Free-plan limits:** Workers free allows 100,000 requests a day. Supabase pauses a free project after a week with no activity; un-pause it from the Supabase dashboard.
 
 ## Running on your computer
 
@@ -48,17 +40,17 @@ npm install
 npm start
 ```
 
-Then open http://localhost:3000. Without the Supabase settings it stores listings in `data/listings.db` (SQLite) and photos in `uploads/`. To use Supabase locally, start it with `SUPABASE_URL=... SUPABASE_SECRET_KEY=... npm start`.
+Then open http://localhost:3000 (or `npm run cf:dev` to run the Cloudflare Worker locally, with secrets in a `.dev.vars` file). Without the Supabase settings it stores listings in `data/listings.db` (SQLite) and photos in `uploads/`. To use Supabase locally, start it with `SUPABASE_URL=... SUPABASE_SECRET_KEY=... npm start`.
 
 ## Files
 
-- `index.html`: the ocean page, form and floating listings
-- `listings.html`: all listings, with search, sale/rent filter and sort
-- `server.js`: web server and listings API
-- `store.js`: storage (Supabase, or SQLite for local use)
-- `seed-listings.json` and `seed/`: starter listings and their photos
+- `public/index.html`: the ocean page, form and floating listings
+- `public/listings.html`: all listings, with search, sale/rent filter and sort
+- `public/seed-listings.json` and `public/seed/`: starter listings and their photos
+- `worker/index.js` + `wrangler.jsonc`: the Cloudflare Worker (listings API) and its settings
+- `server.js` + `store.js`: Node server for running on your own computer (SQLite) or any Node host
 - `supabase/setup.sql`: one-time Supabase setup
-- `render.yaml`: Render deployment settings
+- `render.yaml`: old Render settings, only needed while the Render service still exists
 
 ## Videos (Remotion)
 

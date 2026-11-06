@@ -4,3 +4,5 @@ uploads/
 *.log
 video/node_modules/
 video/out/
+.dev.vars
+.wrangler/

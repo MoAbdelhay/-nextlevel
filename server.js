@@ -9,6 +9,7 @@ const multer = require('multer');
 const { openStore } = require('./store');
 
 const ROOT = __dirname;
+const PUBLIC_DIR = path.join(ROOT, 'public');   /* the site's pages and images */
 const store = openStore();
 
 /* ---------- photo uploads (kept in memory, then handed to the store) ---------- */
@@ -24,11 +25,11 @@ const upload = multer({
 /* ---------- app ---------- */
 const app = express();
 /* only the public site files are served, never server code or data */
-const page = (file) => (req, res) => res.sendFile(path.join(ROOT, file));
+const page = (file) => (req, res) => res.sendFile(path.join(PUBLIC_DIR, file));
 app.get(['/', '/index.html'], page('index.html'));
 app.get(['/listings', '/listings.html'], page('listings.html'));
 for (const f of ['seed-listings.json', 'logo.svg', 'logo-mark.svg']) app.get('/' + f, page(f));
-app.use('/seed', express.static(path.join(ROOT, 'seed'), { maxAge: '7d' }));
+app.use('/seed', express.static(path.join(PUBLIC_DIR, 'seed'), { maxAge: '7d' }));
 if (store.uploadDir) app.use('/uploads', express.static(store.uploadDir, { maxAge: '7d', immutable: true }));
 
 app.get('/healthz', (req, res) => res.json({ ok: true, storage: store.kind }));
@@ -86,7 +87,7 @@ app.use((err, req, res, next) => {
 /* starter listings (seed-listings.json) are added once, then the server starts */
 (async () => {
   try {
-    const seeds = JSON.parse(fs.readFileSync(path.join(ROOT, 'seed-listings.json'), 'utf8'));
+    const seeds = JSON.parse(fs.readFileSync(path.join(PUBLIC_DIR, 'seed-listings.json'), 'utf8'));
     await store.seed(seeds);
   } catch (e) {
     if (e.code !== 'ENOENT') console.warn('Could not add starter listings:', e.message);

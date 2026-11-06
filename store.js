@@ -66,7 +66,7 @@ function supabaseStore(url, key) {
         if (!id) id = (await insertListing(seedFields(l))).id;
         if (l.photos?.length && !hasPhotos) {
           for (const rel of l.photos) {
-            const src = path.join(ROOT, rel);
+            const src = path.join(ROOT, 'public', rel);
             if (!fs.existsSync(src)) continue;
             await addPhoto(id, fs.readFileSync(src), path.basename(rel), MIME[path.extname(rel).toLowerCase()] || 'image/jpeg');
           }
@@ -161,7 +161,7 @@ function sqliteStore() {
         if (!id) id = insert(seedFields(l)).id;
         if (l.photos?.length && photoCount.get(id).n === 0) {
           for (const rel of l.photos) {
-            const src = path.join(ROOT, rel);
+            const src = path.join(ROOT, 'public', rel);
             if (fs.existsSync(src)) savePhoto(id, fs.readFileSync(src), path.basename(rel));
           }
         }
