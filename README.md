@@ -1,4 +1,4 @@
-# MOUJ — Real Estate Marketing Studio
+# MOUJJ — Real Estate Marketing Studio
 
 A one-screen site: a live WebGL ocean that the mouse wheel stirs, the latest listings floating on the water, a listing-submission form with photo upload, and a separate listings page. English and Arabic (right-to-left), prices in Saudi Riyal.
 

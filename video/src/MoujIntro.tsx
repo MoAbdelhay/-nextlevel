@@ -63,7 +63,7 @@ export const MoujIntro: React.FC<{ tagline: string; taglineAr: string }> = ({ ta
             opacity: name,
           }}
         >
-          MOUJ
+          MOUJJ
         </div>
         <div style={{ display: "flex", gap: 40, opacity: tag, color: "#8fa3bd", fontSize: 40, fontFamily: "'IBM Plex Mono', 'DejaVu Sans Mono', monospace", letterSpacing: "0.3em" }}>
           <span>{tagline.toUpperCase()}</span>
