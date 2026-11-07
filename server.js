@@ -30,7 +30,7 @@ const page = (file) => (req, res) => res.sendFile(path.join(PUBLIC_DIR, file));
 app.get(['/', '/index.html'], page('index.html'));
 app.get(['/listings', '/listings.html'], page('listings.html'));
 app.get(['/listing', '/listing.html'], page('listing.html'));
-for (const f of ['seed-listings.json', 'logo.svg', 'logo-mark.svg', 'mouj.js']) app.get('/' + f, page(f));
+for (const f of ['seed-listings.json', 'logo.svg', 'logo-mark.svg', 'mouj.js', 'nav.js', 'nav.css']) app.get('/' + f, page(f));
 app.use('/seed', express.static(path.join(PUBLIC_DIR, 'seed'), { maxAge: '7d' }));
 if (store.uploadDir) app.use('/uploads', express.static(store.uploadDir, { maxAge: '7d', immutable: true }));
 

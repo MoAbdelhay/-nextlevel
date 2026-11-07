@@ -6,6 +6,7 @@
 <title>Listing — MOUJJ</title>
 <meta name="description" content="Property listed with Moujj.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1628'/%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%23dce6f2' stroke-width='2.5' opacity='.35'/%3E%3Cpath d='M18 34l14-14 14 14' fill='none' stroke='%23d9a44a' stroke-width='5.5' stroke-linecap='square'/%3E%3Cpath d='M10 42c4-2.6 7.5-2.6 11.5 0s7.5 2.6 11.5 0 7.5-2.6 11.5 0 7.5 2.6 11 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M14 50c3.5-2.2 6.5-2.2 10 0s6.5 2.2 10 0 6.5-2.2 10 0 6.5 2.2 10 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="nav.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -23,16 +24,8 @@ a{color:inherit}
 :focus-visible{outline:1.5px solid var(--dim);outline-offset:3px}
 .shell{max-width:72rem;margin:0 auto}
 
-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.2rem 1.4rem;border-bottom:1px solid var(--line)}
-.wordmark{font-size:.9rem;letter-spacing:.1em;text-decoration:none;font-weight:500;display:inline-flex;align-items:center;gap:.6rem;direction:ltr}
-.wordmark .mark{width:28px;height:28px;flex:none}
-.hdr-r{display:flex;align-items:center;gap:1rem}
-.back{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--dim)}
-.back:hover{color:var(--ink)}
-.langtoggle{background:none;border:1px solid var(--line);color:var(--ink);font-family:var(--mono);font-size:.72rem;padding:.35rem .8rem;cursor:pointer}
-.langtoggle:hover{border-color:var(--accent);color:var(--accent)}
 
-main{padding:2.4rem 1.4rem 5rem}
+main{padding:calc(2.4rem + 4.6rem) 1.4rem 5rem}
 .layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:2.4rem;align-items:start}
 @media(max-width:860px){.layout{grid-template-columns:1fr;gap:1.6rem}}
 
@@ -85,12 +78,9 @@ h1{font-size:1.35rem;font-weight:500;letter-spacing:.02em;line-height:1.35;margi
 footer{border-top:1px solid var(--line);padding:2rem 1.4rem;font-size:.66rem;color:var(--faint);letter-spacing:.06em}
 footer a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
 
-html[lang=ar] header{direction:ltr}
-html[lang=ar] .hdr-r{direction:rtl}
-html[lang=ar] .wordmark{font-size:1.05rem}
 html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
-html[lang=ar] .back,html[lang=ar] .tag,html[lang=ar] .btn,html[lang=ar] .section h2,html[lang=ar] .ref{letter-spacing:0}
-html[lang=ar] .btn,html[lang=ar] .langtoggle{font-family:'IBM Plex Sans Arabic',var(--mono)}
+html[lang=ar] .tag,html[lang=ar] .btn,html[lang=ar] .section h2,html[lang=ar] .ref{letter-spacing:0}
+html[lang=ar] .btn{font-family:'IBM Plex Sans Arabic',var(--mono)}
 html[lang=ar] .counter{right:auto;left:.6rem}
 html[lang=ar] h1,html[lang=ar] .place,html[lang=ar] .desc{text-align:right}
 </style>
@@ -109,13 +99,7 @@ html[lang=ar] h1,html[lang=ar] .place,html[lang=ar] .desc{text-align:right}
   <symbol id="i-share" viewBox="0 0 24 24"><path d="M18 16a3 3 0 0 0-2.4 1.2l-6.7-3.4a3 3 0 0 0 0-1.6l6.7-3.4A3 3 0 1 0 15 7l-6.7 3.4a3 3 0 1 0 0 3.2L15 17a3 3 0 1 0 3-1Z"/></symbol>
 </svg>
 
-<header>
-  <a class="wordmark" href="./" aria-label="Moujj home"><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span data-t="brand">MOUJJ</span></a>
-  <div class="hdr-r">
-    <a class="back" href="listings.html" data-t="all">← All listings</a>
-    <button class="langtoggle" id="langtoggle" type="button" aria-label="Switch language / تغيير اللغة">عربي</button>
-  </div>
-</header>
+<script src="nav.js"></script>
 
 <main>
   <div class="shell" id="app"><div class="state" data-t="loading">Loading…</div></div>

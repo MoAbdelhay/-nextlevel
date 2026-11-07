@@ -11,6 +11,7 @@
 <meta property="og:description" content="Listing launches, media, brand and lead generation. One studio, one rising tide.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1628'/%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%23dce6f2' stroke-width='2.5' opacity='.35'/%3E%3Cpath d='M18 34l14-14 14 14' fill='none' stroke='%23d9a44a' stroke-width='5.5' stroke-linecap='square'/%3E%3Cpath d='M10 42c4-2.6 7.5-2.6 11.5 0s7.5 2.6 11.5 0 7.5-2.6 11.5 0 7.5 2.6 11 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round'/%3E%3Cpath d='M14 50c3.5-2.2 6.5-2.2 10 0s6.5 2.2 10 0 6.5-2.2 10 0 6.5 2.2 10 0' fill='none' stroke='%23dce6f2' stroke-width='3.5' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="nav.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
@@ -48,28 +49,6 @@ img,video,svg.band{max-width:100%;display:block}
 ::-webkit-scrollbar-thumb{background:#24364f;border:2px solid var(--bg);border-radius:5px}
 html{scrollbar-color:#24364f var(--bg);scrollbar-width:thin}
 
-/* ---------- header ---------- */
-header{
-  position:fixed;inset:0 0 auto 0;z-index:20;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:1.1rem 7.5rem 2.2rem 1.4rem;
-  background:linear-gradient(rgba(10,22,40,.66),rgba(10,22,40,0));
-  transition:opacity .6s cubic-bezier(.22,.61,.36,1);
-  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--dim);
-  pointer-events:none;
-}
-header.gone{opacity:0}
-header.gone a{pointer-events:none}
-@media(prefers-reduced-motion:reduce){header{transition:none}}
-header a{pointer-events:auto;text-decoration:none}
-header .wordmark{color:var(--ink);font-weight:600;letter-spacing:.1em;font-size:.85rem;display:inline-flex;align-items:center;gap:.6rem;direction:ltr}
-header .wordmark .mark{width:26px;height:26px;flex:none}
-header .wordmark b,.hero-title h1 b{font-weight:inherit;color:var(--accent)}
-header .credit{letter-spacing:.12em;text-transform:none;font-size:.7rem}
-header .credit a{color:var(--ink);border-bottom:1px solid var(--line)}
-header .credit a:hover{color:var(--accent);border-color:var(--accent)}
-@media(max-width:520px){header .credit{font-size:.58rem;letter-spacing:.04em;line-height:1.35;text-align:end;max-width:8.5rem}}
 
 /* ---------- hero ---------- */
 #hero{
@@ -95,7 +74,7 @@ header .credit a:hover{color:var(--accent);border-color:var(--accent)}
 .hero-grid{
   position:relative;z-index:5;min-height:100vh;min-height:100svh;
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,450px);gap:2rem 3rem;
-  padding:5.2rem clamp(1.4rem,4vw,3.5rem) 1.4rem;
+  padding:6.2rem clamp(1.4rem,4vw,3.5rem) 1.4rem;
 }
 .hero-left{display:flex;flex-direction:column;justify-content:space-between;gap:2rem}
 .hero-right{display:flex;flex-direction:column;justify-content:flex-end;gap:.9rem}
@@ -107,6 +86,7 @@ header .credit a:hover{color:var(--accent);border-color:var(--accent)}
   text-shadow:0 1px 24px rgba(10,22,40,.45);
   display:flex;align-items:center;gap:.45em;
 }
+.hero-title h1 b{font-weight:inherit;color:var(--accent)}
 .hero-title h1 .mark{width:1.35em;height:1.35em;flex:none;color:#eef3fa;filter:drop-shadow(0 1px 14px rgba(10,22,40,.45))}
 .hero-cta{
   display:inline-block;margin-top:2.2rem;
@@ -196,7 +176,7 @@ html[lang=ar] .float-card .tag{left:auto;right:.5rem;letter-spacing:0}
 .formglass .seg span{padding:.55rem 1.3rem}
 .formglass .sendbtn{background:rgba(10,22,40,.4);width:100%}
 @media(max-width:900px){
-  .hero-grid{grid-template-columns:1fr;padding-top:4.6rem}
+  .hero-grid{grid-template-columns:1fr;padding-top:5.2rem}
   .hero-left,.hero-right{display:contents}
   .hero-title{order:1;padding:2vh 0 1rem}
   .hero-floats{position:static;order:2;justify-content:flex-start;overflow-x:auto;padding:.4rem .2rem 1rem;margin:0 -.2rem;scrollbar-width:none}
@@ -301,21 +281,10 @@ html[lang=ar] .subgrid .pin .flabel{letter-spacing:0}
 }
 
 /* ---------- language toggle + Arabic (RTL) ---------- */
-.langtoggle{
-  position:fixed;top:1.05rem;right:1.4rem;z-index:30;
-  font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
-  background:rgba(10,22,40,.6);backdrop-filter:blur(4px);
-  border:1px solid var(--line);color:var(--ink);
-  padding:.35rem .85rem;cursor:pointer;
-  transition:border-color .3s,color .3s;
-}
-.langtoggle:hover{border-color:var(--accent);color:var(--accent)}
-html[lang=ar] header,html[lang=ar] .hero-grid{direction:ltr}
-html[lang=ar] header > *,html[lang=ar] .hero-right{direction:rtl}
+html[lang=ar] .hero-grid{direction:ltr}
+html[lang=ar] .hero-right{direction:rtl}
 html[lang=ar] .hero-title{text-align:left}
-html[lang=ar] header .wordmark{direction:ltr}
 html[lang=ar] .hero-title h1{font-weight:500}
-html[lang=ar] header .wordmark{font-size:1.05rem}
 html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
 html[lang=ar] *{letter-spacing:0!important}
 html[lang=ar] button,html[lang=ar] input,html[lang=ar] select,html[lang=ar] textarea{
@@ -342,12 +311,8 @@ html[lang=ar] input[type=range]{direction:ltr}
   </symbol>
 </svg>
 
-<header>
-  <a class="wordmark" href="#hero" aria-label="Moujj home"><svg class="mark" aria-hidden="true"><use href="#nl-mark"/></svg><span>MOUJJ</span></a>
-  <span class="credit">Powered by <a href="https://takween-studio.com" target="_blank" rel="noopener">Takween Studio</a></span>
-</header>
 
-<button class="langtoggle" id="langtoggle" type="button" aria-label="Switch language / تغيير اللغة">عربي</button>
+<script src="nav.js"></script>
 
 <!-- ============ HERO ============ -->
 <div id="hero">
@@ -494,11 +459,6 @@ scrub.addEventListener('input', () => {
     (scrubOffset >= 0 ? '+' : '−') + Math.abs(scrubOffset).toFixed(1) + TXT[LANG].mo;
 });
 
-/* ---------- header hides once the hero is gone ---------- */
-const hdr = document.querySelector('header');
-new IntersectionObserver(es => {
-  for (const e of es) hdr.classList.toggle('gone', !e.isIntersecting);
-}, { threshold: 0.04 }).observe(document.getElementById('hero'));
 
 /* ================= listing submission ================= */
 const lform = document.getElementById('listingform');
@@ -659,8 +619,6 @@ lform.addEventListener('reset', () => setTimeout(() => setPin(null, null)));
 
 /* ================= Arabic content + language toggle ================= */
 const AR_HTML = [
-  ['header .credit', 'مدعوم من <a href="https://takween-studio.com" target="_blank" rel="noopener">تكوين ستوديو</a>'],
-  ['header .wordmark span', 'موج'],
   ['.hero-title h1 span', 'موج'],
   ['.hero-cta.alt', 'تصفّح العقارات ←'],
   ['.scrub label', 'حرّك السوق <output id="scrubout" for="tidescrub">+0.0 شهر</output>'],
