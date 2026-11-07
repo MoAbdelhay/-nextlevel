@@ -22,7 +22,7 @@
 .tn-link:hover,.tn-dlink:hover{background:rgba(255,255,255,.08);color:#fff}
 .tn-link.on,.tn-dlink.on{background:rgba(255,255,255,.14);color:#fff}
 
-.tn-search{direction:ltr;position:relative;display:flex;align-items:center;flex:1 1 220px;max-width:340px;margin-inline-start:auto;min-width:0}
+.tn-search{direction:ltr;position:relative;display:flex;align-items:center;flex:1 1 220px;max-width:340px;margin-right:auto;min-width:0}   /* auto space on its right keeps it at the left, by the language button */
 .tn-search input{
   width:100%;min-width:0;font:inherit;font-size:.74rem;color:#fff;
   padding:.55rem 4.4rem .55rem 2.2rem;border-radius:12px;
