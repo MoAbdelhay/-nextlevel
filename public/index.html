@@ -110,7 +110,7 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .hero-grid{position:relative}
 .hero-floats{
   position:absolute;z-index:6;bottom:9%;
-  left:clamp(1.4rem,4vw,3.5rem);right:calc(clamp(1.4rem,4vw,3.5rem) + 450px + 3rem);
+  right:clamp(1.4rem,4vw,3.5rem);left:calc(clamp(1.4rem,4vw,3.5rem) + 450px + 3rem);
   display:flex;justify-content:center;align-items:flex-end;gap:1.1rem;pointer-events:none;
 }
 .float-card{
@@ -162,6 +162,14 @@ html[lang=ar] .float-card .tag{left:auto;right:.5rem;letter-spacing:0}
 .formglass .dropzone{background:rgba(10,22,40,.35);padding:1rem}
 .formglass .seg span{padding:.55rem 1.3rem}
 .formglass .sendbtn{background:rgba(10,22,40,.4);width:100%}
+/* desktop: submit panel on the left, logo on the right (both languages) */
+@media(min-width:901px){
+  .hero-grid{grid-template-columns:minmax(0,450px) minmax(0,1fr)}
+  .hero-right{grid-column:1;grid-row:1}
+  .hero-left{grid-column:2;grid-row:1;align-items:flex-end}
+  .hero-title{text-align:right}
+  .hero-title h1{justify-content:flex-end}
+}
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;padding-top:5.2rem}
   .hero-left,.hero-right{display:contents}
@@ -270,7 +278,7 @@ html[lang=ar] .subgrid .pin .flabel{letter-spacing:0}
 /* ---------- language toggle + Arabic (RTL) ---------- */
 html[lang=ar] .hero-grid{direction:ltr}
 html[lang=ar] .hero-right{direction:rtl}
-html[lang=ar] .hero-title{text-align:left}
+html[lang=ar] .hero-title{text-align:right}
 html[lang=ar] .hero-title h1{font-weight:500}
 html[lang=ar] body{font-family:'IBM Plex Sans Arabic',var(--mono)}
 html[lang=ar] *{letter-spacing:0!important}
