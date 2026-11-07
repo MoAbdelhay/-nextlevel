@@ -38,8 +38,17 @@
   padding:.32rem .6rem;border-radius:9px;border:0;cursor:pointer;background:#dce6f2;color:#0a1628;font-weight:600}
 .tn-go:hover{background:#fff}
 
-.tn-credit{direction:ltr;font-size:.62rem;color:rgba(220,230,242,.6);white-space:nowrap;flex:none}
-.tn-credit a,.tn-dcredit a{color:#dce6f2;text-decoration:none;border-bottom:1px solid rgba(220,230,242,.3)}
+/* credit at the bottom-right of the page */
+.site-credit{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:.64rem;letter-spacing:.04em;color:rgba(220,230,242,.62);white-space:nowrap}
+.site-credit a{color:#dce6f2;text-decoration:none;border-bottom:1px solid rgba(220,230,242,.3)}
+.site-credit a:hover{color:#fff;border-color:#fff}
+#hero > .site-credit{position:absolute;z-index:7;right:clamp(1.4rem,4vw,3.5rem);bottom:1rem;
+  padding:.35rem .7rem;border-radius:10px;background:rgba(10,22,40,.35);border:1px solid rgba(255,255,255,.12);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+@media(max-width:900px){#hero > .site-credit{position:relative;right:auto;bottom:auto;display:table;margin:-.4rem clamp(1.4rem,4vw,3.5rem) 1rem auto}}
+.credit-row{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.credit-row .site-credit{margin-inline-start:auto}
+html[lang=ar] .site-credit{direction:rtl;font-family:'IBM Plex Sans Arabic',sans-serif;letter-spacing:0}
 .tn-lang{
   position:static;flex:none;font:inherit;font-size:.72rem;color:#dce6f2;cursor:pointer;
   padding:.5rem .85rem;border-radius:11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
@@ -58,9 +67,7 @@
 }
 .tn-drawer[hidden]{display:none}
 .tn-dlink{padding:.75rem .8rem;font-size:.8rem}
-.tn-dcredit{font-size:.66rem;color:rgba(220,230,242,.6);padding:.6rem .8rem .3rem;border-top:1px solid rgba(255,255,255,.1);margin-top:.3rem}
 
-@media(max-width:1180px){.tn-credit{display:none}}
 @media(max-width:940px){
   .tn-links{display:none}
   .tn-menu{display:inline-flex}
@@ -79,6 +86,6 @@
 /* Arabic: bar keeps the logo on the left; text inside reads right-to-left */
 html[lang=ar] .topnav{direction:ltr;font-family:'IBM Plex Sans Arabic','IBM Plex Mono',sans-serif}
 html[lang=ar] .tn-brand{font-family:'IBM Plex Sans Arabic',sans-serif;font-size:1.02rem;letter-spacing:0}
-html[lang=ar] .tn-links,html[lang=ar] .tn-drawer,html[lang=ar] .tn-credit{direction:rtl}
+html[lang=ar] .tn-links,html[lang=ar] .tn-drawer{direction:rtl}
 html[lang=ar] .tn-link,html[lang=ar] .tn-dlink,html[lang=ar] .tn-go,html[lang=ar] .tn-lang{letter-spacing:0;font-family:'IBM Plex Sans Arabic',sans-serif}
 html[lang=ar] .tn-search input{font-family:'IBM Plex Sans Arabic','IBM Plex Mono',sans-serif}

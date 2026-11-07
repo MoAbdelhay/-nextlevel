@@ -35,18 +35,27 @@
       <input type="search" name="q" autocomplete="off" enterkeyhint="search" dir="auto">
       <button type="submit" class="tn-go" data-k="searchBtn"></button>
     </form>
-    <span class="tn-credit" data-k="credit"></span>
     <button class="langtoggle tn-lang" id="langtoggle" type="button" aria-label="Switch language / تغيير اللغة">عربي</button>
     <button class="tn-menu" type="button" aria-expanded="false" aria-controls="tn-drawer">${icon.menu}</button>
   </div>
   <div class="tn-drawer" id="tn-drawer" hidden>
     ${links('tn-dlink')}
-    <span class="tn-dcredit" data-k="credit"></span>
   </div>
 </nav>`;
   const me = document.currentScript;
   me.insertAdjacentHTML('beforebegin', html);
   const nav = document.getElementById('topnav');
+
+  /* "Powered by Takween Studio": bottom-right of the page (the home hero, or the page footer) */
+  const credit = document.createElement('div');
+  credit.className = 'site-credit';
+  credit.dataset.k = 'credit';
+  window.addEventListener('DOMContentLoaded', () => {
+    const footer = document.querySelector('footer .shell');
+    if (footer) { footer.classList.add('credit-row'); footer.append(credit); }
+    else (document.getElementById('hero') || document.body).append(credit);
+    label();
+  });
   const input = nav.querySelector('.tn-search input');
   const menuBtn = nav.querySelector('.tn-menu');
   const drawer = nav.querySelector('.tn-drawer');
@@ -55,7 +64,7 @@
   function label() {
     const lang = document.documentElement.lang === 'ar' ? 'ar' : 'en';
     const T = L[lang];
-    nav.querySelectorAll('[data-k]').forEach(el => {
+    [...nav.querySelectorAll('[data-k]'), credit].forEach(el => {
       const v = T[el.dataset.k];
       if (v == null) return;
       if (el.dataset.k === 'credit') el.innerHTML = v; else el.textContent = v;
