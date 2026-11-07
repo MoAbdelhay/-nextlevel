@@ -1,0 +1,135 @@
+/* MOUJJ glass UI: buttons, fields, panels and cards in the same style as the nav bar.
+   Loaded after each page's own styles so it wins. */
+:root{
+  color-scheme:dark;
+  --g-fill:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.03) 60%),rgba(10,22,40,.38);
+  --g-fill-solid:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02) 60%),#0f1e36;
+  --g-border:rgba(255,255,255,.16);
+  --g-blur:blur(18px) saturate(1.5);
+  --g-shadow:0 14px 34px -16px rgba(0,6,18,.75),inset 0 1px 0 rgba(255,255,255,.2);
+  --g-field:rgba(255,255,255,.07);
+  --g-field-line:rgba(255,255,255,.13);
+  --r-panel:18px; --r-card:16px; --r-ctl:12px; --r-sm:9px;
+}
+
+/* ---------- shared pieces ---------- */
+html .g-btn.g-btn,
+html .hero-cta.hero-cta,
+html .btn.btn,
+html .pinbar.pinbar button,
+html .nav.nav,
+html .previews.previews button{
+  font-family:inherit;text-transform:none;letter-spacing:.04em;font-weight:500;
+  border-radius:var(--r-ctl);border:1px solid var(--g-border);color:#dce6f2;cursor:pointer;
+  background:rgba(255,255,255,.08);
+  -webkit-backdrop-filter:var(--g-blur);backdrop-filter:var(--g-blur);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16);
+  transition:background .2s,border-color .2s,color .2s,transform .2s;
+}
+html .g-btn.g-btn:hover,html .hero-cta.hero-cta:hover,html .btn.btn:hover,html .pinbar.pinbar button:hover,html .nav.nav:hover,html .previews.previews button:hover{
+  background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.32);color:#fff;
+}
+/* primary = the nav's "Search" button */
+html .sendbtn.sendbtn,
+html .btn.btn.primary{
+  font-family:inherit;text-transform:none;letter-spacing:.04em;font-weight:600;
+  border-radius:var(--r-ctl);border:1px solid #dce6f2;background:#dce6f2;color:#0a1628;cursor:pointer;
+  box-shadow:0 10px 24px -14px rgba(220,230,242,.6),inset 0 1px 0 rgba(255,255,255,.8);
+  transition:background .2s,transform .2s;
+}
+html .sendbtn.sendbtn:hover,html .btn.btn.primary:hover{background:#fff;color:#0a1628}
+html .sendbtn.sendbtn:active,html .btn.btn:active,html .hero-cta.hero-cta:active{transform:translateY(1px)}
+html .sendbtn.sendbtn[disabled]{opacity:.5;cursor:wait}
+
+/* fields */
+html .lform.lform input:not([type=radio]):not([type=file]):not([type=hidden]),
+html .lform.lform select,
+html .lform.lform textarea,
+html .lbar.lbar input,
+html .lbar.lbar select{
+  font-family:inherit;border-radius:var(--r-ctl);
+  background-color:var(--g-field);border:1px solid var(--g-field-line);color:#fff;
+  transition:background-color .2s,border-color .2s;
+}
+html .lform.lform input:not([type=radio]):not([type=file]):focus,
+html .lform.lform select:focus,html .lform.lform textarea:focus,
+html .lbar.lbar input:focus,html .lbar.lbar select:focus{
+  outline:none;background-color:rgba(255,255,255,.12);border-color:rgba(255,255,255,.35);
+}
+html .lform.lform input::placeholder,html .lform.lform textarea::placeholder,html .lbar.lbar input::placeholder{color:rgba(220,230,242,.5)}
+html .lbar.lbar select{
+  appearance:none;-webkit-appearance:none;padding-right:2rem;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a9bbd2'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .8rem center;
+}
+html[lang=ar] .lbar.lbar select{background-position:left .8rem center;padding-right:.8rem;padding-left:2rem}
+select option{background:#0f1e36;color:#dce6f2}
+
+/* segmented controls: Sale / Rent, Grid / Map */
+html .seg,
+html .viewtabs.viewtabs{
+  display:inline-flex;gap:3px;padding:3px;border-radius:var(--r-ctl);
+  background:rgba(255,255,255,.06);border:1px solid var(--g-field-line);
+}
+html .seg.seg span,
+html .viewtabs.viewtabs button{
+  border-radius:var(--r-sm);text-transform:none;letter-spacing:.04em;font-size:.74rem;color:rgba(220,230,242,.8);
+  transition:background .2s,color .2s;
+}
+html .seg.seg label + label span{border:0}
+html .seg.seg label:hover span,html .viewtabs.viewtabs button:hover{background:rgba(255,255,255,.08);color:#fff}
+html .seg.seg input:checked + span,
+html .viewtabs.viewtabs button[aria-selected=true]{background:#dce6f2;color:#0a1628;font-weight:600}
+
+/* ---------- panels ---------- */
+html .formglass.formglass,
+html .scrub.scrub{
+  border-radius:var(--r-panel);border:1px solid var(--g-border);
+  background:var(--g-fill);
+  -webkit-backdrop-filter:var(--g-blur);backdrop-filter:var(--g-blur);
+  box-shadow:var(--g-shadow);
+}
+html .more.more{border-radius:var(--r-ctl);border:1px solid var(--g-field-line);background:rgba(255,255,255,.03)}
+html .more.more summary{text-transform:none;letter-spacing:.04em;font-size:.74rem;border-radius:var(--r-ctl)}
+html .more.more summary:hover{background:rgba(255,255,255,.05)}
+html .dropzone.dropzone{border-radius:var(--r-ctl);border:1px dashed rgba(255,255,255,.22);background:rgba(255,255,255,.04)}
+html .dropzone.dropzone:hover,html .dropzone.dropzone.drag{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+html .dropzone.dropzone .dz-main{text-transform:none;letter-spacing:.04em}
+html .formstatus.formstatus{border-radius:var(--r-ctl);background:rgba(255,255,255,.06);border-color:var(--g-field-line)}
+html .formstatus.formstatus.ok{border-color:rgba(220,230,242,.45)}
+html .previews.previews figure{border-radius:var(--r-sm);overflow:hidden;border-color:var(--g-field-line)}
+html .previews.previews button{width:20px;height:20px;padding:0;border-radius:6px;font-size:.62rem;line-height:1}
+html #pickmap,html #map,html #lmap{border-radius:var(--r-card);overflow:hidden;border-color:var(--g-border)}
+html .pinbar.pinbar button{font-size:.66rem;padding:.3rem .6rem;border-radius:8px}
+
+/* ---------- cards ---------- */
+html .float-card.float-card,
+html .card.card{
+  border-radius:var(--r-card);overflow:hidden;border:1px solid var(--g-border);
+  background:var(--g-fill);
+  -webkit-backdrop-filter:var(--g-blur);backdrop-filter:var(--g-blur);
+  box-shadow:var(--g-shadow);
+}
+html .card.card{background:var(--g-fill-solid)}
+html .card.card:hover,html .float-card.float-card:hover{border-color:rgba(255,255,255,.34)}
+html .float-card.float-card .tag,html .badge.badge,html .tag.tag{border-radius:7px;letter-spacing:.06em}
+html .pcount.pcount,html .counter.counter{border-radius:7px}
+
+/* ---------- listing page ---------- */
+html .stage.stage{border-radius:var(--r-card);border-color:var(--g-border)}
+html .nav.nav{width:42px;height:42px;padding:0;background:rgba(10,22,40,.45)}
+html .thumbs.thumbs button{border-radius:10px;overflow:hidden;border-color:var(--g-field-line)}
+html .thumbs.thumbs button[aria-current=true]{border-color:#dce6f2}
+html .chips.chips span{border-radius:10px;border-color:var(--g-field-line);background:rgba(255,255,255,.05)}
+html .btn.btn{font-size:.78rem;padding:.85rem 1rem}
+html .toast.toast{border-radius:var(--r-ctl)}
+
+/* Arabic keeps letters joined */
+html[lang=ar] .g-btn.g-btn,html[lang=ar] .hero-cta.hero-cta,html[lang=ar] .btn.btn,html[lang=ar] .sendbtn.sendbtn,
+html[lang=ar] .seg.seg span,html[lang=ar] .viewtabs.viewtabs button,html[lang=ar] .more.more summary{letter-spacing:0}
+
+/* map zoom buttons */
+html .leaflet-bar{border:1px solid var(--g-border);border-radius:var(--r-ctl);overflow:hidden;box-shadow:var(--g-shadow)}
+html .leaflet-bar a{background:rgba(15,30,54,.85);color:#dce6f2;border-bottom-color:var(--g-field-line);-webkit-backdrop-filter:var(--g-blur);backdrop-filter:var(--g-blur)}
+html .leaflet-bar a:hover{background:rgba(40,60,90,.9);color:#fff}
+html .leaflet-popup-content-wrapper,html .leaflet-popup-tip{border-radius:var(--r-ctl)}
